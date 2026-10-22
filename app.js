@@ -921,7 +921,11 @@
       ? `<span class="dot" style="background:var(--brand)"></span>教师端`
       : `<span class="dot" style="background:var(--green)"></span>学生端`;
     window.scrollTo({ top: 0, behavior: "smooth" });
-    if (r === "teacher") renderTeacher();
+    if (r === "teacher") {
+      renderTeacher();
+      // 教师进入自动拉一次云端成绩（静默，失败只在横幅里提示）
+      if (window.Cloud && window.Cloud.enabled) syncCloud(false);
+    }
     if (r === "student") resetStudent();
   }
 
@@ -966,9 +970,10 @@
     const st = Store.classStats(classId);
     const clsName = (Store.db.classes.find(c => c.id === classId) || {}).name || "";
     if (!st.n) {
-      box.innerHTML = `<div class="card sec"><div class="empty-state">
+      box.innerHTML = `<div class="card sec">${cloudBanner()}<div class="empty-state">
         <div class="es-ic">📭</div><h3>「${esc(clsName)}」暂无作答数据</h3>
         <p>到「测验任务」发布一次测验，把测验码发给学生，交卷后这里会实时更新。</p>
+        <p class="hint-line">学生交卷成绩会自动上传云端，点「成绩明细」右上角「同步云端成绩」即可拉到最新。</p>
       </div></div>`;
       return;
     }
@@ -1122,18 +1127,131 @@
     renderRecords();
   }
 
+  /* ---------- 成绩明细（支持云端成绩合并） ---------- */
+  /* 云端行 → 本地记录结构，key 用于去重（同测验+同姓名+同分+同时间近似） */
+  let cloudRows = [];      // 最近一次从云端拉到的原始行
+  let cloudState = "idle"; // idle | loading | ok | error
+
+  function cloudRowToRec(row) {
+    const at = row.client_at ? new Date(row.client_at).getTime() : Date.now();
+    return {
+      quizId: "cloud_" + (row.quiz_code || ""),
+      quizName: row.quiz_name || "",
+      code: row.quiz_code || "",
+      studentName: row.student_name || "匿名学生",
+      score: row.score || 0,
+      correct: row.correct || 0,
+      total: row.total || 0,
+      seconds: row.seconds || 0,
+      wrongWords: Array.isArray(row.wrong_words) ? row.wrong_words : [],
+      at,
+      fromCloud: true
+    };
+  }
+
+  /* 把云端成绩写进本地 Store，供看板/导出统一使用；按 (code,姓名,分数,时间) 去重 */
+  function mergeCloudIntoStore() {
+    if (!cloudRows.length) return { added: 0 };
+    let added = 0;
+    cloudRows.forEach(row => {
+      const code = String(row.quiz_code || "").toUpperCase();
+      let quiz = Store.db.quizzes.find(q => String(q.code || "").toUpperCase() === code);
+      if (!quiz) {
+        // 老师本机没有这份卷（学生在别的设备/演示卷作答）：按云端信息建档
+        quiz = Store.addQuiz({
+          name: row.quiz_name || `词汇测验 ${code}`,
+          code, count: row.total || 0, minutes: 15, instant: true
+        });
+      }
+      const rec = cloudRowToRec(row);
+      rec.quizId = quiz.id;
+      const dup = Store.db.records.some(r =>
+        r.quizId === quiz.id &&
+        String(r.studentName) === String(rec.studentName) &&
+        Number(r.score) === Number(rec.score) &&
+        Math.abs((r.at || 0) - rec.at) < 120000     // 2 分钟内视为同一条
+      );
+      if (!dup) { Store.addRecord(rec); added++; }
+    });
+    return { added };
+  }
+
+  let syncing = false;
+  async function syncCloud(showToast) {
+    if (!window.Cloud || !window.Cloud.enabled) {
+      if (showToast) toast("云端未配置：请在 index.html 的 cloud-config 填入 Supabase 地址与 key");
+      return;
+    }
+    if (syncing) return;
+    syncing = true;
+    cloudState = "loading";
+    renderRecords();
+    const res = await window.Cloud.pullScores("");
+    syncing = false;
+    if (!res.ok) {
+      cloudState = "error";
+      cloudError = res.error;
+      renderRecords();
+      if (showToast) toast("云端同步失败：" + res.error);
+      return;
+    }
+    cloudRows = res.rows;
+    cloudState = "ok";
+    const { added } = mergeCloudIntoStore();
+    renderRecordList();
+    if (showToast) {
+      if (!cloudRows.length) {
+        toast(window.Cloud.cfg.teacherCode
+          ? "云端暂时还没有学生提交（口令若不对也会是空的，请核对）"
+          : "教师口令为空：请在 cloud-config 的 teacherCode 填入与数据库一致的口令");
+      } else {
+        toast(added ? `已从云端同步 ${added} 条新成绩` : `云端已是最新，共 ${cloudRows.length} 条成绩`);
+      }
+    }
+  }
+  let cloudError = "";
+
+  function renderRecordList() {
+    const qs = Store.db.quizzes.slice().sort((a, b) => b.createdAt - a.createdAt);
+    const sel = $("#rec-quiz");
+    const cur = sel.value;
+    sel.innerHTML = qs.length ? qs.map(q => `<option value="${q.id}">${esc(q.name)}（${q.code}）</option>`).join("")
+      : `<option value="">暂无测验</option>`;
+    if (cur && [...sel.options].some(o => o.value === cur)) sel.value = cur;
+    renderRecords();
+  }
+
+  function cloudBanner() {
+    if (!window.Cloud || !window.Cloud.enabled)
+      return `<div class="cloud-note">☁️ 云端同步未启用，当前只显示本机成绩（可用「录入成绩码」汇总）。</div>`;
+    if (cloudState === "loading") return `<div class="cloud-note">☁️ 正在从云端拉取成绩…</div>`;
+    if (cloudState === "error") return `<div class="cloud-note err">☁️ 云端同步失败：${esc(cloudError)}</div>`;
+    if (cloudState === "ok") {
+      if (!cloudRows.length) {
+        return `<div class="cloud-note">☁️ 已连上云端，但还没有学生提交。${
+          window.Cloud.cfg.teacherCode ? "" : "（教师口令未配置，请在 cloud-config 的 teacherCode 填写）"}</div>`;
+      }
+      const t = cloudRows[0] && cloudRows[0].client_at
+        ? new Date(cloudRows[0].client_at).toLocaleString("zh-CN", { hour12: false }) : "";
+      return `<div class="cloud-note ok">☁️ 云端已同步 · 共 ${cloudRows.length} 条成绩${t ? ` · 最近一条 ${esc(t)}` : ""}</div>`;
+    }
+    return `<div class="cloud-note">☁️ 点右上「同步云端成绩」拉取学生最新提交。</div>`;
+  }
+
   function renderRecords() {
     const qid = $("#rec-quiz").value;
     const box = $("#rec-body");
-    if (!qid) { box.innerHTML = `<p class="empty-note">暂无测验记录。</p>`; return; }
+    const banner = cloudBanner();
+
+    if (!qid) { box.innerHTML = banner + `<p class="empty-note">暂无测验记录。</p>`; return; }
     const st = Store.quizStats(qid);
-    if (!st.n) { box.innerHTML = `<p class="empty-note">该测验暂无学生提交。</p>`; return; }
+    if (!st.n) { box.innerHTML = banner + `<p class="empty-note">该测验暂无学生提交。</p>`; return; }
     const quiz = Store.db.quizzes.find(q => q.id === qid);
-    box.innerHTML = `
+    box.innerHTML = banner + `
       <div class="kpi-row" style="margin-bottom:16px">
         <div class="kpi"><small>提交人数</small><b>${st.n}</b></div>
         <div class="kpi"><small>平均分</small><b>${st.avg}</b></div>
-        <div class="kpi"><small>最高 / 最低</small><b>${st.max} / ${st.min}</b></div>
+        <div class="kpi"><small>最高 / 最低</small><b style="white-space:nowrap;font-size:26px">${st.max}<span style="color:var(--ink-3);font-weight:600"> / </span>${st.min}</b></div>
         <div class="kpi"><small>及格率</small><b>${st.pass}%</b></div>
       </div>
       <div class="tbl-scroll"><table class="tb"><thead><tr>
@@ -1373,11 +1491,41 @@
     Store.addRecord(rec);
     window.__lastRec = rec;
     window.__lastWrongIdx = wrongIndexOf(rec);
+
+    // 成绩自动上云：教师端刷新即可看到，无需学生再生成成绩码
     const tip = document.createElement("div");
     tip.className = "share-ok";
-    tip.innerHTML = `✅ 成绩已保存到本机（${esc(rec.studentName)} · ${r.score} 分）。点下方 <b>「把成绩交给老师」</b> 生成成绩码，发给老师即可记入班级统计。`;
-    $("#stu-report").prepend(tip);
-    setTimeout(() => tip.classList.add("fade"), 8000);
+    if (window.Cloud && window.Cloud.enabled) {
+      tip.innerHTML = `⏳ 正在把成绩上传到云端…（${esc(rec.studentName)} · ${r.score} 分）`;
+      $("#stu-report").prepend(tip);
+      let retry = 0;
+      const doPush = () => {
+        window.Cloud.pushScore(rec).then(res => {
+          if (res.ok) {
+            tip.innerHTML = `✅ 成绩已上传云端（${esc(rec.studentName)} · ${r.score} 分），老师那边可以直接看到，无需再发成绩码。`;
+            setTimeout(() => tip.classList.add("fade"), 12000);
+            return;
+          }
+          if (retry < 2) {                       // 网络抖动：静默重试两次
+            retry++;
+            tip.innerHTML = `⏳ 网络不稳，正在重试上传（第 ${retry} 次）…`;
+            setTimeout(doPush, 1500 * retry);
+            return;
+          }
+          tip.innerHTML = `⚠️ 云端上传失败：${esc(res.error)}。成绩已保存在本机，可点「把成绩交给老师」用成绩码回传。`;
+          const btn = $("#btn-score-code");
+          if (btn) btn.classList.remove("hidden");
+          setTimeout(() => tip.classList.add("fade"), 12000);
+        });
+      };
+      doPush();
+    } else {
+      tip.innerHTML = `✅ 成绩已保存到本机（${esc(rec.studentName)} · ${r.score} 分）。当前未启用云端同步，点下方 <b>「把成绩交给老师」</b> 生成成绩码发给老师。`;
+      const btn = $("#btn-score-code");
+      if (btn) btn.classList.remove("hidden");
+      $("#stu-report").prepend(tip);
+      setTimeout(() => tip.classList.add("fade"), 10000);
+    }
   }
 
   /* ---------- 成绩码：无后端的跨设备成绩回传 ----------
@@ -1637,6 +1785,17 @@
     });
 
     $("#rec-quiz").addEventListener("change", renderRecords);
+    $("#btn-sync-cloud").addEventListener("click", () => syncCloud(true));
+    $("#btn-cloud-test").addEventListener("click", async () => {
+      if (!window.Cloud) return toast("cloud.js 未加载");
+      if (!window.Cloud.enabled) {
+        return toast("云端未配置：请把 Supabase 的 url / anonKey 填进 index.html 的 cloud-config");
+      }
+      toast("正在测试云端连接…");
+      const r = await window.Cloud.ping();
+      if (r.ok) toast("✅ 云端连接正常，教师口令有效（可以拉到成绩）");
+      else toast("❌ " + r.error);
+    });
     $("#btn-export").addEventListener("click", () => {
       const qid = $("#rec-quiz").value;
       if (!qid) return toast("暂无测验可导出");
@@ -1756,6 +1915,18 @@
   /* ---------- 启动 ---------- */
   let builtinVocab = [];
   async function boot() {
+    // 页脚/入口隐私说明随云端是否启用切换，避免未配置时误导
+    const foot = $("#cloud-foot");
+    if (foot) {
+      foot.textContent = (window.Cloud && window.Cloud.enabled)
+        ? "交卷成绩自动上传云端，教师端即时汇总"
+        : "成绩保存在本机浏览器，由学生用成绩码回传或在此设备导出";
+    }
+    const pn = $("#privacy-note");
+    if (pn && !(window.Cloud && window.Cloud.enabled)) {
+      pn.textContent = "🔒 全部数据保存在本机浏览器，不上传服务器";
+    }
+
     // 微信内置浏览器已可完整作答（GitHub Pages 不拦微信 UA），不再提示跳转浏览器
     try {
       // 用相对路径：GitHub Pages 部署在 /vocab-quiz/ 子目录，绝对路径 /vocab.json 会 404

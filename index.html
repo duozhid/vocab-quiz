@@ -19,7 +19,7 @@
       <div class="logo">3500</div>
       <div>
         <h1>高中英语 3500 词 · 词汇测验平台</h1>
-        <p id="brand-sub">教师建卷下发 · 学生限时作答 · 成绩自动回流</p>
+        <p id="brand-sub">教师建卷下发 · 学生限时作答 · 交卷成绩自动上云</p>
       </div>
     </div>
     <div class="top-actions">
@@ -50,7 +50,7 @@
       </button>
     </div>
     <div class="gate-foot">
-      <span>🔒 全部数据保存在本机浏览器，不上传服务器</span>
+      <span id="privacy-note">🔒 测验内容与成绩：本机保存 · 交卷成绩自动上传云端供老师查看</span>
       <span>·</span>
       <span>内置高考大纲词库 <b id="vocab-total">—</b> 词，亦可上传自建词库</span>
     </div>
@@ -203,7 +203,9 @@
         </div>
         <div class="head-actions">
           <select class="sel" id="rec-quiz"></select>
-          <button class="btn btn-primary btn-sm" id="btn-import-score">📥 录入成绩码</button>
+          <button class="btn btn-primary btn-sm" id="btn-sync-cloud">🔄 同步云端成绩</button>
+          <button class="btn btn-ghost btn-sm" id="btn-cloud-test">☁️ 测试云端连接</button>
+          <button class="btn btn-ghost btn-sm" id="btn-import-score">📥 录入成绩码</button>
           <button class="btn btn-ghost btn-sm" id="btn-export">⬇ 导出 CSV</button>
         </div>
       </div>
@@ -323,8 +325,8 @@
   </section>
 
   <footer class="foot no-print">
-    高中英语词汇测验平台 · 词库来源：高考英语考试大纲词汇 · 全部计算与存储在浏览器本地完成<br>
-    通过本地服务器访问：<code>python3 -m http.server 8000</code> 后打开 <code>http://localhost:8000</code>
+    高中英语词汇测验平台 · 词库来源：高考英语考试大纲词汇 · 组卷与评分在浏览器本地完成<br>
+    <span id="cloud-foot">交卷成绩自动上传云端，教师端即时汇总</span>
   </footer>
 </div>
 
@@ -347,11 +349,22 @@
      由 pack-share.js 生成，勿手工编辑
      ============================================================ -->
 <script type="application/json" id="vial-data">AWEyYTk5ZmFlZWFhZjYEAKYuXajso9tgPrxnR4gr8LlrB4Hb3bhyD3gUMpa/T3VIq6M/SCIYwLF++oLwTXbZy/hbIr56j0SEnTFzONZ9x8vXXiGVSnynwWGgvw6gE+FfplWxUkkxntAQffqodSW2DEaGshAEI6akMarLb84sL9zuTeEG3gcH20xleEmf/5cNqJJopD8cel7q8s7bmG6Pk5gaYEQrszVjUWjpd/A4fUfvyqYi6a0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKZ3FcEjGllyStiT/X3iL1/WkMnr18mo6MBvO+VCnn6ueSG8LygrCz5eL70A/TdXql9yB0Y2zPVwfHWeQ99CjIaReGy62bV3XPdbamgGR7REQM12b62Ubj9u979DtEonQ/pYcpcTwqjNd5tZ/HfEB6Zm9ny3vGX7YVcDVmcynaP11eWXMV8wPCUxNM2dxInRFrO0O0Nwvnq71AExg1OsbeteZypmBc31AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOZOYOr1+lE96BNtETeNwm75Gt4DypilLHYTSAUTqIaLPCvyxYVa1NX56rDO4WQp+jHjqb1DWsH5qClJ+LES9qc47qDdhpiEj0IvA+s8dHenJE9EzmwgJK4o4FSQGjp9Ks+ESqQ/Vq/sR+sPPIy7cgZqA6RdUOtWpWbZzl6TaOvqh1k8hmgDqjkWCubAWBIjrucPox5tbg5rmUWBN5C1dg0JAwbudHeQvr0KSNk7jTXbkkKhmPna7J3j4vWKCocLk0zc3+FEJlmyVoaHKRviDoM5Q90Os77GUXVWMLPAQGRw5d0tAhJgmGbAkSXVeWkqz+HBlpLSPx2qYYnIOFS8rWSBtnqDQI05QsR5aZ+JkjSI5SzYi50BZk8kr/F6gC7SHSyT1PyfvSmABNmAd5tBiCWwjDoXN3GqAXVVwYIoe5j68CS30qkxEn7Dc3PkR1IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</script>
-<script src="html2canvas.min.js?v=gh08"></script>
-<script src="jszip.min.js?v=gh08"></script>
-<script src="docx-parse.js?v=gh08"></script>
-<script src="store.js?v=gh08"></script>
-<script src="share.js?v=gh08"></script>
-<script src="app.js?v=gh08"></script>
+<!-- ============================================================
+     云端同步配置（成绩自动上传，教师端自动可见）
+     把 Supabase 项目的 URL 和 anon public key 填进来即可启用；
+     留空则退回「本地存储 + 成绩码回传」模式。
+     ============================================================ -->
+<script type="application/json" id="cloud-config">{
+  "url": "",
+  "anonKey": "",
+  "teacherCode": ""
+}</script>
+<script src="html2canvas.min.js?v=gh10"></script>
+<script src="jszip.min.js?v=gh10"></script>
+<script src="docx-parse.js?v=gh10"></script>
+<script src="store.js?v=gh10"></script>
+<script src="cloud.js?v=gh10"></script>
+<script src="share.js?v=gh10"></script>
+<script src="app.js?v=gh10"></script>
 </body>
 </html>
