@@ -1734,28 +1734,10 @@
     box.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  /* ---------- 微信 / QQ 内置浏览器提示 ---------- */
-  const IN_APP_UA = /MicroMessenger|QQ\/|Weibo|AlipayClient|DingTalk/i.test(navigator.userAgent);
-  function showInAppTip() {
-    if (document.getElementById("inapp-tip")) return;
-    const tip = document.createElement("div");
-    tip.id = "inapp-tip";
-    tip.className = "inapp-tip";
-    tip.innerHTML = `<span class="it-ic">↗</span>
-      <span class="it-txt">当前在微信内打开：点右上角 <b>「···」</b> → <b>在浏览器中打开</b>，即可正常作答。</span>
-      <button class="it-x" type="button" aria-label="关闭">✕</button>`;
-    document.body.appendChild(tip);
-    document.body.classList.add("has-inapp-tip");
-    tip.querySelector(".it-x").addEventListener("click", () => {
-      tip.remove();
-      document.body.classList.remove("has-inapp-tip");
-    });
-  }
-
   /* ---------- 启动 ---------- */
   let builtinVocab = [];
   async function boot() {
-    if (IN_APP_UA) showInAppTip();
+    // 微信内置浏览器已可完整作答（GitHub Pages 不拦微信 UA），不再提示跳转浏览器
     try {
       // 用相对路径：GitHub Pages 部署在 /vocab-quiz/ 子目录，绝对路径 /vocab.json 会 404
       const res = await fetch("vocab.json", { cache: "no-cache" });
