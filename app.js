@@ -777,9 +777,8 @@
     }
     const { stage, index } = staged;
     const total = stage.list.length;
-    const ready = window.ShareCodec.hasVial() && index < window.ShareCodec.toc().count;
-    const alias = ready ? window.ShareCodec.aliasAt(index) : "";
-    const link = ready ? window.ShareCodec.makeLink(alias) : "";
+    const aliasCandidate = window.ShareCodec.hasVial() && index < window.ShareCodec.toc().count
+      ? window.ShareCodec.aliasAt(index) : "";
     const qrSize = 240;
 
     modal("测验已创建 · 学生扫码作答", `
@@ -788,30 +787,9 @@
         <div class="qs-meta">${esc(q.name)}<br>${q.count} 题 · 限时 ${q.minutes} 分钟</div>
       </div>
 
-      ${ready ? `
-      <div class="qr-card">
-        <div class="qr-frame" id="qr-frame">${window.ShareCodec.qrSvg(link, qrSize)}</div>
-        <div class="qr-cap">学生用手机 <b>扫一扫</b> 即可开始作答</div>
-        <div class="qr-acts">
-          <button class="btn btn-primary btn-sm" id="btn-save-qr">⬇ 保存二维码</button>
-          <button class="btn btn-soft btn-sm" id="btn-copy-link">📋 复制链接</button>
-          <button class="btn btn-ghost btn-sm" id="btn-copy-text">复制通知文案</button>
-        </div>
-        <div class="qr-note">
-          扫码或在浏览器打开均直接进入卷面 · 链接仅 ${link.length} 字符<br>
-          微信里收到链接时，点右上角「···」→ <b>在浏览器中打开</b>
-        </div>
-        <details class="qr-detail">
-          <summary>查看链接与暗号</summary>
-          <div class="sl-url" id="share-url">${esc(link)}</div>
-          <div class="qr-alias">暗号 <code>${alias}</code> · 也可在首页输入此暗号进入</div>
-        </details>
-      </div>` : `
-      <div class="share-err" style="margin-top:12px">
-        这份试卷是第 <b>${index + 1}</b> 份，但线上批次只打包了
-        <b>${window.ShareCodec.toc().count}</b> 份，暂时还生成不了二维码。<br>
-        点下方「导出发布包」，把它一起打进批次即可。
-      </div>`}
+      <div class="qr-card" id="qr-slot">
+        <div class="qr-cap">正在校验线上试卷批次…</div>
+      </div>
 
       <div class="share-tip" style="margin-top:14px">
         <b>其他进入方式</b>
@@ -828,6 +806,46 @@
         <button class="btn btn-soft btn-sm" id="btn-export-vials">⬇ 导出发布包（${total} 份）</button>
       </div>`, null, "知道了");
 
+    /* 异步校验：密钥瓶 alias 解出的卷面必须与本卷完全一致（测验码 + 题数），
+       否则二维码会指向批次里的另一份卷——此前新建卷直接命中 alias 就是这个错配。 */
+    const verifyAndRenderQr = async () => {
+      const slot = $("#qr-slot");
+      if (!slot) return;
+      let ok = false, link = "", alias = "";
+      if (aliasCandidate) {
+        try {
+          const decoded = await window.ShareCodec.decode(aliasCandidate);
+          ok = decoded && String(decoded.code || "").toUpperCase() === String(q.code).toUpperCase()
+            && (decoded.questions || []).length === q.count;
+          if (ok) { alias = aliasCandidate; link = window.ShareCodec.makeLink(alias); }
+        } catch (e) { ok = false; }
+      }
+      if (!slot.isConnected) return;   // 弹窗已被用户关闭
+      if (ok) {
+        slot.innerHTML = `
+          <div class="qr-frame" id="qr-frame">${window.ShareCodec.qrSvg(link, qrSize)}</div>
+          <div class="qr-cap">学生用手机 <b>扫一扫</b> 即可开始作答</div>
+          <div class="qr-acts">
+            <button class="btn btn-primary btn-sm" id="btn-save-qr">⬇ 保存二维码</button>
+            <button class="btn btn-soft btn-sm" id="btn-copy-link">📋 复制链接</button>
+            <button class="btn btn-ghost btn-sm" id="btn-copy-text">复制通知文案</button>
+          </div>
+          <div class="qr-note">扫码或在浏览器打开均直接进入卷面 · 链接仅 ${link.length} 字符</div>
+          <details class="qr-detail">
+            <summary>查看链接与暗号</summary>
+            <div class="sl-url" id="share-url">${esc(link)}</div>
+            <div class="qr-alias">暗号 <code>${alias}</code> · 也可在首页输入此暗号进入</div>
+          </details>`;
+        bindQrActions(link, q);
+      } else {
+        slot.innerHTML = `
+          <div class="share-err" style="margin:12px 0">
+            这份试卷还没有发布到线上批次（线上密文与本卷不一致），二维码暂不可用。<br>
+            点下方「导出发布包」，把它一起打进批次重新发布即可。
+          </div>`;
+      }
+    };
+
     const copy = async (text, okMsg) => {
       try {
         await navigator.clipboard.writeText(text);
@@ -840,12 +858,13 @@
       }
     };
 
-    if (ready) {
-      const noticeText = `【${q.name}】英语词汇测验\n共 ${q.count} 题，限时 ${q.minutes} 分钟。\n点开链接直接作答：\n${link}\n（微信里打开请点右上角「···」→ 在浏览器中打开；也可在电脑上输入测验码 ${q.code}）`;
-      $("#btn-save-qr").onclick = () => downloadQr(link, q.name || q.code, q.code);
+    function bindQrActions(link, quiz) {
+      const noticeText = `【${quiz.name}】英语词汇测验\n共 ${quiz.count} 题，限时 ${quiz.minutes} 分钟。\n点开链接直接作答：\n${link}\n（也可在电脑上打开链接输入测验码 ${quiz.code}）`;
+      $("#btn-save-qr").onclick = () => downloadQr(link, quiz.name || quiz.code, quiz.code);
       $("#btn-copy-link").onclick = () => copy(link, "链接已复制，微信里直接粘贴发送");
       $("#btn-copy-text").onclick = () => copy(noticeText, "通知文案已复制");
     }
+    verifyAndRenderQr();
 
     const btnExport = $("#btn-export-vials");
     if (btnExport) btnExport.onclick = () => {
