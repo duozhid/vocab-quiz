@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="theme-color" content="#3355d1">
+<meta name="description" content="高中英语 3500 词掌握度测验：老师建卷下发，学生点开链接直接作答，自动生成成绩分析与个性化练习。">
+<title>高中英语 3500 词 · 词汇测验平台（教师端 / 学生端）</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%233355d1'/><text x='32' y='42' font-size='26' font-weight='bold' text-anchor='middle' fill='white' font-family='Arial'>35</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= 顶部导航 ================= -->
+  <div class="topbar no-print">
+    <div class="brand" id="brand-home" style="cursor:pointer">
+      <div class="logo">3500</div>
+      <div>
+        <h1>高中英语 3500 词 · 词汇测验平台</h1>
+        <p id="brand-sub">教师建卷下发 · 学生限时作答 · 成绩自动回流</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <span class="role-pill hidden" id="role-pill"></span>
+      <button class="btn btn-primary btn-sm hidden" id="btn-print2">⬇ 下载巩固练习</button>
+      <button class="btn btn-ghost btn-sm hidden" id="btn-switch">切换角色</button>
+    </div>
+  </div>
+
+  <!-- ================= 角色选择 ================= -->
+  <section id="view-gate">
+    <div class="gate-hero">
+      <h2>选择你的身份</h2>
+      <p>教师建立测验并查看班级学情；学生凭测验码参加限时测验，交卷后立即获得成绩分析与学习建议。</p>
+    </div>
+    <div class="gate-grid">
+      <button class="role-card" id="btn-role-teacher">
+        <div class="role-icon" style="background:linear-gradient(140deg,#3f63e8,#6b48d4)">👩‍🏫</div>
+        <h3>我是教师</h3>
+        <p>上传 Word 词库 → 自动组卷 → 生成测验码 → 查看班级学情看板与高频错词榜</p>
+        <span class="role-go">进入教师端 →</span>
+      </button>
+      <button class="role-card" id="btn-role-student">
+        <div class="role-icon" style="background:linear-gradient(140deg,#0f9d63,#3fc48c)">🧑‍🎓</div>
+        <h3>我是学生</h3>
+        <p>输入教师提供的 6 位测验码 → 限时作答 → 交卷即得得分、错词清单与 15 天提升方案</p>
+        <span class="role-go">进入学生端 →</span>
+      </button>
+    </div>
+    <div class="gate-foot">
+      <span>🔒 全部数据保存在本机浏览器，不上传服务器</span>
+      <span>·</span>
+      <span>内置高考大纲词库 <b id="vocab-total">—</b> 词，亦可上传自建词库</span>
+    </div>
+  </section>
+
+  <!-- ================= 教师端 ================= -->
+  <section id="view-teacher" class="hidden">
+    <nav class="tabs" id="teacher-tabs">
+      <button class="tab on" data-tab="dash">📊 班级学情</button>
+      <button class="tab" data-tab="bank">📚 词库管理</button>
+      <button class="tab" data-tab="quiz">📝 测验任务</button>
+      <button class="tab" data-tab="record">📋 成绩明细</button>
+    </nav>
+
+    <!-- 学情看板 -->
+    <div class="tab-panel" id="panel-dash">
+      <div class="panel-head">
+        <div>
+          <h2>班级学情看板</h2>
+          <p>汇总本班所有测验的作答数据，定位共性薄弱词与学生个体风险</p>
+        </div>
+        <div class="head-actions">
+          <select class="sel" id="dash-class"></select>
+          <button class="btn btn-ghost btn-sm" id="btn-add-class">+ 新建班级</button>
+        </div>
+      </div>
+      <div id="dash-body"></div>
+    </div>
+
+    <!-- 词库管理 -->
+    <div class="tab-panel hidden" id="panel-bank">
+      <div class="panel-head">
+        <div>
+          <h2>词库管理</h2>
+          <p>上传 Word（.docx）自动解析，兼容「一行一词条」与「表格式」两种排版</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn btn-ghost btn-sm" id="btn-use-builtin">载入内置 3500 词库</button>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card sec">
+          <h3>📤 上传词库</h3>
+          <div class="sub">支持 .docx / .csv / .txt，也可直接粘贴文本</div>
+          <div class="drop" id="dropzone">
+            <div class="drop-ic">📄</div>
+            <div class="drop-main"><b>点击选择</b>或把 Word 文件拖到这里</div>
+            <div class="drop-hint">.docx / .csv / .txt　单个文件建议 ≤ 5 MB</div>
+            <input type="file" id="file-input" accept=".docx,.csv,.txt" hidden>
+          </div>
+          <details class="paste-box">
+            <summary>或者直接粘贴词表文本</summary>
+            <textarea id="paste-area" rows="6" placeholder="abandon v. 抛弃，放弃&#10;ability n. 能力；才能&#10;accept&#9;vt.&#9;接受；认可"></textarea>
+            <button class="btn btn-soft btn-sm" id="btn-paste-parse" style="margin-top:8px">解析文本 →</button>
+          </details>
+          <div class="fmt-tip">
+            <b>格式兼容说明</b>
+            <ul>
+              <li>行式：<code>abandon v. 抛弃，放弃</code>　或　<code>abandon 抛弃；放弃</code></li>
+              <li>表格式：两列（单词｜释义）或三列（单词｜音标｜词性+释义），有无表头均可识别</li>
+              <li>自动清理序号、项目符号、Unit 标题等无关行</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card sec">
+          <h3>🗂 我的词库</h3>
+          <div class="sub" id="bank-count">—</div>
+          <div id="bank-list"></div>
+        </div>
+      </div>
+
+      <div class="card sec hidden" id="parse-preview" style="margin-top:18px">
+        <h3>解析预览</h3>
+        <div class="sub" id="parse-meta"></div>
+        <div class="preview-name">
+          <label>词库名称</label>
+          <input id="bank-name" class="inp" placeholder="如：必修一 Unit 1–3">
+          <button class="btn btn-primary btn-sm" id="btn-save-bank">保存为词库</button>
+        </div>
+        <div class="tbl-wrap"><div id="parse-table"></div></div>
+      </div>
+    </div>
+
+    <!-- 测验任务 -->
+    <div class="tab-panel hidden" id="panel-quiz">
+      <div class="panel-head">
+        <div>
+          <h2>测验任务</h2>
+          <p>从词库抽题生成测验码，学生凭码作答；到达时限自动交卷</p>
+        </div>
+      </div>
+
+      <div class="grid-quiz">
+        <div class="card sec">
+          <h3>➕ 新建测验</h3>
+          <div class="sub">默认限时 15 分钟，可调</div>
+          <div class="field">
+            <label>测验名称</label>
+            <input class="inp" id="q-name" placeholder="如：Unit 1 词汇过关测">
+          </div>
+          <div class="field">
+            <label>选择词库</label>
+            <select class="sel" id="q-bank"></select>
+          </div>
+          <div class="field">
+            <label>发布班级</label>
+            <select class="sel" id="q-class"></select>
+          </div>
+          <div class="field">
+            <label>题量</label>
+            <div class="chips" id="q-count">
+              <button class="chip" data-v="10">10 题</button>
+              <button class="chip on" data-v="20">20 题</button>
+              <button class="chip" data-v="30">30 题</button>
+              <button class="chip" data-v="40">40 题</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>限时</label>
+            <div class="chips" id="q-minutes">
+              <button class="chip" data-v="10">10 分钟</button>
+              <button class="chip on" data-v="15">15 分钟</button>
+              <button class="chip" data-v="20">20 分钟</button>
+              <button class="chip" data-v="30">30 分钟</button>
+            </div>
+          </div>
+          <div class="switch-row">
+            <span>答完即时反馈对错</span>
+            <div class="switch on" id="sw-instant"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-create-quiz" style="width:100%;justify-content:center;margin-top:14px">生成测验码</button>
+        </div>
+
+        <div class="card sec">
+          <h3>📌 已发布测验</h3>
+          <div class="sub" id="quiz-count">—</div>
+          <div id="quiz-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 成绩明细 -->
+    <div class="tab-panel hidden" id="panel-record">
+      <div class="panel-head">
+        <div>
+          <h2>成绩明细</h2>
+          <p>按测验查看每位学生的得分、用时与错词，可导出 CSV</p>
+        </div>
+        <div class="head-actions">
+          <select class="sel" id="rec-quiz"></select>
+          <button class="btn btn-ghost btn-sm" id="btn-export">⬇ 导出 CSV</button>
+        </div>
+      </div>
+      <div class="card sec" id="rec-body"></div>
+    </div>
+  </section>
+
+  <!-- ================= 学生端 ================= -->
+  <section id="view-student" class="hidden">
+    <!-- 入口：输入测验码 -->
+    <div id="stu-gate">
+      <div class="card stu-entry">
+        <h2>输入测验码开始</h2>
+        <p>向老师索取 6 位测验码，输入后核对信息再开始。开始计时后不可暂停。</p>
+        <div class="code-row">
+          <input id="code-input" maxlength="6" placeholder="ABC123" autocomplete="off" spellcheck="false">
+          <input id="name-input" placeholder="你的姓名（用于回传成绩）" autocomplete="off">
+          <button class="btn btn-primary" id="btn-code-go">进入测验 →</button>
+        </div>
+        <div class="entry-tip" id="entry-tip"></div>
+        <div class="entry-divider"><span>或</span></div>
+        <p style="font-size:13px;color:var(--ink-3);margin-bottom:10px">没有测验码？可以先做一次内置词库的自主检测，同样会得到成绩分析。</p>
+        <button class="btn btn-ghost btn-sm" id="btn-self-test">使用内置 3500 词库自主检测</button>
+      </div>
+    </div>
+
+    <!-- 答题 -->
+    <div id="stu-quiz" class="hidden">
+      <div class="card q-card">
+        <div class="quiz-head">
+          <div class="meta" id="q-counter">第 <b>1</b> / 20 题</div>
+          <div class="meta" style="display:flex;gap:16px;align-items:center">
+            <span id="q-progress-text">0%</span>
+            <span class="countdown" id="countdown">15:00</span>
+            <button class="btn btn-ghost btn-sm" id="btn-quit">交卷</button>
+          </div>
+        </div>
+        <div class="progress"><span id="q-progress"></span></div>
+        <div class="dots" id="q-dots"></div>
+
+        <div class="q-top">
+          <span class="q-no" id="q-no">QUESTION 01</span>
+          <div class="q-tag">
+            <span>题型 <b id="q-type">英译中</b></span>
+            <span>词性 <b id="q-pos">名词</b></span>
+            <span>难度 <b id="q-tier">高频核心词</b></span>
+          </div>
+        </div>
+
+        <p style="font-size:12.5px;color:var(--ink-3);margin-bottom:8px" id="q-instr">选出该单词最恰当的中文释义</p>
+        <div class="q-stem" id="q-stem"></div>
+        <div class="q-phon" id="q-phon"></div>
+
+        <div class="opts" id="q-opts"></div>
+        <div class="instant hidden" id="instant-fb"></div>
+
+        <div class="q-foot">
+          <div class="kbd-hint">快捷键 <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> 选择　<kbd>Enter</kbd> 下一题</div>
+          <button class="btn btn-primary" id="btn-next" disabled>下一题 →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 报告 -->
+    <div id="stu-report" class="hidden">
+      <div class="card report-head" id="report-head"></div>
+
+      <div class="grid-2">
+        <div class="card sec">
+          <h3>📊 分层掌握情况</h3>
+          <div class="sub">按词汇难度层次统计正确率</div>
+          <div id="tier-bars"></div>
+        </div>
+        <div class="card sec">
+          <h3>🔁 题型与词性表现</h3>
+          <div class="sub">识别是「认词」问题还是「用词」问题</div>
+          <div id="type-bars"></div>
+        </div>
+      </div>
+
+      <div class="card sec" style="margin-top:18px">
+        <h3>🩺 诊断结论</h3>
+        <div class="sub">基于正确率、耗时与错选项类型推得</div>
+        <div id="diagnosis"></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card sec">
+          <h3>🎯 15 天提升方案</h3>
+          <div class="sub">按你当前最薄弱的环节排期</div>
+          <div id="plan"></div>
+        </div>
+        <div class="card sec">
+          <h3>💡 方法建议</h3>
+          <div class="sub">针对你的失分模式挑选</div>
+          <div id="methods"></div>
+        </div>
+      </div>
+
+      <div class="card sec" style="margin-top:18px">
+        <h3>📕 需要回炉的词条 <span id="wrong-count" style="font-size:12px;color:var(--red);font-weight:600"></span></h3>
+        <div class="sub">三天内清空；可下载成练习卷反复练</div>
+        <div id="wrong-table"></div>
+      </div>
+
+      <div class="no-print" style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="btn-print">⬇ 下载巩固练习（不含成绩评价）</button>
+        <button class="btn btn-soft" id="btn-retest">再测一次</button>
+        <button class="btn btn-ghost" id="btn-again">返回学生端首页</button>
+      </div>
+
+      <div class="card" style="margin-top:22px;padding:26px">
+        <div class="paper" id="worksheet" style="margin-top:0;box-shadow:none;border:none;padding:0"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot no-print">
+    高中英语词汇测验平台 · 词库来源：高考英语考试大纲词汇 · 全部计算与存储在浏览器本地完成<br>
+    通过本地服务器访问：<code>python3 -m http.server 8000</code> 后打开 <code>http://localhost:8000</code>
+  </footer>
+</div>
+
+<!-- 通用弹窗 -->
+<div class="modal hidden" id="modal">
+  <div class="modal-card">
+    <h3 id="modal-title">提示</h3>
+    <div id="modal-body"></div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost btn-sm" id="modal-cancel">取消</button>
+      <button class="btn btn-primary btn-sm" id="modal-ok">确定</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ============================================================
+     密钥瓶：试卷密文（随页面发布，长度不计入分享链接）
+     由 pack-share.js 生成，勿手工编辑
+     ============================================================ -->
+<script type="application/json" id="vial-data">AWFhZWFlMjViMTU4MDYEAKZeSiLIvkFf4J9I6tEY3y4atAaQ8PIAMakQ1I0pvtFRj6GEy439i2ur27Yuu5yOrlaGjJp6WC/caUggNOYt5G0LmUWK5IQoWwkdQuUR21BB3PleoGTkXAhYBSrnfuB/cdrIMXdoVGMpswMRXk7PeW30VCrfJBWDIVNfzhZilnHlN4Z2FGoxave1CrA+7cl41U/A+pcZ8HYH/h5RCuPpfpiIimhZkXu9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKZLnM1iIc9/Rv2qdXcI/nfQ0O/hH9MjLgFuCsu27/osVnmBMeG5w0lOm0tcY+zbc1JVuyAiNgMh9MqEmbPNRG4s670AFGXS+J1sRI/g0SC//thVALf2VHzk5Rcj3uxnbrFei7SVG1wMwm9hLo1HnAkjWELFxOsKhkgiLSUf+7DtVeVJcF3sOrLMNy06boiwXNbss2dMNe/1XHmmRHx5Nth/XGP3BQA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOaL1rCKJVWf18OEKGH2XEfu2l4ahranabYBxGGzU94547KGhpnWKFuJSGjAyTZSYVgKFMaaarxK/77+NBHlp7Tsl7OAR+OqQ383q011kQPGC2uEawf/Yk59phW0qxvRxepgFpaz2/B+YcKg9t5Pzl5g+kY8OHXnQIY3Yqqf8bRbVT4J3Zx3+UuJtkNSCRXEmEObez/lj/r/lDiZ5jlWTGK4RZyuT0KOGVwAn50uL1wvBrGgCVI5hgFqiefQudiVbCYv65BBzlEEOgS9/SfeJjmoBUrfk6TzcQv/LIqLkAa4bpAv4DAz1Wbt9CkMhB606X6dRX/XzzTKCG2WUBkFRD38MRxDQcKDe3bBm326l0gy6KZ6EHq6CRJf5CSmF2MosmA8NfC3LfCNC+31av8dvQfJkonE3+OdpOF2sLRRlTYW/hra70k206+6N7Jo2AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</script>
+<script src="jszip.min.js?v=gh01"></script>
+<script src="docx-parse.js?v=gh01"></script>
+<script src="store.js?v=gh01"></script>
+<script src="share.js?v=gh01"></script>
+<script src="app.js?v=gh01"></script>
+</body>
+</html>
