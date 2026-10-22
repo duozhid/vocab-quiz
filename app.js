@@ -1251,7 +1251,7 @@
       <div class="kpi-row" style="margin-bottom:16px">
         <div class="kpi"><small>提交人数</small><b>${st.n}</b></div>
         <div class="kpi"><small>平均分</small><b>${st.avg}</b></div>
-        <div class="kpi"><small>最高 / 最低</small><b style="white-space:nowrap;font-size:26px">${st.max}<span style="color:var(--ink-3);font-weight:600"> / </span>${st.min}</b></div>
+        <div class="kpi"><small>最高 / 最低</small><b class="kpi-dual"><span>${st.max}</span><i>/</i><span>${st.min}</span></b></div>
         <div class="kpi"><small>及格率</small><b>${st.pass}%</b></div>
       </div>
       <div class="tbl-scroll"><table class="tb"><thead><tr>
