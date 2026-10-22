@@ -68,7 +68,7 @@ as $$
   select s.id, s.quiz_code, s.quiz_name, s.student_name, s.score,
          s.correct, s.total, s.seconds, s.wrong_words, s.client_at
   from public.gk_scores s
-  where p_pass = 'CHANGE-ME-2026'
+  where p_pass = 'vhobkjbiorgzewellbaf'
     and (p_code is null or upper(s.quiz_code) = upper(p_code))
   order by s.client_at desc
   limit least(coalesce(p_limit, 1000), 5000);
