@@ -303,6 +303,11 @@ footer.foot{text-align:center;color:var(--ink-3);font-size:12px;margin-top:34px;
 .kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
 .kpi small{ font-size:11.5px;color:var(--ink-3);display:block;margin-bottom:6px;letter-spacing:.3px}
 .kpi b{font-size:26px;letter-spacing:-1px;font-weight:750}
+/* 最高/最低：用 flex 排，窄屏自动收缩字号，避免数字被挤成竖排 */
+.kpi-dual{display:flex;align-items:baseline;gap:6px;font-size:26px;letter-spacing:-1px;font-weight:750;
+  min-width:0;flex-wrap:nowrap}
+.kpi-dual span{flex:0 1 auto;min-width:0}
+.kpi-dual i{flex:none;font-style:normal;font-size:16px;font-weight:600;color:var(--ink-3)}
 .kpi span{display:block;font-size:11.5px;color:var(--ink-3);margin-top:3px}
 
 /* ---------- 直方图 ---------- */
