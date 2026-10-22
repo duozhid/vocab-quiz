@@ -1,31 +1,31 @@
 {
-  "pw": "aaeae25b15806",
-  "builtAt": 1792639825275,
+  "pw": "a2a99faeeaaf6",
+  "builtAt": 1792652313214,
   "quizzes": [
     {
-      "id": "demo_tvx6ph",
-      "code": "TVX6PH",
+      "id": "demo_xgffwx",
+      "code": "XGFFWX",
       "name": "高一 Unit 1–2 词汇过关测",
       "alias": "00000000",
       "bytes": 194
     },
     {
-      "id": "demo_h9uqx9",
-      "code": "H9UQX9",
+      "id": "demo_rpmdkj",
+      "code": "RPMDKJ",
       "name": "高二 高频动词专项",
       "alias": "0000003J",
       "bytes": 194
     },
     {
-      "id": "demo_cq7ctw",
-      "code": "CQ7CTW",
+      "id": "demo_yj64xf",
+      "code": "YJ64XF",
       "name": "高三 一轮复习综合测",
       "alias": "00000050",
       "bytes": 258
     },
     {
-      "id": "demo_gvedlm",
-      "code": "GVEDLM",
+      "id": "demo_v3y7nv",
+      "code": "V3Y7NV",
       "name": "课堂 5 分钟小测",
       "alias": "0000006J",
       "bytes": 130
