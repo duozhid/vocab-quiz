@@ -803,7 +803,7 @@
           二维码之所以能这么小，是因为试卷密文跟网页一起发布了。
           当前共有 <b>${total}</b> 份待发布试卷，导出后由系统重新打包上线。
         </div>
-        <button class="btn btn-soft btn-sm" id="btn-export-vials">⬇ 导出发布包（${total} 份）</button>
+        <button class="btn btn-soft btn-sm" id="btn-export-vials">导出发布包（${total} 份）</button>
       </div>`, null, "知道了");
 
     /* 异步校验：密钥瓶 alias 解出的卷面必须与本卷完全一致（测验码 + 题数），
@@ -826,7 +826,7 @@
           <div class="qr-frame" id="qr-frame">${window.ShareCodec.qrSvg(link, qrSize)}</div>
           <div class="qr-cap">学生用手机 <b>扫一扫</b> 即可开始作答</div>
           <div class="qr-acts">
-            <button class="btn btn-primary btn-sm" id="btn-save-qr">⬇ 保存二维码</button>
+            <button class="btn btn-primary btn-sm" id="btn-save-qr">保存二维码</button>
             <button class="btn btn-soft btn-sm" id="btn-copy-link">复制链接</button>
             <button class="btn btn-ghost btn-sm" id="btn-copy-text">复制通知文案</button>
           </div>
