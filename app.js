@@ -1022,7 +1022,7 @@
           <div class="hist">${distHtml}</div>
         </div>
         <div class="card sec">
-          <h3>⚠️ 班级高频错词 Top ${st.topWrong.length || 0}</h3>
+          <h3>班级高频错词 Top ${st.topWrong.length || 0}</h3>
           <div class="sub">按答错人次排序，可直接用于讲评课</div>
           <div class="tbl-scroll">${wrongHtml}</div>
         </div>
@@ -1223,19 +1223,19 @@
 
   function cloudBanner() {
     if (!window.Cloud || !window.Cloud.enabled)
-      return `<div class="cloud-note">☁️ 云端同步未启用，当前只显示本机成绩（可用「录入成绩码」汇总）。</div>`;
-    if (cloudState === "loading") return `<div class="cloud-note">☁️ 正在从云端拉取成绩…</div>`;
-    if (cloudState === "error") return `<div class="cloud-note err">☁️ 云端同步失败：${esc(cloudError)}</div>`;
+      return `<div class="cloud-note">云端同步未启用，当前只显示本机成绩（可用「录入成绩码」汇总）。</div>`;
+    if (cloudState === "loading") return `<div class="cloud-note">正在从云端拉取成绩…</div>`;
+    if (cloudState === "error") return `<div class="cloud-note err">云端同步失败：${esc(cloudError)}</div>`;
     if (cloudState === "ok") {
       if (!cloudRows.length) {
-        return `<div class="cloud-note">☁️ 已连上云端，但还没有学生提交。${
+        return `<div class="cloud-note">已连上云端，但还没有学生提交。${
           window.Cloud.cfg.teacherCode ? "" : "（教师口令未配置，请在 cloud-config 的 teacherCode 填写）"}</div>`;
       }
       const t = cloudRows[0] && cloudRows[0].client_at
         ? new Date(cloudRows[0].client_at).toLocaleString("zh-CN", { hour12: false }) : "";
-      return `<div class="cloud-note ok">☁️ 云端已同步 · 共 ${cloudRows.length} 条成绩${t ? ` · 最近一条 ${esc(t)}` : ""}</div>`;
+      return `<div class="cloud-note ok">云端已同步 · 共 ${cloudRows.length} 条成绩${t ? ` · 最近一条 ${esc(t)}` : ""}</div>`;
     }
-    return `<div class="cloud-note">☁️ 点右上「同步云端成绩」拉取学生最新提交。</div>`;
+    return `<div class="cloud-note">点右上「同步云端成绩」拉取学生最新提交。</div>`;
   }
 
   function renderRecords() {
@@ -1496,23 +1496,23 @@
     const tip = document.createElement("div");
     tip.className = "share-ok";
     if (window.Cloud && window.Cloud.enabled) {
-      tip.innerHTML = `⏳ 正在把成绩上传到云端…（${esc(rec.studentName)} · ${r.score} 分）`;
+      tip.innerHTML = `正在上传成绩到云端…（${esc(rec.studentName)} · ${r.score} 分）`;
       $("#stu-report").prepend(tip);
       let retry = 0;
       const doPush = () => {
         window.Cloud.pushScore(rec).then(res => {
           if (res.ok) {
-            tip.innerHTML = `✅ 成绩已上传云端（${esc(rec.studentName)} · ${r.score} 分），老师那边可以直接看到，无需再发成绩码。`;
+            tip.innerHTML = `成绩已上传云端（${esc(rec.studentName)} · ${r.score} 分），老师那边可以直接看到，无需再发成绩码。`;
             setTimeout(() => tip.classList.add("fade"), 12000);
             return;
           }
           if (retry < 2) {                       // 网络抖动：静默重试两次
             retry++;
-            tip.innerHTML = `⏳ 网络不稳，正在重试上传（第 ${retry} 次）…`;
+            tip.innerHTML = `网络不稳，正在重试上传（第 ${retry} 次）…`;
             setTimeout(doPush, 1500 * retry);
             return;
           }
-          tip.innerHTML = `⚠️ 云端上传失败：${esc(res.error)}。成绩已保存在本机，可点「把成绩交给老师」用成绩码回传。`;
+          tip.innerHTML = `云端上传失败：${esc(res.error)}。成绩已保存在本机，可点「把成绩交给老师」用成绩码回传。`;
           const btn = $("#btn-score-code");
           if (btn) btn.classList.remove("hidden");
           setTimeout(() => tip.classList.add("fade"), 12000);
@@ -1520,7 +1520,7 @@
       };
       doPush();
     } else {
-      tip.innerHTML = `✅ 成绩已保存到本机（${esc(rec.studentName)} · ${r.score} 分）。当前未启用云端同步，点下方 <b>「把成绩交给老师」</b> 生成成绩码发给老师。`;
+      tip.innerHTML = `成绩已保存到本机（${esc(rec.studentName)} · ${r.score} 分）。当前未启用云端同步，点下方 <b>「把成绩交给老师」</b> 生成成绩码发给老师。`;
       const btn = $("#btn-score-code");
       if (btn) btn.classList.remove("hidden");
       $("#stu-report").prepend(tip);
@@ -1793,7 +1793,7 @@
       }
       toast("正在测试云端连接…");
       const r = await window.Cloud.ping();
-      if (r.ok) toast("✅ 云端连接正常，教师口令有效（可以拉到成绩）");
+      if (r.ok) toast("云端连接正常，教师口令有效，可以拉到成绩");
       else toast("❌ " + r.error);
     });
     $("#btn-export").addEventListener("click", () => {
@@ -1915,16 +1915,23 @@
   /* ---------- 启动 ---------- */
   let builtinVocab = [];
   async function boot() {
-    // 页脚/入口隐私说明随云端是否启用切换，避免未配置时误导
+    // 页脚/品牌副标题/隐私说明随云端是否启用切换，避免未配置时误导
+    const cloudOn = !!(window.Cloud && window.Cloud.enabled);
     const foot = $("#cloud-foot");
     if (foot) {
-      foot.textContent = (window.Cloud && window.Cloud.enabled)
+      foot.textContent = cloudOn
         ? "交卷成绩自动上传云端，教师端即时汇总"
         : "成绩保存在本机浏览器，由学生用成绩码回传或在此设备导出";
     }
+    const sub = $("#brand-sub");
+    if (sub) {
+      sub.textContent = cloudOn
+        ? "教师建卷下发 · 学生限时作答 · 交卷成绩自动上云"
+        : "教师建卷下发 · 学生限时作答 · 自动生成成绩分析";
+    }
     const pn = $("#privacy-note");
-    if (pn && !(window.Cloud && window.Cloud.enabled)) {
-      pn.textContent = "🔒 全部数据保存在本机浏览器，不上传服务器";
+    if (pn && !cloudOn) {
+      pn.textContent = "全部数据保存在本机浏览器，不上传服务器";
     }
 
     // 微信内置浏览器已可完整作答（GitHub Pages 不拦微信 UA），不再提示跳转浏览器
