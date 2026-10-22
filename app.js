@@ -827,7 +827,7 @@
           <div class="qr-cap">学生用手机 <b>扫一扫</b> 即可开始作答</div>
           <div class="qr-acts">
             <button class="btn btn-primary btn-sm" id="btn-save-qr">⬇ 保存二维码</button>
-            <button class="btn btn-soft btn-sm" id="btn-copy-link">📋 复制链接</button>
+            <button class="btn btn-soft btn-sm" id="btn-copy-link">复制链接</button>
             <button class="btn btn-ghost btn-sm" id="btn-copy-text">复制通知文案</button>
           </div>
           <div class="qr-note">扫码或在浏览器打开均直接进入卷面 · 链接仅 ${link.length} 字符</div>
@@ -1682,7 +1682,7 @@
         ${qr ? `<div class="sc-qr">${qr}<div class="sc-cap">老师可扫码直接读取</div></div>` : ""}
         <div class="sc-code" id="sc-code">${esc(code)}</div>
         <div class="sc-note">包含：姓名 ${esc(rec.studentName)} · ${rec.score} 分 · ${rec.correct}/${rec.total} 题</div>
-        <button class="btn btn-primary btn-sm" id="btn-copy-sc">📋 复制成绩码</button>
+        <button class="btn btn-primary btn-sm" id="btn-copy-sc">复制成绩码</button>
       </div>`, null, "完成");
     const c = $("#btn-copy-sc");
     if (c) c.onclick = async () => {
@@ -1794,7 +1794,7 @@
       toast("正在测试云端连接…");
       const r = await window.Cloud.ping();
       if (r.ok) toast("云端连接正常，教师口令有效，可以拉到成绩");
-      else toast("❌ " + r.error);
+      else toast("连接失败：" + r.error);
     });
     $("#btn-export").addEventListener("click", () => {
       const qid = $("#rec-quiz").value;
