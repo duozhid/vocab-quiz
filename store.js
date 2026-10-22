@@ -56,14 +56,15 @@ window.Store = (() => {
   function getBank(id) { return db.banks.find(b => b.id === id); }
 
   /* ---------- 测验任务 ---------- */
-  function addQuiz({ name, bankId, classId, count, minutes, instant, types }) {
-    const bank = getBank(bankId);
-    if (!bank) throw new Error("请先选择词库");
-    const n = Math.min(count, bank.items.length);
-    const code = genCode();
+  function addQuiz({ name, bankId, classId, count, minutes, instant, types, code }) {
+    // code 传入时（成绩码自动建档等场景）沿用外部测验码，词库可缺省
+    const bank = bankId ? getBank(bankId) : null;
+    if (bankId && !bank) throw new Error("请先选择词库");
+    const n = bank ? Math.min(count, bank.items.length) : (count || 0);
     const q = {
-      id: uid("q_"), code, name: name || `${bank.name} 词汇测验`,
-      bankId, bankName: bank.name, classId,
+      id: uid("q_"), code: code || genCode(), name: name || (bank ? `${bank.name} 词汇测验` : "词汇测验"),
+      bankId: bankId || null, bankName: bank ? bank.name : "",
+      classId,
       count: n, minutes: minutes || 15, instant: instant !== false,
       types: types || ["en2cn", "cn2en"],
       createdAt: Date.now(), open: true
