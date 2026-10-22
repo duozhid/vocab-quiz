@@ -721,66 +721,6 @@
   let lastResult = null;
   const currentResult = () => lastResult || {};
 
-  /* 移动端检测：手机上「打印成 PDF」不可用，改为直接出图片/文件 */
-  const IS_MOBILE = (() => {
-    const ua = navigator.userAgent || "";
-    const touch = "ontouchstart" in window || (navigator.maxTouchPoints || 0) > 1;
-    const narrow = Math.min(screen.width, screen.height) <= 820;
-    return (/(iPhone|iPad|iPod|Android|Mobile)/i.test(ua)) || (touch && narrow);
-  })();
-
-  /* 把习题渲染成一张长图（手机端最稳的保存方式：长按图片即可保存/转发） */
-  function worksheetImage() {
-    const node = worksheetNode(true);
-    if (!node) return toast("还没有可下载的习题");
-    const wrap = document.createElement("div");
-    wrap.style.cssText = "position:fixed;left:-9999px;top:0;width:794px;background:#fff;z-index:-1";
-    const style = document.createElement("style");
-    style.textContent = PAPER_CSS + " body{width:794px}";
-    wrap.appendChild(style);
-    wrap.appendChild(node);
-    document.body.appendChild(wrap);
-    return html2canvas(node, {
-      scale: 2,
-      backgroundColor: "#ffffff",
-      windowWidth: 794,
-      useCORS: true
-    }).then(canvas => {
-      wrap.remove();
-      return canvas;
-    }).catch(e => { wrap.remove(); throw e; });
-  }
-
-  /* 手机端查看/保存长图 */
-  function showWorksheetImage() {
-    toast("正在生成图片…");
-    worksheetImage().then(canvas => {
-      const url = canvas.toDataURL("image/png");
-      modal("保存练习卷", `
-        <div class="dl-img-wrap">
-          <img class="dl-img" src="${url}" alt="词汇巩固练习">
-        </div>
-        <div class="dl-img-tip">📱 <b>长按图片</b> → 「保存图片」或「发送给朋友」。<br>
-          Word / 网页文件按钮在下方，点一下即可下载。</div>
-        <div class="qr-acts">
-          <button class="btn btn-soft btn-sm" id="dl-img-doc">📝 下载 Word</button>
-          <button class="btn btn-soft btn-sm" id="dl-img-html">🌐 下载网页文件</button>
-        </div>`, null, "关闭");
-      $("#dl-img-doc").onclick = () => worksheetWord(true);
-      $("#dl-img-html").onclick = () => {
-        const html = worksheetHtml(true);
-        if (!html) return;
-        const blob = new Blob([html], { type: "text/html;charset=utf-8" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = DL_FILE(currentResult()) + ".html";
-        document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-        toast("网页文件已下载");
-      };
-    }).catch(e => toast("图片生成失败：" + e.message));
-  }
-
   /* 下载面板 */
   function showDownloadSheet() {
     if (!state.worksheetWords || !state.worksheetWords.length) {
@@ -795,15 +735,10 @@
           <div><b>附参考答案页</b><span>答案单独排在最后一页，可撕下</span></div>
         </label>
         <div class="dl-grid">
-          ${IS_MOBILE ? `
-          <button class="dl-btn primary" id="dl-img">
-            <span class="dl-ico">🖼️</span>
-            <span class="dl-t"><b>保存为图片</b><i>长按即可保存 / 发到群里，手机最方便</i></span>
-          </button>` : `
           <button class="dl-btn primary" id="dl-pdf">
             <span class="dl-ico">📄</span>
             <span class="dl-t"><b>下载 PDF</b><i>排版固定，适合打印/发群</i></span>
-          </button>`}
+          </button>
           <button class="dl-btn" id="dl-doc">
             <span class="dl-ico">📝</span>
             <span class="dl-t"><b>下载 Word</b><i>可编辑，改题目/加校名</i></span>
@@ -813,18 +748,11 @@
             <span class="dl-t"><b>下载网页文件</b><i>单个 .html，手机可直接看</i></span>
           </button>
         </div>
-        ${IS_MOBILE
-          ? `<div class="dl-foot">手机上会直接下载 Word / 网页文件；微信里若无法下载，请用「保存为图片」后长按保存。</div>`
-          : `<div class="dl-foot">PDF 会打开系统打印窗口，在「目标打印机」里选 <b>另存为 PDF</b> 即可保存到本地。</div>`}
+        <div class="dl-foot">PDF 会打开系统打印窗口，在「目标打印机」里选 <b>另存为 PDF</b> 即可保存到本地。</div>
       </div>`, null, "关闭");
 
     const withKey = () => ($("#dl-key") ? $("#dl-key").checked : true);
-    if (IS_MOBILE) {
-      const bi = $("#dl-img");
-      if (bi) bi.onclick = () => showWorksheetImage();
-    } else {
-      $("#dl-pdf").onclick = () => worksheetPdf(withKey());
-    }
+    $("#dl-pdf").onclick = () => worksheetPdf(withKey());
     $("#dl-doc").onclick = () => worksheetWord(withKey());
     $("#dl-html").onclick = () => {
       const html = worksheetHtml(withKey());
@@ -1420,14 +1348,184 @@
     if (selfMode || !currentQuiz.id) {
       // 自主检测不进入班级统计，但保存在本地供回看
       localStorage.setItem("gk3500_self", JSON.stringify(rec));
+      window.__lastRec = rec;
       return;
     }
     Store.addRecord(rec);
+    window.__lastRec = rec;
+    window.__lastWrongIdx = wrongIndexOf(rec);
     const tip = document.createElement("div");
     tip.className = "share-ok";
-    tip.innerHTML = `✅ 成绩已回传教师端（${esc(currentQuiz.studentName)} · ${r.score} 分）`;
+    tip.innerHTML = `✅ 成绩已保存到本机（${esc(rec.studentName)} · ${r.score} 分）。点下方 <b>「把成绩交给老师」</b> 生成成绩码，发给老师即可记入班级统计。`;
     $("#stu-report").prepend(tip);
-    setTimeout(() => tip.classList.add("fade"), 4000);
+    setTimeout(() => tip.classList.add("fade"), 8000);
+  }
+
+  /* ---------- 成绩码：无后端的跨设备成绩回传 ----------
+     格式 GK1.<6位测验码>.<base64url 位流>
+     位流 = [姓名长 5bit][姓名 utf8 ≤12B][分数 7bit][正确 6bit]
+          [总题 6bit][耗时 11bit(÷2)][错词数 5bit][错词内置索引 12bit×n]
+     学生把成绩码发给老师，老师端粘贴录入即写进班级统计。 */
+  const CODE_ALPHA = "ACDEFGHJKLMNPQRTUVWXY34679";
+
+  function wrongIndexOf(rec) {
+    const idx = getBuiltinIndex();
+    return (rec.wrongWords || []).map(x => {
+      const i = idx.get(String(x.w || "").toLowerCase());
+      return i == null ? -1 : i;
+    }).filter(i => i >= 0 && i < 4095);
+  }
+  function getBuiltinIndex() {
+    if (window.__builtinIdxMap) return window.__builtinIdxMap;
+    const m = new Map();
+    (window.__BUILTIN_VOCAB__ || []).forEach((v, i) => m.set(String(v.w).toLowerCase(), i));
+    window.__builtinIdxMap = m;
+    return m;
+  }
+  function b64uEncode(bytes) {
+    let s = "";
+    const B = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    for (let i = 0; i < bytes.length; i += 3) {
+      const b0 = bytes[i], b1 = bytes[i + 1], b2 = bytes[i + 2];
+      s += B[b0 >> 2];
+      s += B[((b0 & 3) << 4) | ((b1 == null ? 0 : b1) >> 4)];
+      if (b1 == null) break;
+      s += B[((b1 & 15) << 2) | ((b2 == null ? 0 : b2) >> 6)];
+      if (b2 == null) break;
+      s += B[b2 & 63];
+    }
+    return s;
+  }
+  function b64uDecode(str) {
+    const B = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    const out = [];
+    let buf = 0, nb = 0;
+    for (const ch of str) {
+      const v = B.indexOf(ch);
+      if (v < 0) continue;
+      buf = (buf << 6) | v; nb += 6;
+      if (nb >= 8) { nb -= 8; out.push((buf >> nb) & 0xff); }
+    }
+    return out;
+  }
+
+  function makeScoreCode(rec) {
+    const shortQid = rec.code ? String(rec.code).toUpperCase().slice(0, 6) : "";
+    if (!shortQid) throw new Error("该测验没有测验码，无法生成成绩码");
+    const nameBytes = Array.from(new TextEncoder().encode(String(rec.studentName || "").slice(0, 8))).slice(0, 12);
+    const wrongIdx = wrongIndexOf(rec);
+    const bits = [];
+    const push = (val, n) => { for (let i = n - 1; i >= 0; i--) bits.push((val >> i) & 1); };
+    push(nameBytes.length, 5);
+    nameBytes.forEach(b => push(b, 8));
+    push(Math.max(0, Math.min(100, Math.round(rec.score))), 7);
+    push(Math.max(0, Math.min(63, rec.correct)), 6);
+    push(Math.max(0, Math.min(63, rec.total)), 6);
+    push(Math.max(0, Math.min(2047, Math.round(rec.seconds / 2))), 11);
+    push(Math.min(31, wrongIdx.length), 5);
+    wrongIdx.slice(0, 31).forEach(i => push(i, 12));
+    while (bits.length % 8) bits.push(0);
+    const bytes = [];
+    for (let i = 0; i < bits.length; i += 8) {
+      let b = 0;
+      for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j];
+      bytes.push(b);
+    }
+    return `GK1.${shortQid}.${b64uEncode(bytes)}`;
+  }
+
+  function parseScoreCode(text) {
+    const m = String(text || "").trim().match(/GK(\d)\.([0-9A-Za-z]{1,12})\.([A-Za-z0-9\-_]+)/);
+    if (!m) throw new Error("成绩码格式不正确");
+    const bytes = b64uDecode(m[3]);
+    let p = 0, bitBuf = 0, bitN = 0;
+    const take = n => {
+      while (bitN < n) { bitBuf = (bitBuf << 8) | (bytes[p++] || 0); bitN += 8; }
+      bitN -= n;
+      return (bitBuf >> bitN) & ((1 << n) - 1);
+    };
+    const nameLen = take(5);
+    const nameBytes = [];
+    for (let i = 0; i < nameLen; i++) nameBytes.push(take(8));
+    const studentName = new TextDecoder().decode(new Uint8Array(nameBytes)) || "匿名学生";
+    const score = take(7), correct = take(6), total = take(6), sec2 = take(11);
+    const wn = take(5);
+    const wrongIdx = [];
+    for (let i = 0; i < wn; i++) wrongIdx.push(take(12));
+    return { qidShort: m[2].toUpperCase(), studentName, score, correct, total, seconds: sec2 * 2, wrongIdx };
+  }
+
+  async function importScoreCode(text) {
+    const p = parseScoreCode(text);
+    let quiz = Store.db.quizzes.find(q => String(q.code || "").toUpperCase() === p.qidShort)
+      || Store.db.quizzes.find(q => String(q.id || "").toUpperCase().endsWith(p.qidShort));
+    if (!quiz) {
+      // 教师本机没有这个测验（可能是演示卷/别的设备建的）：按成绩码自动补建档，
+      // 否则成绩无处可挂。先在密钥瓶里反查真实卷名，查不到就用通用名。
+      let qname = `词汇测验 ${p.qidShort}`, qcount = p.total;
+      try {
+        const meta = window.ShareCodec.toc ? window.ShareCodec.toc() : null;
+        if (meta && meta.count) {
+          for (let i = 0; i < meta.count; i++) {
+            const alias = window.ShareCodec.aliasAt(i);
+            if (!alias) continue;
+            const q = await window.ShareCodec.decode(alias);
+            if (q && q.code && String(q.code).toUpperCase() === p.qidShort) {
+              qname = q.name || qname;
+              qcount = (q.questions || []).length || qcount;
+              break;
+            }
+          }
+        }
+      } catch (e) { /* 反查失败不影响建档 */ }
+      quiz = Store.addQuiz({ name: qname, code: p.qidShort, count: qcount, minutes: 15, instant: true });
+    }
+    const vocab = window.__BUILTIN_VOCAB__ || [];
+    const rec = {
+      quizId: quiz.id,
+      quizName: quiz.name,
+      code: quiz.code || p.qidShort,
+      classId: quiz.classId || null,
+      className: quiz.classId ? ((Store.db.classes.find(c => c.id === quiz.classId) || {}).name || "") : "",
+      studentName: p.studentName,
+      score: p.score, correct: p.correct, total: p.total,
+      seconds: p.seconds,
+      wrongWords: p.wrongIdx.map(i => vocab[i]).filter(Boolean).map(v => ({ w: v.w, m: v.m, p: v.p })),
+      imported: true, importedAt: Date.now()
+    };
+    // 同一学生同一测验重复录入：覆盖旧记录，避免统计翻倍
+    const old = Store.db.records.findIndex(r => r.quizId === quiz.id && r.studentName === rec.studentName);
+    if (old >= 0) Store.db.records[old] = rec; else Store.addRecord(rec);
+    Store.save && Store.save();
+    return { quiz, rec };
+  }
+
+  /* 学生报告页：生成并展示成绩码（文本 + 二维码） */
+  function showScoreCode() {
+    const rec = window.__lastRec;
+    if (!rec) { toast("请先完成一次测验"); return; }
+    let code;
+    try { code = makeScoreCode(rec); }
+    catch (e) { toast(e.message); return; }
+    let qr = "";
+    try { qr = window.ShareCodec.qrSvg(code, 200); } catch (e) { /* 二维码失败不影响文本 */ }
+    modal("把成绩交给老师", `
+      <div class="sc-wrap">
+        <p class="sc-lead">截图或复制下面的成绩码，发给老师；老师在「成绩明细 → 录入成绩码」里粘贴即可。</p>
+        ${qr ? `<div class="sc-qr">${qr}<div class="sc-cap">老师可扫码直接读取</div></div>` : ""}
+        <div class="sc-code" id="sc-code">${esc(code)}</div>
+        <div class="sc-note">包含：姓名 ${esc(rec.studentName)} · ${rec.score} 分 · ${rec.correct}/${rec.total} 题</div>
+        <button class="btn btn-primary btn-sm" id="btn-copy-sc">📋 复制成绩码</button>
+      </div>`, null, "完成");
+    const c = $("#btn-copy-sc");
+    if (c) c.onclick = async () => {
+      try { await navigator.clipboard.writeText(code); toast("已复制，发给老师吧"); }
+      catch (e) {
+        const ta = document.createElement("textarea");
+        ta.value = code; document.body.appendChild(ta); ta.select();
+        document.execCommand("copy"); ta.remove(); toast("已复制，发给老师吧");
+      }
+    };
   }
 
   /* =========================================================
@@ -1525,6 +1623,30 @@
       if (!qid) return toast("暂无测验可导出");
       Store.exportCSV(qid); toast("已导出 CSV");
     });
+    /* 教师端：批量录入成绩码（每行一条，也接受空格分隔） */
+    $("#btn-import-score").addEventListener("click", () => {
+      modal("录入成绩码", `
+        <p style="margin:0 0 10px;color:var(--ink-3);font-size:13px">粘贴学生发来的成绩码，每行一条，可一次录入多名学生。</p>
+        <textarea class="inp" id="imp-text" rows="5" placeholder="GK1.XGFFWX.xxxxxxxx" style="width:100%"></textarea>`,
+        () => {
+          const lines = ($("#imp-text").value || "").split(/[\s,;]+/).map(x => x.trim()).filter(Boolean);
+          let ok = 0; const errs = [];
+          (async () => {
+            for (const t of lines) {
+              try { await importScoreCode(t); ok++; }
+              catch (e) { errs.push(e.message); }
+            }
+            if (ok) {
+              renderTeacher();
+              renderRecords();
+              toast(`已录入 ${ok} 条成绩${errs.length ? `，${errs.length} 条失败` : ""}`);
+            } else {
+              toast(errs[0] || "没有可录入的成绩码");
+            }
+          })();
+        }, "录入");
+      setTimeout(() => { const t = $("#imp-text"); if (t) t.focus(); }, 30);
+    });
 
     /* 学生端 */
     $("#btn-code-go").addEventListener("click", enterByCode);
@@ -1546,6 +1668,7 @@
     });
     $("#btn-print").addEventListener("click", showDownloadSheet);
     $("#btn-print2").addEventListener("click", showDownloadSheet);
+    $("#btn-score-code").addEventListener("click", showScoreCode);
 
     document.addEventListener("keydown", e => {
       const quizView = $("#stu-quiz");
@@ -1611,11 +1734,32 @@
     box.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  /* ---------- 微信 / QQ 内置浏览器提示 ---------- */
+  const IN_APP_UA = /MicroMessenger|QQ\/|Weibo|AlipayClient|DingTalk/i.test(navigator.userAgent);
+  function showInAppTip() {
+    if (document.getElementById("inapp-tip")) return;
+    const tip = document.createElement("div");
+    tip.id = "inapp-tip";
+    tip.className = "inapp-tip";
+    tip.innerHTML = `<span class="it-ic">↗</span>
+      <span class="it-txt">当前在微信内打开：点右上角 <b>「···」</b> → <b>在浏览器中打开</b>，即可正常作答。</span>
+      <button class="it-x" type="button" aria-label="关闭">✕</button>`;
+    document.body.appendChild(tip);
+    document.body.classList.add("has-inapp-tip");
+    tip.querySelector(".it-x").addEventListener("click", () => {
+      tip.remove();
+      document.body.classList.remove("has-inapp-tip");
+    });
+  }
+
   /* ---------- 启动 ---------- */
   let builtinVocab = [];
   async function boot() {
+    if (IN_APP_UA) showInAppTip();
     try {
+      // 用相对路径：GitHub Pages 部署在 /vocab-quiz/ 子目录，绝对路径 /vocab.json 会 404
       const res = await fetch("vocab.json", { cache: "no-cache" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
       builtinVocab = await res.json();
     } catch (err) {
       document.body.innerHTML = `<div style="padding:60px;text-align:center;font-family:sans-serif">
