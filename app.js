@@ -721,6 +721,66 @@
   let lastResult = null;
   const currentResult = () => lastResult || {};
 
+  /* 移动端检测：手机上「打印成 PDF」不可用，改为直接出图片/文件 */
+  const IS_MOBILE = (() => {
+    const ua = navigator.userAgent || "";
+    const touch = "ontouchstart" in window || (navigator.maxTouchPoints || 0) > 1;
+    const narrow = Math.min(screen.width, screen.height) <= 820;
+    return (/(iPhone|iPad|iPod|Android|Mobile)/i.test(ua)) || (touch && narrow);
+  })();
+
+  /* 把习题渲染成一张长图（手机端最稳的保存方式：长按图片即可保存/转发） */
+  function worksheetImage() {
+    const node = worksheetNode(true);
+    if (!node) return toast("还没有可下载的习题");
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "position:fixed;left:-9999px;top:0;width:794px;background:#fff;z-index:-1";
+    const style = document.createElement("style");
+    style.textContent = PAPER_CSS + " body{width:794px}";
+    wrap.appendChild(style);
+    wrap.appendChild(node);
+    document.body.appendChild(wrap);
+    return html2canvas(node, {
+      scale: 2,
+      backgroundColor: "#ffffff",
+      windowWidth: 794,
+      useCORS: true
+    }).then(canvas => {
+      wrap.remove();
+      return canvas;
+    }).catch(e => { wrap.remove(); throw e; });
+  }
+
+  /* 手机端查看/保存长图 */
+  function showWorksheetImage() {
+    toast("正在生成图片…");
+    worksheetImage().then(canvas => {
+      const url = canvas.toDataURL("image/png");
+      modal("保存练习卷", `
+        <div class="dl-img-wrap">
+          <img class="dl-img" src="${url}" alt="词汇巩固练习">
+        </div>
+        <div class="dl-img-tip">📱 <b>长按图片</b> → 「保存图片」或「发送给朋友」。<br>
+          Word / 网页文件按钮在下方，点一下即可下载。</div>
+        <div class="qr-acts">
+          <button class="btn btn-soft btn-sm" id="dl-img-doc">📝 下载 Word</button>
+          <button class="btn btn-soft btn-sm" id="dl-img-html">🌐 下载网页文件</button>
+        </div>`, null, "关闭");
+      $("#dl-img-doc").onclick = () => worksheetWord(true);
+      $("#dl-img-html").onclick = () => {
+        const html = worksheetHtml(true);
+        if (!html) return;
+        const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = DL_FILE(currentResult()) + ".html";
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+        toast("网页文件已下载");
+      };
+    }).catch(e => toast("图片生成失败：" + e.message));
+  }
+
   /* 下载面板 */
   function showDownloadSheet() {
     if (!state.worksheetWords || !state.worksheetWords.length) {
@@ -735,10 +795,15 @@
           <div><b>附参考答案页</b><span>答案单独排在最后一页，可撕下</span></div>
         </label>
         <div class="dl-grid">
+          ${IS_MOBILE ? `
+          <button class="dl-btn primary" id="dl-img">
+            <span class="dl-ico">🖼️</span>
+            <span class="dl-t"><b>保存为图片</b><i>长按即可保存 / 发到群里，手机最方便</i></span>
+          </button>` : `
           <button class="dl-btn primary" id="dl-pdf">
             <span class="dl-ico">📄</span>
             <span class="dl-t"><b>下载 PDF</b><i>排版固定，适合打印/发群</i></span>
-          </button>
+          </button>`}
           <button class="dl-btn" id="dl-doc">
             <span class="dl-ico">📝</span>
             <span class="dl-t"><b>下载 Word</b><i>可编辑，改题目/加校名</i></span>
@@ -748,11 +813,18 @@
             <span class="dl-t"><b>下载网页文件</b><i>单个 .html，手机可直接看</i></span>
           </button>
         </div>
-        <div class="dl-foot">PDF 会打开系统打印窗口，在「目标打印机」里选 <b>另存为 PDF</b> 即可保存到本地。</div>
+        ${IS_MOBILE
+          ? `<div class="dl-foot">手机上会直接下载 Word / 网页文件；微信里若无法下载，请用「保存为图片」后长按保存。</div>`
+          : `<div class="dl-foot">PDF 会打开系统打印窗口，在「目标打印机」里选 <b>另存为 PDF</b> 即可保存到本地。</div>`}
       </div>`, null, "关闭");
 
     const withKey = () => ($("#dl-key") ? $("#dl-key").checked : true);
-    $("#dl-pdf").onclick = () => worksheetPdf(withKey());
+    if (IS_MOBILE) {
+      const bi = $("#dl-img");
+      if (bi) bi.onclick = () => showWorksheetImage();
+    } else {
+      $("#dl-pdf").onclick = () => worksheetPdf(withKey());
+    }
     $("#dl-doc").onclick = () => worksheetWord(withKey());
     $("#dl-html").onclick = () => {
       const html = worksheetHtml(withKey());
