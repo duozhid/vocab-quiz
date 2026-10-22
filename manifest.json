@@ -1,0 +1,8 @@
+{
+  "name": "词汇测验平台",
+  "short_name": "词汇测验",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3355d1"
+}
