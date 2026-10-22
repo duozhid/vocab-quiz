@@ -203,6 +203,7 @@
         </div>
         <div class="head-actions">
           <select class="sel" id="rec-quiz"></select>
+          <button class="btn btn-primary btn-sm" id="btn-import-score">📥 录入成绩码</button>
           <button class="btn btn-ghost btn-sm" id="btn-export">⬇ 导出 CSV</button>
         </div>
       </div>
@@ -309,8 +310,9 @@
       </div>
 
       <div class="no-print" style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap">
-        <button class="btn btn-primary" id="btn-print">⬇ 下载巩固练习（不含成绩评价）</button>
-        <button class="btn btn-soft" id="btn-retest">再测一次</button>
+        <button class="btn btn-primary" id="btn-score-code">📤 把成绩交给老师</button>
+        <button class="btn btn-soft" id="btn-print">⬇ 下载巩固练习</button>
+        <button class="btn btn-ghost" id="btn-retest">再测一次</button>
         <button class="btn btn-ghost" id="btn-again">返回学生端首页</button>
       </div>
 
@@ -344,12 +346,12 @@
      密钥瓶：试卷密文（随页面发布，长度不计入分享链接）
      由 pack-share.js 生成，勿手工编辑
      ============================================================ -->
-<script type="application/json" id="vial-data">AWFhZWFlMjViMTU4MDYEAKZeSiLIvkFf4J9I6tEY3y4atAaQ8PIAMakQ1I0pvtFRj6GEy439i2ur27Yuu5yOrlaGjJp6WC/caUggNOYt5G0LmUWK5IQoWwkdQuUR21BB3PleoGTkXAhYBSrnfuB/cdrIMXdoVGMpswMRXk7PeW30VCrfJBWDIVNfzhZilnHlN4Z2FGoxave1CrA+7cl41U/A+pcZ8HYH/h5RCuPpfpiIimhZkXu9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKZLnM1iIc9/Rv2qdXcI/nfQ0O/hH9MjLgFuCsu27/osVnmBMeG5w0lOm0tcY+zbc1JVuyAiNgMh9MqEmbPNRG4s670AFGXS+J1sRI/g0SC//thVALf2VHzk5Rcj3uxnbrFei7SVG1wMwm9hLo1HnAkjWELFxOsKhkgiLSUf+7DtVeVJcF3sOrLMNy06boiwXNbss2dMNe/1XHmmRHx5Nth/XGP3BQA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOaL1rCKJVWf18OEKGH2XEfu2l4ahranabYBxGGzU94547KGhpnWKFuJSGjAyTZSYVgKFMaaarxK/77+NBHlp7Tsl7OAR+OqQ383q011kQPGC2uEawf/Yk59phW0qxvRxepgFpaz2/B+YcKg9t5Pzl5g+kY8OHXnQIY3Yqqf8bRbVT4J3Zx3+UuJtkNSCRXEmEObez/lj/r/lDiZ5jlWTGK4RZyuT0KOGVwAn50uL1wvBrGgCVI5hgFqiefQudiVbCYv65BBzlEEOgS9/SfeJjmoBUrfk6TzcQv/LIqLkAa4bpAv4DAz1Wbt9CkMhB606X6dRX/XzzTKCG2WUBkFRD38MRxDQcKDe3bBm326l0gy6KZ6EHq6CRJf5CSmF2MosmA8NfC3LfCNC+31av8dvQfJkonE3+OdpOF2sLRRlTYW/hra70k206+6N7Jo2AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</script>
-<script src="html2canvas.min.js?v=gh03"></script>
-<script src="jszip.min.js?v=gh03"></script>
-<script src="docx-parse.js?v=gh03"></script>
-<script src="store.js?v=gh03"></script>
-<script src="share.js?v=gh03"></script>
-<script src="app.js?v=gh03"></script>
+<script type="application/json" id="vial-data">AWEyYTk5ZmFlZWFhZjYEAKYuXajso9tgPrxnR4gr8LlrB4Hb3bhyD3gUMpa/T3VIq6M/SCIYwLF++oLwTXbZy/hbIr56j0SEnTFzONZ9x8vXXiGVSnynwWGgvw6gE+FfplWxUkkxntAQffqodSW2DEaGshAEI6akMarLb84sL9zuTeEG3gcH20xleEmf/5cNqJJopD8cel7q8s7bmG6Pk5gaYEQrszVjUWjpd/A4fUfvyqYi6a0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKZ3FcEjGllyStiT/X3iL1/WkMnr18mo6MBvO+VCnn6ueSG8LygrCz5eL70A/TdXql9yB0Y2zPVwfHWeQ99CjIaReGy62bV3XPdbamgGR7REQM12b62Ubj9u979DtEonQ/pYcpcTwqjNd5tZ/HfEB6Zm9ny3vGX7YVcDVmcynaP11eWXMV8wPCUxNM2dxInRFrO0O0Nwvnq71AExg1OsbeteZypmBc31AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOZOYOr1+lE96BNtETeNwm75Gt4DypilLHYTSAUTqIaLPCvyxYVa1NX56rDO4WQp+jHjqb1DWsH5qClJ+LES9qc47qDdhpiEj0IvA+s8dHenJE9EzmwgJK4o4FSQGjp9Ks+ESqQ/Vq/sR+sPPIy7cgZqA6RdUOtWpWbZzl6TaOvqh1k8hmgDqjkWCubAWBIjrucPox5tbg5rmUWBN5C1dg0JAwbudHeQvr0KSNk7jTXbkkKhmPna7J3j4vWKCocLk0zc3+FEJlmyVoaHKRviDoM5Q90Os77GUXVWMLPAQGRw5d0tAhJgmGbAkSXVeWkqz+HBlpLSPx2qYYnIOFS8rWSBtnqDQI05QsR5aZ+JkjSI5SzYi50BZk8kr/F6gC7SHSyT1PyfvSmABNmAd5tBiCWwjDoXN3GqAXVVwYIoe5j68CS30qkxEn7Dc3PkR1IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</script>
+<script src="html2canvas.min.js?v=gh06"></script>
+<script src="jszip.min.js?v=gh06"></script>
+<script src="docx-parse.js?v=gh06"></script>
+<script src="store.js?v=gh06"></script>
+<script src="share.js?v=gh06"></script>
+<script src="app.js?v=gh06"></script>
 </body>
 </html>
