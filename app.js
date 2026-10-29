@@ -1127,7 +1127,13 @@
             <button class="btn btn-soft btn-sm" id="btn-copy-pdf">复制下载链接</button>
           </div>`;
         const fire = () => {
-          // 微信内置浏览器对 http 直链的 .pdf 会走下载器，不跳外部浏览器
+          // 微信内置浏览器：必须用本页直接跳转才会触发原生下载器；
+          // <a target="_blank"> 或 window.open 会跳到外部浏览器（用户实测）
+          if (/MicroMessenger/i.test(navigator.userAgent)) {
+            try { location.href = r.url; }
+            catch (e) { toast("下载失败，请复制链接在浏览器打开"); }
+            return;
+          }
           const a = document.createElement("a");
           a.href = r.url;
           a.target = "_blank";
@@ -1940,9 +1946,13 @@
       byTier: r.byTier, byType: r.byType, avgMs: r.avgMs, guessed: r.guessed
     };
     if (selfMode || !quiz.id) {
-      // 自主检测不进入班级统计，但保存在本地供回看
+      // 自主检测：本地留档，并同样上传云端（code 置空 → 教师端显示「自主检测」）
       localStorage.setItem("gk3500_self", JSON.stringify(rec));
       window.__lastRec = rec;
+      if (window.Cloud && window.Cloud.enabled) {
+        window.Cloud.pushScore(Object.assign({}, rec, { code: null, quizName: "自主检测" }))
+          .catch(() => {});
+      }
       return;
     }
     Store.addRecord(rec);
@@ -2168,7 +2178,17 @@
       t.classList.add("on");
       $$(".tab-panel").forEach(p => p.classList.add("hidden"));
       $("#panel-" + t.dataset.tab).classList.remove("hidden");
+      // 切到成绩明细时自动同步一次云端（静默），无需手动点按钮
+      if (t.dataset.tab === "record" && window.Cloud && window.Cloud.enabled) syncCloud(false);
     }));
+
+    // 教师在线期间每 30 秒静默轮询云端成绩，学生交卷后教师端自动出现
+    setInterval(() => {
+      if (role === "teacher" && window.Cloud && window.Cloud.enabled) {
+        const on = $("#panel-record");
+        if (on && !on.classList.contains("hidden")) syncCloud(false);
+      }
+    }, 30000);
 
     /* 班级 */
     $("#dash-class").addEventListener("change", renderDash);
