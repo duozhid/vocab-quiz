@@ -193,5 +193,42 @@ window.Cloud = (() => {
     }
   }
 
-  return { enabled, cfg, pushScore, pullScores, ping, uploadWorksheet, uploadFile };
+  /* ---------- 发布批次（密钥瓶）中转 ----------
+     前端只管把「待发布批次」丢到存储桶，后台 runner 定时取走、
+     重打包并提交到 GitHub Pages。bucket=assets，固定键 data/vials.json。 */
+  const BATCH_OBJ = "data/vials.json";
+
+  async function uploadBatch(batch) {
+    if (!enabled) return { ok: false, error: "云端未配置" };
+    try {
+      const res = await fetch(`${cfg.url}/storage/v1/object/assets/${BATCH_OBJ}`, {
+        method: "POST",
+        headers: {
+          "apikey": cfg.anonKey,
+          "Authorization": "Bearer " + cfg.anonKey,
+          "Content-Type": "application/json",
+          "x-upsert": "true",
+          "cache-control": "no-store"
+        },
+        body: JSON.stringify(batch)
+      });
+      if (!res.ok) return { ok: false, error: brief(res.status, await res.text()) };
+      return { ok: true };
+    } catch (e) { return { ok: false, error: netErr(e) }; }
+  }
+
+  async function pullBatch() {
+    if (!enabled) return { ok: false, error: "云端未配置" };
+    try {
+      const res = await fetch(`${cfg.url}/storage/v1/object/public/assets/${BATCH_OBJ}?t=${Date.now()}`, { cache: "no-store" });
+      if (res.status === 400 || res.status === 404) return { ok: true, batch: null };
+      if (!res.ok) return { ok: false, error: brief(res.status, await res.text()) };
+      const txt = await res.text();
+      let b = null;
+      try { b = JSON.parse(txt); } catch { b = null; }
+      return { ok: true, batch: b };
+    } catch (e) { return { ok: false, error: netErr(e) }; }
+  }
+
+  return { enabled, cfg, pushScore, pullScores, ping, uploadWorksheet, uploadFile, uploadBatch, pullBatch };
 })();
