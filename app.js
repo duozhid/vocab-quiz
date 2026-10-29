@@ -665,7 +665,17 @@
     const node = worksheetNode(includeKey);
     if (!node) return null;
     return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
-<title>词汇巩固练习</title><style>${PAPER_CSS}</style></head><body>${node.outerHTML}</body></html>`;
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>词汇巩固练习</title><style>${PAPER_CSS}
+/* 手机端适配：微信里点开链接直接能看 */
+@media(max-width:640px){
+  body{padding:14px 12px}
+  .paper{max-width:100%;padding:0}
+  .paper-part ol{gap:14px}
+  .wordbank{grid-template-columns:1fr 1fr}
+  .answerkey .kv{grid-template-columns:1fr}
+}
+</style></head><body>${node.outerHTML}</body></html>`;
   }
 
   /* 方式 A：生成 PDF（走浏览器打印面板的「另存为 PDF」，不弹网页打印） */
@@ -727,31 +737,79 @@
       toast("还没有生成习题，请先完成一次测验");
       return;
     }
+    const IN_WX = /MicroMessenger/i.test(navigator.userAgent);
     modal("下载巩固练习", `
       <div class="dl-sheet">
+        ${IN_WX ? `<div class="wx-tip">当前在微信内打开，系统限制「直接下载」和「打印」。
+          点下面 <b>「发到微信文件助手」</b> 生成链接，粘贴给文件传输助手即可保存、打印、转发。</div>` : ""}
         <div class="dl-lead">只下载<b>习题本身</b>（题目 + 答题横线），不含得分、诊断、提升方案等评价内容。</div>
         <label class="dl-row">
           <input type="checkbox" id="dl-key" checked>
           <div><b>附参考答案页</b><span>答案单独排在最后一页，可撕下</span></div>
         </label>
         <div class="dl-grid">
-          <button class="dl-btn primary" id="dl-pdf">
-            <span class="dl-ico">📄</span>
-            <span class="dl-t"><b>下载 PDF</b><i>排版固定，适合打印/发群</i></span>
+          <button class="dl-btn primary" id="dl-wx">
+            <span class="dl-t"><b>发到微信文件助手</b><i>生成链接 → 复制 → 粘贴给「文件传输助手」</i></span>
+          </button>
+          <button class="dl-btn" id="dl-pdf">
+            <span class="dl-t"><b>下载 PDF</b><i>排版固定，适合打印/发群（电脑端）</i></span>
           </button>
           <button class="dl-btn" id="dl-doc">
-            <span class="dl-ico">📝</span>
-            <span class="dl-t"><b>下载 Word</b><i>可编辑，改题目/加校名</i></span>
+            <span class="dl-t"><b>下载 Word</b><i>可编辑，改题目/加校名（电脑端）</i></span>
           </button>
           <button class="dl-btn" id="dl-html">
-            <span class="dl-ico">🌐</span>
             <span class="dl-t"><b>下载网页文件</b><i>单个 .html，手机可直接看</i></span>
           </button>
         </div>
-        <div class="dl-foot">PDF 会打开系统打印窗口，在「目标打印机」里选 <b>另存为 PDF</b> 即可保存到本地。</div>
+        <div id="wx-result"></div>
+        <div class="dl-foot">${IN_WX
+          ? "微信里：复制链接 → 聊天列表搜索「文件传输助手」→ 粘贴发送，手机和电脑微信都能打开。"
+          : "PDF 会打开系统打印窗口，在「目标打印机」里选 另存为 PDF 即可保存到本地。"}</div>
       </div>`, null, "关闭");
 
     const withKey = () => ($("#dl-key") ? $("#dl-key").checked : true);
+
+    /* 微信文件助手：上传到云存储 → 出链接 → 复制 */
+    $("#dl-wx").onclick = async () => {
+      const box = $("#wx-result");
+      const btn = $("#dl-wx");
+      btn.disabled = true;
+      box.innerHTML = `<div class="wx-uploading">正在生成链接…</div>`;
+      const html = worksheetHtml(withKey());
+      if (!html) { btn.disabled = false; box.innerHTML = ""; return toast("还没有可下载的习题"); }
+      const r = await window.Cloud.uploadWorksheet(DL_FILE(currentResult()), html);
+      btn.disabled = false;
+      if (!r.ok) {
+        box.innerHTML = `<div class="wx-err">生成失败：${esc(r.error)}。可稍后重试，或用电脑浏览器下载。</div>`;
+        return;
+      }
+      box.innerHTML = `
+        <div class="wx-ok">
+          <b>链接已生成</b>
+          <div class="wx-link">${esc(r.url)}</div>
+          <button class="btn btn-primary btn-sm" id="btn-copy-wx">复制链接</button>
+          <ol class="wx-steps">
+            <li>点上方按钮复制链接</li>
+            <li>微信聊天列表顶部 <b>搜索「文件传输助手」</b>，打开对话</li>
+            <li>粘贴并发送 —— 手机、电脑微信都能打开，可打印、可转发、可另存</li>
+          </ol>
+        </div>`;
+      $("#btn-copy-wx").onclick = () => {
+        const done = () => toast("已复制，去微信粘贴给「文件传输助手」");
+        const fallback = () => {
+          const ta = document.createElement("textarea");
+          ta.value = r.url; ta.style.cssText = "position:fixed;opacity:0";
+          document.body.appendChild(ta); ta.select();
+          try { document.execCommand("copy"); done(); }
+          catch (e) { toast("复制失败，请长按链接手动复制"); }
+          ta.remove();
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(r.url).then(done).catch(fallback);
+        } else fallback();
+      };
+    };
+
     $("#dl-pdf").onclick = () => worksheetPdf(withKey());
     $("#dl-doc").onclick = () => worksheetWord(withKey());
     $("#dl-html").onclick = () => {
