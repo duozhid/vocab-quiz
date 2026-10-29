@@ -134,17 +134,17 @@ async function tick() {
      前端也会合并，这里是兜底——旧链接一旦丢失无法恢复。 */
   let prev = [];
   try {
-    const back = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "vials-published.json"), "utf8"));
+    const back = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "vials-full.json"), "utf8"));
     prev = Array.isArray(back.quizzes) ? back.quizzes : [];
   } catch { /* 首次运行没有历史 */ }
   if (prev.length) {
-    const merged = prev.slice();
+    const merged = prev.map(q => ({ ...q }));
     list.forEach(q => {
       const code = String(q.c || q.code || "");
       const i = merged.findIndex(x => String(x.c || x.code || "") === code);
       if (i >= 0) merged[i] = q; else merged.push(q);
     });
-    if (merged.length !== list.length) log(`合并历史批次：线上 ${prev.length} + 本次 ${list.length} → ${merged.length}`);
+    if (merged.length !== list.length) log(`合并历史批次：已发布 ${prev.length} + 本次 ${list.length} → ${merged.length}`);
     list.length = 0; list.push(...merged);
   }
   // 密钥优先级：已发布批次的密钥 > 前端带来的 > 默认值。换密钥会让旧短链全废，所以历史优先。
@@ -166,15 +166,29 @@ async function tick() {
   const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
   await putGithub("index.html", html);
 
-  const after = JSON.parse(fs.readFileSync(VIAL_JSON, "utf8"));
-  // 记下本次已上线的完整卷，作为下次合并的历史基线
-  fs.writeFileSync(path.join(ROOT, "data", "vials-published.json"), JSON.stringify(after, null, 2));
+  const after = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "vials-full.json"), "utf8"));
   const pub = {
     ...doc,
     publishedAt: Date.now(),
     count: after.quizzes.length,
     quizzes: after.quizzes
   };
+
+  /* 关键：等 GitHub Pages 真的换上新密文，再告诉前端「已上线」。
+     否则前端轮询到的还是旧页面，会一直卡在等待态。 */
+  const wantLen = (html.match(/id="vial-data">([^<]*)<\/script>/) || [, ""])[1].length;
+  let live = false;
+  for (let i = 0; i < 30; i++) {
+    await new Promise(r => setTimeout(r, 6000));
+    try {
+      const r = await fetch(`https://duozhid.github.io/vocab-quiz/index.html?cb=${Date.now()}`, { cache: "no-store" });
+      const txt = await r.text();
+      const got = (txt.match(/id="vial-data">([^<]*)<\/script>/) || [, ""])[1].length;
+      if (got === wantLen) { live = true; log(`线上已生效（第 ${(i + 1) * 6}s）`); break; }
+    } catch { /* 继续等 */ }
+  }
+  if (!live) log("等待线上生效超时，仍写入发布状态（前端下次轮询会自愈）");
+
   await uploadStatus(pub);
   writeState({ etag: got.etag, lastPubAt: Date.now(), pw: input.pw, count: after.quizzes.length });
   log(`已上线 ${after.quizzes.length} 份试卷（批次 ${got.total} 条，其中 ${got.usable} 条带题）`);
