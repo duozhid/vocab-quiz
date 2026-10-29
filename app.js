@@ -1388,14 +1388,37 @@
       btnPub.disabled = true;
       btnPub.textContent = "正在发布…";
       if (note) note.innerHTML = "正在把 <b>" + total + "</b> 份试卷推到线上批次…";
-      const r = await window.Cloud.uploadBatch({ pw: stage.pw, quizzes: stage.list, pushedAt: Date.now() });
+
+      /* 关键：必须与线上已有批次合并。
+         直接推本地批次会把别人之前发布的卷整批冲掉（旧短链随即失效）。 */
+      let remote = [];
+      try {
+        const pr = await window.Cloud.pullBatch();
+        if (pr.ok && pr.batch && Array.isArray(pr.batch.quizzes)) {
+          remote = pr.batch.quizzes.filter(x => (x.q || x.questions || []).length);
+        }
+      } catch (e) { /* 拉取失败就按本地发，至少不阻断 */ }
+
+      const local = stage.list;
+      const sameQuiz = (a, b) => String(a.c || a.code || "") === String(b.c || b.code || "")
+        && (a.q || a.questions || []).length === (b.q || b.questions || []).length;
+      const merged = remote.slice();
+      local.forEach(q => {
+        const i = merged.findIndex(x => String(x.c || x.code || "") === String(q.c || q.code || ""));
+        if (i >= 0) {
+          // 同码同题数视为同一份：本地卷面更新则替换，否则保留线上
+          if (!sameQuiz(merged[i], q)) merged[i] = q;
+        } else merged.push(q);
+      });
+
+      const r = await window.Cloud.uploadBatch({ pw: stage.pw, quizzes: merged, pushedAt: Date.now() });
       if (!r.ok) {
         btnPub.disabled = false;
         btnPub.textContent = "重试发布";
         if (note) note.innerHTML = `发布失败：${esc(r.error)}。也可以点「导出备份」交给管理员。`;
         return;
       }
-      if (note) note.innerHTML = "已推送，后台正在打包上线，成功后二维码会自动出现。";
+      if (note) note.innerHTML = `已推送（含线上原有 <b>${merged.length - local.length > 0 ? merged.length - local.length : 0}</b> 份 + 本地 <b>${local.length}</b> 份），后台正在打包上线…`;
       watchPublish();
     };
 
