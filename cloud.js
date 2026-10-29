@@ -133,5 +133,30 @@ window.Cloud = (() => {
     }
   }
 
-  return { enabled, cfg, pushScore, pullScores, ping };
+  /* 把巩固练习上传到云存储，返回公开链接（微信内转发/保存用）。
+     走公开密钥 + 存储桶 worksheets 的 anon INSERT 策略。 */
+  async function uploadWorksheet(fileName, html) {
+    if (!enabled) return { ok: false, error: "云端未配置" };
+    // 路径只留安全字符，避免中文/特殊符号在不同端表现不一
+    const safe = String(fileName || "练习").replace(/[^\w\u4e00-\u9fa5.-]+/g, "_").slice(0, 40);
+    const path = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}-${safe}.html`;
+    try {
+      const res = await fetch(`${cfg.url}/storage/v1/object/worksheets/${path}`, {
+        method: "POST",
+        headers: {
+          "apikey": cfg.anonKey,
+          "Authorization": "Bearer " + cfg.anonKey,
+          "Content-Type": "text/html; charset=utf-8",
+          "cache-control": "3600"
+        },
+        body: String(html || "")
+      });
+      if (!res.ok) return { ok: false, error: brief(res.status, await res.text()) };
+      return { ok: true, url: `${cfg.url}/storage/v1/object/public/worksheets/${path}` };
+    } catch (e) {
+      return { ok: false, error: netErr(e) };
+    }
+  }
+
+  return { enabled, cfg, pushScore, pullScores, ping, uploadWorksheet };
 })();
