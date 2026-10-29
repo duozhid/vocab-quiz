@@ -486,6 +486,15 @@ footer.foot{text-align:center;color:var(--ink-3);font-size:12px;margin-top:34px;
 .qr-alias code{font-family:ui-monospace,Menlo,monospace;background:#eef2ff;color:#3355d1;
   padding:1px 6px;border-radius:5px;font-size:11.5px}
 
+/* 发布等待中：轻量呼吸动画，替代此前红色的失败提示 */
+.share-wait{display:flex;align-items:flex-start;gap:11px;text-align:left;
+  background:#f4f7ff;border:1px solid #e2e9ff;border-radius:12px;padding:14px 15px;margin:4px 0 2px}
+.share-wait b{font-size:13.5px;color:#3355d1}
+.wait-sub{margin-top:4px;font-size:11.5px;color:var(--ink-3);line-height:1.65}
+.wait-dot{flex:none;width:14px;height:14px;margin-top:3px;border-radius:50%;
+  border:2px solid #c7d5ff;border-top-color:#3355d1;animation:waitspin .9s linear infinite}
+@keyframes waitspin{to{transform:rotate(360deg)}}
+
 @media(max-width:640px){
   .qs-head{gap:10px}
   .qs-code{font-size:20px;padding:6px 10px;letter-spacing:2px}
