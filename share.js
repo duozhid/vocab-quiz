@@ -2468,11 +2468,12 @@ window.ShareCodec = (() => {
     const recLen = meta.recLen;
     const p = meta.dataStart + idx * recLen;
     if (!recLen || p + recLen > b.length) return null;
-    const len = b[p];
-    if (!len || len + 1 > recLen) return null;
-    const nonce = b.slice(p + 1, p + 13);
+    // v2 格式：2 字节大端长度（支持 >255 字节的大卷），旧版 1 字节已弃用
+    const len = (b[p] << 8) | b[p + 1];
+    if (!len || len + 2 > recLen) return null;
+    const nonce = b.slice(p + 2, p + 14);
     // 末 16 字节是 GCM 认证标签，必须原样交给 WebCrypto
-    const ct = b.slice(p + 13, p + 1 + len);
+    const ct = b.slice(p + 14, p + 2 + len);
     return { nonce, ct };
   }
 
