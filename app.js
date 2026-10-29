@@ -1924,20 +1924,22 @@
 
   function submitRecord() {
     const r = analyze();
+    // 自主检测时 currentQuiz 为 null，必须先兜底再读字段
+    const quiz = currentQuiz || {};
     const wrongWords = r.wrong.map(q => ({ w: q.word, m: q.meaning, p: q.pos }));
     const rec = {
-      quizId: currentQuiz.id,
-      quizName: currentQuiz.name,
-      code: currentQuiz.code || null,
-      classId: currentQuiz.classId || null,
-      className: currentQuiz.classId ? ((Store.db.classes.find(c => c.id === currentQuiz.classId) || {}).name || "") : "",
-      studentName: currentQuiz.studentName || "匿名学生",
+      quizId: quiz.id || null,
+      quizName: quiz.name || "自主检测",
+      code: quiz.code || null,
+      classId: quiz.classId || null,
+      className: quiz.classId ? ((Store.db.classes.find(c => c.id === quiz.classId) || {}).name || "") : "",
+      studentName: quiz.studentName || "匿名学生",
       score: r.score, correct: r.correct, total: r.total,
-      seconds: Math.min(currentQuiz.minutes * 60, state.elapsed),
+      seconds: Math.min((quiz.minutes || 15) * 60, state.elapsed),
       wrongWords,
       byTier: r.byTier, byType: r.byType, avgMs: r.avgMs, guessed: r.guessed
     };
-    if (selfMode || !currentQuiz.id) {
+    if (selfMode || !quiz.id) {
       // 自主检测不进入班级统计，但保存在本地供回看
       localStorage.setItem("gk3500_self", JSON.stringify(rec));
       window.__lastRec = rec;
