@@ -544,11 +544,22 @@
      ========================================================= */
   const SHARE_STAGE = "gk3500_share_stage_v1";
 
+  /* 批次密钥：必须 13 位 [0-9a-f]，一经确定不再变，否则已发出的链接全失效。
+     历史批次用的就是 "0123456789abc"，这里沿用为默认值，避免旧短链失效；
+     想换密钥时把 PW_KEY 对应的值改掉即可（注意：换完旧链接全部作废）。 */
+  const PW_KEY = "gk3500_vial_pw_v1";
+  const PW_DEFAULT = "0123456789abc";
+  function batchPw(prev) {
+    const pw = String(prev || "").replace(/[^0-9a-f]/gi, "").toLowerCase();
+    if (pw.length >= 13) return pw.slice(0, 13);
+    return localStorage.getItem(PW_KEY) || PW_DEFAULT;
+  }
+
   function readStage() {
     try {
       const d = JSON.parse(localStorage.getItem(SHARE_STAGE) || "{}");
-      return { pw: d.pw || "", list: Array.isArray(d.list) ? d.list : [] };
-    } catch { return { pw: "", list: [] }; }
+      return { pw: batchPw(d.pw), list: Array.isArray(d.list) ? d.list : [] };
+    } catch { return { pw: batchPw(""), list: [] }; }
   }
   function writeStage(stage) {
     localStorage.setItem(SHARE_STAGE, JSON.stringify(stage));
