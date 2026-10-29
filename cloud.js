@@ -133,6 +133,40 @@ window.Cloud = (() => {
     }
   }
 
+  /* 上传二进制文件（PDF 等）到 worksheets 桶，返回公开直链。
+     微信内置浏览器不能下载 blob: 链接，但可以下载 http 直链的 pdf/doc，
+     所以手机端走「先上传、再让微信按原生方式下载」。 */
+  async function uploadFile(fileName, blobOrText, mime) {
+    if (!enabled) return { ok: false, error: "云端未配置" };
+    const safe = String(fileName || "")
+      .replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 30);
+    const ext = /\.pdf$/i.test(String(fileName)) ? ".pdf"
+      : /\.doc$/i.test(String(fileName)) ? ".doc" : ".html";
+    const path = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}${safe ? "-" + safe : ""}${ext}`;
+    try {
+      const res = await fetch(`${cfg.url}/storage/v1/object/worksheets/${path}`, {
+        method: "POST",
+        headers: {
+          "apikey": cfg.anonKey,
+          "Authorization": "Bearer " + cfg.anonKey,
+          "Content-Type": mime || "application/octet-stream",
+          "cache-control": "3600"
+        },
+        body: blobOrText
+      });
+      if (!res.ok) return { ok: false, error: brief(res.status, await res.text()) };
+      const name = `${safe || "worksheet"}${ext}`;
+      return {
+        ok: true,
+        url: `${cfg.url}/storage/v1/object/public/worksheets/${path}`,
+        dlUrl: `${cfg.url}/storage/v1/object/public/worksheets/${path}?download=${encodeURIComponent(name)}`,
+        name: `${String(fileName || "练习").replace(/\.pdf$/i, "")}.pdf`
+      };
+    } catch (e) {
+      return { ok: false, error: netErr(e) };
+    }
+  }
+
   /* 把巩固练习上传到云存储，返回公开链接（微信内转发/保存用）。
      走公开密钥 + 存储桶 worksheets 的 anon INSERT 策略。
      注意：Supabase Storage 的 key 只接受 ASCII 安全字符，文件名里的
@@ -159,5 +193,5 @@ window.Cloud = (() => {
     }
   }
 
-  return { enabled, cfg, pushScore, pullScores, ping, uploadWorksheet };
+  return { enabled, cfg, pushScore, pullScores, ping, uploadWorksheet, uploadFile };
 })();
