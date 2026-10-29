@@ -1277,18 +1277,22 @@
 
       <div class="share-publish">
         <b>发布到线上批次</b>
-        <div class="pub-note">
+        <div class="pub-note" id="pub-note">
           二维码之所以能这么小，是因为试卷密文跟网页一起发布了。
-          当前共有 <b>${total}</b> 份待发布试卷，导出后由系统重新打包上线。
+          当前共有 <b>${total}</b> 份待发布试卷，点一下即可自动打包上线。
         </div>
-        <button class="btn btn-soft btn-sm" id="btn-export-vials">导出发布包（${total} 份）</button>
+        <button class="btn btn-primary btn-sm" id="btn-publish-batch">发布上线（${total} 份）</button>
+        <button class="btn btn-ghost btn-sm" id="btn-export-vials">导出备份</button>
       </div>`, null, "知道了");
 
     /* 异步校验：密钥瓶 alias 解出的卷面必须与本卷完全一致（测验码 + 题数），
        否则二维码会指向批次里的另一份卷——此前新建卷直接命中 alias 就是这个错配。 */
+    let watcher = null;          // 轮询定时器，关弹窗要清掉
+    const stopWatch = () => { if (watcher) { clearInterval(watcher); watcher = null; } };
+
     const verifyAndRenderQr = async () => {
       const slot = $("#qr-slot");
-      if (!slot) return;
+      if (!slot) { stopWatch(); return; }
       let ok = false, link = "", alias = "";
       if (aliasCandidate) {
         try {
@@ -1300,6 +1304,7 @@
       }
       if (!slot.isConnected) return;   // 弹窗已被用户关闭
       if (ok) {
+        stopWatch();
         slot.innerHTML = `
           <div class="qr-frame" id="qr-frame">${window.ShareCodec.qrSvg(link, qrSize)}</div>
           <div class="qr-cap">学生用手机 <b>扫一扫</b> 即可开始作答</div>
@@ -1315,13 +1320,31 @@
             <div class="qr-alias">暗号 <code>${alias}</code> · 也可在首页输入此暗号进入</div>
           </details>`;
         bindQrActions(link, q);
+        const note = $("#pub-note");
+        if (note) note.innerHTML = "本卷已在线上批次中，二维码可直接投屏或发群。";
+        const pb = $("#btn-publish-batch");
+        if (pb) { pb.textContent = "已上线"; pb.disabled = true; }
       } else {
         slot.innerHTML = `
-          <div class="share-err" style="margin:12px 0">
-            这份试卷还没有发布到线上批次（线上密文与本卷不一致），二维码暂不可用。<br>
-            点下方「导出发布包」，把它一起打进批次重新发布即可。
-          </div>`;
+          <div class="share-wait">
+            <div class="wait-dot"></div>
+            <div>
+              <b>正在发布到线上批次…</b>
+              <div class="wait-sub">通常是几秒到一分钟，就绪后这里会自动出现二维码，页面无需刷新。</div>
+            </div>
+          </div>
+          <div class="qr-note">等不及可以先用测验码 <b>${q.code}</b>：同一台电脑的学生端直接输码即可作答。</div>`;
       }
+    };
+
+    /* 未上线时每 5 秒检查一次批次；上线后立刻重绘二维码 */
+    const watchPublish = () => {
+      stopWatch();
+      verifyAndRenderQr();
+      watcher = setInterval(async () => {
+        if (!$("#qr-slot")) { stopWatch(); return; }
+        await verifyAndRenderQr();
+      }, 5000);
     };
 
     const copy = async (text, okMsg) => {
@@ -1342,13 +1365,41 @@
       $("#btn-copy-link").onclick = () => copy(link, "链接已复制，微信里直接粘贴发送");
       $("#btn-copy-text").onclick = () => copy(noticeText, "通知文案已复制");
     }
-    verifyAndRenderQr();
+
+    /* 发布：批次推到存储桶 → 后台 runner 打包上线 → 前端轮询到二维码 */
+    const btnPub = $("#btn-publish-batch");
+    if (btnPub) btnPub.onclick = async () => {
+      const note = $("#pub-note");
+      if (!window.Cloud || !window.Cloud.enabled) {
+        if (note) note.innerHTML = "云端未配置，无法自动发布。可点「导出备份」交给管理员打包。";
+        return;
+      }
+      btnPub.disabled = true;
+      btnPub.textContent = "正在发布…";
+      if (note) note.innerHTML = "正在把 <b>" + total + "</b> 份试卷推到线上批次…";
+      const r = await window.Cloud.uploadBatch({ pw: stage.pw, quizzes: stage.list, pushedAt: Date.now() });
+      if (!r.ok) {
+        btnPub.disabled = false;
+        btnPub.textContent = "重试发布";
+        if (note) note.innerHTML = `发布失败：${esc(r.error)}。也可以点「导出备份」交给管理员。`;
+        return;
+      }
+      if (note) note.innerHTML = "已推送，后台正在打包上线，成功后二维码会自动出现。";
+      watchPublish();
+    };
+
+    watchPublish();
 
     const btnExport = $("#btn-export-vials");
     if (btnExport) btnExport.onclick = () => {
       downloadJson("vials.json", { pw: stage.pw, quizzes: stage.list });
-      toast("发布包已导出，交给管理员打包上线");
+      toast("发布包已导出（备份用）");
     };
+
+    /* 弹窗关闭时停掉轮询，避免后台空转 */
+    const okBtn = $("#modal-ok"), cancelBtn = $("#modal-cancel");
+    if (okBtn) okBtn.addEventListener("click", stopWatch);
+    if (cancelBtn) cancelBtn.addEventListener("click", stopWatch);
   }
 
   /* 把二维码导出成高清 PNG（1024px，含白边，适合打印/投屏/发群） */
