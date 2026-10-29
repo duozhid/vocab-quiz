@@ -78,8 +78,43 @@ $$;
 revoke all on function public.teacher_scores(text, text, int) from public;
 grant execute on function public.teacher_scores(text, text, int) to anon, authenticated;
 
--- ---------- 4. 自检 ----------
--- 跑完可以执行下面这句确认表建好了：
+-- ---------- 4. 习题文件存储桶（微信下载用） ----------
+-- 微信内置浏览器不能下载 blob: 链接，但能下载 http 直链的 .pdf。
+-- 所以手机端把练习 PDF 传到这里，再把公开直链给微信去下载。
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'worksheets', 'worksheets', true, 5242880,
+  array['application/pdf','text/html','application/msword']
+)
+on conflict (id) do update
+  set public = true,
+      file_size_limit = 5242880,
+      allowed_mime_types = array['application/pdf','text/html','application/msword'];
+
+-- 允许任何人上传（学生手机端没有账号）
+drop policy if exists "anon can upload worksheets" on storage.objects;
+create policy "anon can upload worksheets"
+  on storage.objects for insert
+  to anon, authenticated
+  with check (bucket_id = 'worksheets');
+
+-- 允许读取/列出（公开桶，微信要能直接访问链接）
+drop policy if exists "anon can read worksheets" on storage.objects;
+create policy "anon can read worksheets"
+  on storage.objects for select
+  to anon, authenticated
+  using (bucket_id = 'worksheets');
+
+-- 允许覆盖同名文件（重复生成时不会报 already exists）
+drop policy if exists "anon can update worksheets" on storage.objects;
+create policy "anon can update worksheets"
+  on storage.objects for update
+  to anon, authenticated
+  using (bucket_id = 'worksheets')
+  with check (bucket_id = 'worksheets');
+
+-- ---------- 5. 自检 ----------
+-- 跑完可以执行下面几句确认：
 --   select count(*) from public.gk_scores;
--- 以及确认 RPC 通（应返回空集合，不报错）：
---   select * from public.teacher_scores('CHANGE-ME-2026', null, 1);
+--   select * from public.teacher_scores('vhobkjbiorgzewellbaf', null, 1);
+--   select id, public from storage.buckets where id = 'worksheets';
