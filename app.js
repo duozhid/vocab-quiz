@@ -746,10 +746,27 @@
     });
   }
 
+  /* 依次尝试多个源，任一成功即返回。
+     Supabase 存储优先（国内手机直连快得多），GitHub Pages 作为兜底。 */
+  async function loadScriptFrom(candidates) {
+    let lastErr = null;
+    for (const src of candidates) {
+      try { await loadScriptOnce(src); return src; }
+      catch (e) { lastErr = e; }
+    }
+    throw lastErr || new Error("全部源均加载失败");
+  }
+
   async function ensurePdfLib() {
-    if (pdfLibReady && window.jspdf) return;
-    if (!window.jspdf) await loadScriptOnce("jspdf.min.js?v=gh18");
-    if (!window.PDF_FONT_B64) await loadScriptOnce("pdf-font.js?v=gh18");
+    if (pdfLibReady && window.jspdf && window.PDF_FONT_B64) return;
+    const assetBase = (window.Cloud && window.Cloud.cfg && window.Cloud.cfg.url)
+      ? `${window.Cloud.cfg.url}/storage/v1/object/public/assets`
+      : "";
+    const srcs = (name) => assetBase
+      ? [`${assetBase}/${name}`, `${name}?v=gh21`]
+      : [`${name}?v=gh21`];
+    if (!window.jspdf) await loadScriptFrom(srcs("jspdf.min.js"));
+    if (!window.PDF_FONT_B64) await loadScriptFrom(srcs("pdf-font.js"));
     pdfLibReady = true;
   }
 
