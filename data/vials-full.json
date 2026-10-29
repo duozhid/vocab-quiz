@@ -1,0 +1,6881 @@
+{
+  "pw": "0123456789abc",
+  "builtAt": 1793266078973,
+  "quizzes": [
+    {
+      "id": "q_live_0",
+      "c": "7MDQW7",
+      "code": "7MDQW7",
+      "name": "测试",
+      "m": 10,
+      "minutes": 10,
+      "i": true,
+      "instant": true,
+      "q": [
+        {
+          "id": 0,
+          "type": "cn2en",
+          "word": "accelerate",
+          "meaning": "（使）加速，加快",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 1,
+          "type": "en2cn",
+          "word": "abandon",
+          "meaning": "抛弃，舍弃，放弃",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 2,
+          "type": "en2cn",
+          "word": "academy",
+          "meaning": "专科学院,（美）私立学校",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 3,
+          "type": "en2cn",
+          "word": "acquire",
+          "meaning": "获得，得到",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "acre",
+              "meaning": "英亩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 4,
+          "type": "cn2en",
+          "word": "accommodation",
+          "meaning": "住宿，膳宿",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "access",
+              "meaning": "通道，途径，存取",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "absolute",
+              "meaning": "完全，全部，绝对的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 5,
+          "type": "en2cn",
+          "word": "about",
+          "meaning": "大约；到处；四处",
+          "pos": "adv.",
+          "options": [
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": true
+            },
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 6,
+          "type": "cn2en",
+          "word": "abstract",
+          "meaning": "抽象的（作品）",
+          "pos": "",
+          "options": [
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "abstract",
+              "meaning": "抽象的（作品）",
+              "pos": "",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 7,
+          "type": "cn2en",
+          "word": "absurd",
+          "meaning": "荒谬的，怪诞不经的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 8,
+          "type": "cn2en",
+          "word": "accept",
+          "meaning": "接受",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 9,
+          "type": "cn2en",
+          "word": "academic",
+          "meaning": "学术的，教学的",
+          "pos": "",
+          "options": [
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accuracy",
+              "meaning": "准确，精确",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "academic",
+              "meaning": "学术的，教学的",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 10,
+          "type": "cn2en",
+          "word": "to",
+          "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 11,
+          "type": "en2cn",
+          "word": "abolish",
+          "meaning": "废除，废止",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "abolish",
+              "meaning": "废除，废止",
+              "pos": "v.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 12,
+          "type": "en2cn",
+          "word": "accent",
+          "meaning": "口音，音调",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 13,
+          "type": "en2cn",
+          "word": "abortion",
+          "meaning": "人工流产，堕胎",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 14,
+          "type": "cn2en",
+          "word": "ache",
+          "meaning": "痛，疼痛",
+          "pos": "",
+          "options": [
+            {
+              "word": "ache",
+              "meaning": "痛，疼痛",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 15,
+          "type": "en2cn",
+          "word": "absorb",
+          "meaning": "吸收，使全神贯注",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "ability",
+              "meaning": "能力；才能",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 16,
+          "type": "cn2en",
+          "word": "absent",
+          "meaning": "缺席，不在",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 17,
+          "type": "en2cn",
+          "word": "accuracy",
+          "meaning": "准确，精确",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accuracy",
+              "meaning": "准确，精确",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 18,
+          "type": "cn2en",
+          "word": "act",
+          "meaning": "法令，条例",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 19,
+          "type": "cn2en",
+          "word": "abnormal",
+          "meaning": "反常的，变态的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accessible",
+              "meaning": "可到达的，可接受的，易相处的）",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "type": "cn2en",
+          "word": "accelerate",
+          "meaning": "（使）加速，加快",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 1,
+          "type": "en2cn",
+          "word": "abandon",
+          "meaning": "抛弃，舍弃，放弃",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 2,
+          "type": "en2cn",
+          "word": "academy",
+          "meaning": "专科学院,（美）私立学校",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 3,
+          "type": "en2cn",
+          "word": "acquire",
+          "meaning": "获得，得到",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "acre",
+              "meaning": "英亩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 4,
+          "type": "cn2en",
+          "word": "accommodation",
+          "meaning": "住宿，膳宿",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "access",
+              "meaning": "通道，途径，存取",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "absolute",
+              "meaning": "完全，全部，绝对的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 5,
+          "type": "en2cn",
+          "word": "about",
+          "meaning": "大约；到处；四处",
+          "pos": "adv.",
+          "options": [
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": true
+            },
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 6,
+          "type": "cn2en",
+          "word": "abstract",
+          "meaning": "抽象的（作品）",
+          "pos": "",
+          "options": [
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "abstract",
+              "meaning": "抽象的（作品）",
+              "pos": "",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 7,
+          "type": "cn2en",
+          "word": "absurd",
+          "meaning": "荒谬的，怪诞不经的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 8,
+          "type": "cn2en",
+          "word": "accept",
+          "meaning": "接受",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 9,
+          "type": "cn2en",
+          "word": "academic",
+          "meaning": "学术的，教学的",
+          "pos": "",
+          "options": [
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accuracy",
+              "meaning": "准确，精确",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "academic",
+              "meaning": "学术的，教学的",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 10,
+          "type": "cn2en",
+          "word": "to",
+          "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 11,
+          "type": "en2cn",
+          "word": "abolish",
+          "meaning": "废除，废止",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "abolish",
+              "meaning": "废除，废止",
+              "pos": "v.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 12,
+          "type": "en2cn",
+          "word": "accent",
+          "meaning": "口音，音调",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 13,
+          "type": "en2cn",
+          "word": "abortion",
+          "meaning": "人工流产，堕胎",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 14,
+          "type": "cn2en",
+          "word": "ache",
+          "meaning": "痛，疼痛",
+          "pos": "",
+          "options": [
+            {
+              "word": "ache",
+              "meaning": "痛，疼痛",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 15,
+          "type": "en2cn",
+          "word": "absorb",
+          "meaning": "吸收，使全神贯注",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "ability",
+              "meaning": "能力；才能",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 16,
+          "type": "cn2en",
+          "word": "absent",
+          "meaning": "缺席，不在",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 17,
+          "type": "en2cn",
+          "word": "accuracy",
+          "meaning": "准确，精确",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accuracy",
+              "meaning": "准确，精确",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 18,
+          "type": "cn2en",
+          "word": "act",
+          "meaning": "法令，条例",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 19,
+          "type": "cn2en",
+          "word": "abnormal",
+          "meaning": "反常的，变态的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accessible",
+              "meaning": "可到达的，可接受的，易相处的）",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        }
+      ],
+      "alias": "00000000"
+    },
+    {
+      "id": "q_live_1",
+      "c": "DUU33J",
+      "code": "DUU33J",
+      "name": "测试",
+      "m": 10,
+      "minutes": 10,
+      "i": true,
+      "instant": true,
+      "q": [
+        {
+          "id": 0,
+          "type": "en2cn",
+          "word": "across",
+          "meaning": "横过，穿过",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "access",
+              "meaning": "通道，途径，存取",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 1,
+          "type": "cn2en",
+          "word": "act",
+          "meaning": "法令，条例",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 2,
+          "type": "en2cn",
+          "word": "abundant",
+          "meaning": "大量,丰盛的,充裕的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accuracy",
+              "meaning": "准确，精确",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 3,
+          "type": "en2cn",
+          "word": "above",
+          "meaning": "在……上面",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 4,
+          "type": "cn2en",
+          "word": "academy",
+          "meaning": "专科学院,（美）私立学校",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "ability",
+              "meaning": "能力；才能",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "ache",
+              "meaning": "痛，疼痛",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 5,
+          "type": "en2cn",
+          "word": "abrupt",
+          "meaning": "突然的，意外的，粗鲁",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "ability",
+              "meaning": "能力；才能",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 6,
+          "type": "cn2en",
+          "word": "abortion",
+          "meaning": "人工流产，堕胎",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 7,
+          "type": "en2cn",
+          "word": "absence",
+          "meaning": "不在，缺席",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "absence",
+              "meaning": "不在，缺席",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "abstract",
+              "meaning": "抽象的（作品）",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "acre",
+              "meaning": "英亩",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 8,
+          "type": "en2cn",
+          "word": "acknowledge",
+          "meaning": "承认",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acknowledge",
+              "meaning": "承认",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 9,
+          "type": "cn2en",
+          "word": "abuse",
+          "meaning": "（酗酒）滥用,虐待,恶语",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 10,
+          "type": "cn2en",
+          "word": "action",
+          "meaning": "行动",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 11,
+          "type": "cn2en",
+          "word": "abnormal",
+          "meaning": "反常的，变态的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 12,
+          "type": "en2cn",
+          "word": "acid",
+          "meaning": "酸的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 13,
+          "type": "en2cn",
+          "word": "achieve",
+          "meaning": "达到，取得",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 14,
+          "type": "cn2en",
+          "word": "acquaintance",
+          "meaning": "熟人，（与某人）认识",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 15,
+          "type": "en2cn",
+          "word": "achievement",
+          "meaning": "成就,成绩,功绩",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 16,
+          "type": "en2cn",
+          "word": "?",
+          "meaning": "",
+          "pos": "",
+          "options": [
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 17,
+          "type": "en2cn",
+          "word": "account",
+          "meaning": "账目;描述",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 18,
+          "type": "cn2en",
+          "word": "able",
+          "meaning": "能够；有能力的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 19,
+          "type": "en2cn",
+          "word": "accustomed",
+          "meaning": "习惯于,惯常的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "accustomed",
+              "meaning": "习惯于,惯常的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "type": "en2cn",
+          "word": "across",
+          "meaning": "横过，穿过",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "access",
+              "meaning": "通道，途径，存取",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 1,
+          "type": "cn2en",
+          "word": "act",
+          "meaning": "法令，条例",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 2,
+          "type": "en2cn",
+          "word": "abundant",
+          "meaning": "大量,丰盛的,充裕的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accuracy",
+              "meaning": "准确，精确",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 3,
+          "type": "en2cn",
+          "word": "above",
+          "meaning": "在……上面",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 4,
+          "type": "cn2en",
+          "word": "academy",
+          "meaning": "专科学院,（美）私立学校",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "ability",
+              "meaning": "能力；才能",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "ache",
+              "meaning": "痛，疼痛",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 5,
+          "type": "en2cn",
+          "word": "abrupt",
+          "meaning": "突然的，意外的，粗鲁",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "ability",
+              "meaning": "能力；才能",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 6,
+          "type": "cn2en",
+          "word": "abortion",
+          "meaning": "人工流产，堕胎",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 7,
+          "type": "en2cn",
+          "word": "absence",
+          "meaning": "不在，缺席",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "absence",
+              "meaning": "不在，缺席",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "abstract",
+              "meaning": "抽象的（作品）",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "acre",
+              "meaning": "英亩",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 8,
+          "type": "en2cn",
+          "word": "acknowledge",
+          "meaning": "承认",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acknowledge",
+              "meaning": "承认",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 9,
+          "type": "cn2en",
+          "word": "abuse",
+          "meaning": "（酗酒）滥用,虐待,恶语",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 10,
+          "type": "cn2en",
+          "word": "action",
+          "meaning": "行动",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 11,
+          "type": "cn2en",
+          "word": "abnormal",
+          "meaning": "反常的，变态的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 12,
+          "type": "en2cn",
+          "word": "acid",
+          "meaning": "酸的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 13,
+          "type": "en2cn",
+          "word": "achieve",
+          "meaning": "达到，取得",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 14,
+          "type": "cn2en",
+          "word": "acquaintance",
+          "meaning": "熟人，（与某人）认识",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 15,
+          "type": "en2cn",
+          "word": "achievement",
+          "meaning": "成就,成绩,功绩",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 16,
+          "type": "en2cn",
+          "word": "?",
+          "meaning": "",
+          "pos": "",
+          "options": [
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 17,
+          "type": "en2cn",
+          "word": "account",
+          "meaning": "账目;描述",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 18,
+          "type": "cn2en",
+          "word": "able",
+          "meaning": "能够；有能力的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 19,
+          "type": "en2cn",
+          "word": "accustomed",
+          "meaning": "习惯于,惯常的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "accustomed",
+              "meaning": "习惯于,惯常的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        }
+      ],
+      "alias": "0000003J"
+    },
+    {
+      "id": "q_live_2",
+      "c": "6DK9WM",
+      "code": "6DK9WM",
+      "name": "1",
+      "m": 10,
+      "minutes": 10,
+      "i": true,
+      "instant": true,
+      "q": [
+        {
+          "id": 0,
+          "type": "en2cn",
+          "word": "abolish",
+          "meaning": "废除，废止",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "academic",
+              "meaning": "学术的，教学的",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "abolish",
+              "meaning": "废除，废止",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 1,
+          "type": "en2cn",
+          "word": "above",
+          "meaning": "在……上面",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 2,
+          "type": "cn2en",
+          "word": "achievement",
+          "meaning": "成就,成绩,功绩",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 3,
+          "type": "cn2en",
+          "word": "abroad",
+          "meaning": "到（在）国外",
+          "pos": "adv.",
+          "options": [
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": true
+            },
+            {
+              "word": "abstract",
+              "meaning": "抽象的（作品）",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 4,
+          "type": "cn2en",
+          "word": "ache",
+          "meaning": "痛，疼痛",
+          "pos": "",
+          "options": [
+            {
+              "word": "ache",
+              "meaning": "痛，疼痛",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "accustomed",
+              "meaning": "习惯于,惯常的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 5,
+          "type": "cn2en",
+          "word": "absurd",
+          "meaning": "荒谬的，怪诞不经的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "access",
+              "meaning": "通道，途径，存取",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 6,
+          "type": "en2cn",
+          "word": "accept",
+          "meaning": "接受",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 7,
+          "type": "cn2en",
+          "word": "active",
+          "meaning": "积极的，主动的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 8,
+          "type": "cn2en",
+          "word": "accomplish",
+          "meaning": "完成",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "absolute",
+              "meaning": "完全，全部，绝对的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 9,
+          "type": "en2cn",
+          "word": "accelerate",
+          "meaning": "（使）加速，加快",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "absolute",
+              "meaning": "完全，全部，绝对的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 10,
+          "type": "en2cn",
+          "word": "accuse",
+          "meaning": "正确无误的,精确的",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 11,
+          "type": "cn2en",
+          "word": "accommodation",
+          "meaning": "住宿，膳宿",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 12,
+          "type": "en2cn",
+          "word": "achieve",
+          "meaning": "达到，取得",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 13,
+          "type": "en2cn",
+          "word": "abrupt",
+          "meaning": "突然的，意外的，粗鲁",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "acknowledge",
+              "meaning": "承认",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 14,
+          "type": "cn2en",
+          "word": "?",
+          "meaning": "",
+          "pos": "",
+          "options": [
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 15,
+          "type": "en2cn",
+          "word": "accustomed",
+          "meaning": "习惯于,惯常的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accustomed",
+              "meaning": "习惯于,惯常的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 16,
+          "type": "cn2en",
+          "word": "to",
+          "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 17,
+          "type": "cn2en",
+          "word": "absent",
+          "meaning": "缺席，不在",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 18,
+          "type": "en2cn",
+          "word": "absorb",
+          "meaning": "吸收，使全神贯注",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "absence",
+              "meaning": "不在，缺席",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 19,
+          "type": "en2cn",
+          "word": "act",
+          "meaning": "法令，条例",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "type": "en2cn",
+          "word": "abolish",
+          "meaning": "废除，废止",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "academic",
+              "meaning": "学术的，教学的",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "abolish",
+              "meaning": "废除，废止",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 1,
+          "type": "en2cn",
+          "word": "above",
+          "meaning": "在……上面",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 2,
+          "type": "cn2en",
+          "word": "achievement",
+          "meaning": "成就,成绩,功绩",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 3,
+          "type": "cn2en",
+          "word": "abroad",
+          "meaning": "到（在）国外",
+          "pos": "adv.",
+          "options": [
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": true
+            },
+            {
+              "word": "abstract",
+              "meaning": "抽象的（作品）",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 4,
+          "type": "cn2en",
+          "word": "ache",
+          "meaning": "痛，疼痛",
+          "pos": "",
+          "options": [
+            {
+              "word": "ache",
+              "meaning": "痛，疼痛",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "accustomed",
+              "meaning": "习惯于,惯常的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 5,
+          "type": "cn2en",
+          "word": "absurd",
+          "meaning": "荒谬的，怪诞不经的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "access",
+              "meaning": "通道，途径，存取",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 6,
+          "type": "en2cn",
+          "word": "accept",
+          "meaning": "接受",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 7,
+          "type": "cn2en",
+          "word": "active",
+          "meaning": "积极的，主动的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 8,
+          "type": "cn2en",
+          "word": "accomplish",
+          "meaning": "完成",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "absolute",
+              "meaning": "完全，全部，绝对的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 9,
+          "type": "en2cn",
+          "word": "accelerate",
+          "meaning": "（使）加速，加快",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "absolute",
+              "meaning": "完全，全部，绝对的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 10,
+          "type": "en2cn",
+          "word": "accuse",
+          "meaning": "正确无误的,精确的",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 11,
+          "type": "cn2en",
+          "word": "accommodation",
+          "meaning": "住宿，膳宿",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 12,
+          "type": "en2cn",
+          "word": "achieve",
+          "meaning": "达到，取得",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 13,
+          "type": "en2cn",
+          "word": "abrupt",
+          "meaning": "突然的，意外的，粗鲁",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "acknowledge",
+              "meaning": "承认",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 14,
+          "type": "cn2en",
+          "word": "?",
+          "meaning": "",
+          "pos": "",
+          "options": [
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 15,
+          "type": "en2cn",
+          "word": "accustomed",
+          "meaning": "习惯于,惯常的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accustomed",
+              "meaning": "习惯于,惯常的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 16,
+          "type": "cn2en",
+          "word": "to",
+          "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 17,
+          "type": "cn2en",
+          "word": "absent",
+          "meaning": "缺席，不在",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 18,
+          "type": "en2cn",
+          "word": "absorb",
+          "meaning": "吸收，使全神贯注",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "absorb",
+              "meaning": "吸收，使全神贯注",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "absence",
+              "meaning": "不在，缺席",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 19,
+          "type": "en2cn",
+          "word": "act",
+          "meaning": "法令，条例",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        }
+      ],
+      "alias": "00000050"
+    },
+    {
+      "id": "q_live_3",
+      "c": "V3JA79",
+      "code": "V3JA79",
+      "name": "测试",
+      "m": 15,
+      "minutes": 15,
+      "i": true,
+      "instant": true,
+      "q": [
+        {
+          "id": 0,
+          "type": "cn2en",
+          "word": "across",
+          "meaning": "横过，穿过",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 1,
+          "type": "en2cn",
+          "word": "ache",
+          "meaning": "痛，疼痛",
+          "pos": "",
+          "options": [
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "ache",
+              "meaning": "痛，疼痛",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 2,
+          "type": "en2cn",
+          "word": "access",
+          "meaning": "通道，途径，存取",
+          "pos": "",
+          "options": [
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "access",
+              "meaning": "通道，途径，存取",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "abstract",
+              "meaning": "抽象的（作品）",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 3,
+          "type": "cn2en",
+          "word": "absolute",
+          "meaning": "完全，全部，绝对的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "absolute",
+              "meaning": "完全，全部，绝对的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "academic",
+              "meaning": "学术的，教学的",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 4,
+          "type": "en2cn",
+          "word": "acquisition",
+          "meaning": "获得，得到",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 5,
+          "type": "cn2en",
+          "word": "above",
+          "meaning": "在……上面",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 6,
+          "type": "en2cn",
+          "word": "accommodation",
+          "meaning": "住宿，膳宿",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 7,
+          "type": "cn2en",
+          "word": "abrupt",
+          "meaning": "突然的，意外的，粗鲁",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 8,
+          "type": "cn2en",
+          "word": "academy",
+          "meaning": "专科学院,（美）私立学校",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "abolish",
+              "meaning": "废除，废止",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 9,
+          "type": "en2cn",
+          "word": "accountant",
+          "meaning": "会计，会计师",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abolish",
+              "meaning": "废除，废止",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 10,
+          "type": "cn2en",
+          "word": "accuse",
+          "meaning": "正确无误的,精确的",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 11,
+          "type": "cn2en",
+          "word": "achieve",
+          "meaning": "达到，取得",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 12,
+          "type": "cn2en",
+          "word": "acre",
+          "meaning": "英亩",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "accustomed",
+              "meaning": "习惯于,惯常的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acre",
+              "meaning": "英亩",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 13,
+          "type": "en2cn",
+          "word": "accept",
+          "meaning": "接受",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 14,
+          "type": "en2cn",
+          "word": "account",
+          "meaning": "账目;描述",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 15,
+          "type": "cn2en",
+          "word": "able",
+          "meaning": "能够；有能力的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 16,
+          "type": "en2cn",
+          "word": "abnormal",
+          "meaning": "反常的，变态的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "absence",
+              "meaning": "不在，缺席",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 17,
+          "type": "cn2en",
+          "word": "achievement",
+          "meaning": "成就,成绩,功绩",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 18,
+          "type": "cn2en",
+          "word": "acquaintance",
+          "meaning": "熟人，（与某人）认识",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 19,
+          "type": "cn2en",
+          "word": "accent",
+          "meaning": "口音，音调",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "accessible",
+              "meaning": "可到达的，可接受的，易相处的）",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "type": "cn2en",
+          "word": "across",
+          "meaning": "横过，穿过",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 1,
+          "type": "en2cn",
+          "word": "ache",
+          "meaning": "痛，疼痛",
+          "pos": "",
+          "options": [
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "ache",
+              "meaning": "痛，疼痛",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 2,
+          "type": "en2cn",
+          "word": "access",
+          "meaning": "通道，途径，存取",
+          "pos": "",
+          "options": [
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "access",
+              "meaning": "通道，途径，存取",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "abstract",
+              "meaning": "抽象的（作品）",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 3,
+          "type": "cn2en",
+          "word": "absolute",
+          "meaning": "完全，全部，绝对的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "absolute",
+              "meaning": "完全，全部，绝对的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "academic",
+              "meaning": "学术的，教学的",
+              "pos": "",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 4,
+          "type": "en2cn",
+          "word": "acquisition",
+          "meaning": "获得，得到",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 5,
+          "type": "cn2en",
+          "word": "above",
+          "meaning": "在……上面",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 6,
+          "type": "en2cn",
+          "word": "accommodation",
+          "meaning": "住宿，膳宿",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 7,
+          "type": "cn2en",
+          "word": "abrupt",
+          "meaning": "突然的，意外的，粗鲁",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 8,
+          "type": "cn2en",
+          "word": "academy",
+          "meaning": "专科学院,（美）私立学校",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "abolish",
+              "meaning": "废除，废止",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 9,
+          "type": "en2cn",
+          "word": "accountant",
+          "meaning": "会计，会计师",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abolish",
+              "meaning": "废除，废止",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "abrupt",
+              "meaning": "突然的，意外的，粗鲁",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 10,
+          "type": "cn2en",
+          "word": "accuse",
+          "meaning": "正确无误的,精确的",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accuse",
+              "meaning": "正确无误的,精确的",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 11,
+          "type": "cn2en",
+          "word": "achieve",
+          "meaning": "达到，取得",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 12,
+          "type": "cn2en",
+          "word": "acre",
+          "meaning": "英亩",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "accustomed",
+              "meaning": "习惯于,惯常的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acre",
+              "meaning": "英亩",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 13,
+          "type": "en2cn",
+          "word": "accept",
+          "meaning": "接受",
+          "pos": "vt.",
+          "options": [
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": true
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 14,
+          "type": "en2cn",
+          "word": "account",
+          "meaning": "账目;描述",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 15,
+          "type": "cn2en",
+          "word": "able",
+          "meaning": "能够；有能力的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 16,
+          "type": "en2cn",
+          "word": "abnormal",
+          "meaning": "反常的，变态的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "absence",
+              "meaning": "不在，缺席",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 17,
+          "type": "cn2en",
+          "word": "achievement",
+          "meaning": "成就,成绩,功绩",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 18,
+          "type": "cn2en",
+          "word": "acquaintance",
+          "meaning": "熟人，（与某人）认识",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 19,
+          "type": "cn2en",
+          "word": "accent",
+          "meaning": "口音，音调",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "accessible",
+              "meaning": "可到达的，可接受的，易相处的）",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        }
+      ],
+      "alias": "0000006J"
+    },
+    {
+      "id": "q_live_4",
+      "c": "FXF6WV",
+      "code": "FXF6WV",
+      "name": "测试",
+      "m": 10,
+      "minutes": 10,
+      "i": true,
+      "instant": true,
+      "q": [
+        {
+          "id": 0,
+          "type": "cn2en",
+          "word": "ability",
+          "meaning": "能力；才能",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "ability",
+              "meaning": "能力；才能",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 1,
+          "type": "cn2en",
+          "word": "absent",
+          "meaning": "缺席，不在",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 2,
+          "type": "cn2en",
+          "word": "abortion",
+          "meaning": "人工流产，堕胎",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accuracy",
+              "meaning": "准确，精确",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "academic",
+              "meaning": "学术的，教学的",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 3,
+          "type": "cn2en",
+          "word": "about",
+          "meaning": "大约；到处；四处",
+          "pos": "adv.",
+          "options": [
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": true
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 4,
+          "type": "en2cn",
+          "word": "acquaintance",
+          "meaning": "熟人，（与某人）认识",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "absolute",
+              "meaning": "完全，全部，绝对的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 5,
+          "type": "en2cn",
+          "word": "aboard",
+          "meaning": "上（船，飞机，火车，汽车等）",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 6,
+          "type": "en2cn",
+          "word": "abuse",
+          "meaning": "（酗酒）滥用,虐待,恶语",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 7,
+          "type": "cn2en",
+          "word": "achievement",
+          "meaning": "成就,成绩,功绩",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "acre",
+              "meaning": "英亩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accuracy",
+              "meaning": "准确，精确",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 8,
+          "type": "cn2en",
+          "word": "academy",
+          "meaning": "专科学院,（美）私立学校",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "absence",
+              "meaning": "不在，缺席",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 9,
+          "type": "en2cn",
+          "word": "accessible",
+          "meaning": "可到达的，可接受的，易相处的）",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accessible",
+              "meaning": "可到达的，可接受的，易相处的）",
+              "pos": "adj.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 10,
+          "type": "en2cn",
+          "word": "absence",
+          "meaning": "不在，缺席",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absence",
+              "meaning": "不在，缺席",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 11,
+          "type": "cn2en",
+          "word": "act",
+          "meaning": "法令，条例",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 12,
+          "type": "en2cn",
+          "word": "active",
+          "meaning": "积极的，主动的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 13,
+          "type": "en2cn",
+          "word": "above",
+          "meaning": "在……上面",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 14,
+          "type": "en2cn",
+          "word": "to",
+          "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 15,
+          "type": "en2cn",
+          "word": "acquisition",
+          "meaning": "获得，得到",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "ache",
+              "meaning": "痛，疼痛",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 16,
+          "type": "en2cn",
+          "word": "access",
+          "meaning": "通道，途径，存取",
+          "pos": "",
+          "options": [
+            {
+              "word": "acre",
+              "meaning": "英亩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "access",
+              "meaning": "通道，途径，存取",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "abolish",
+              "meaning": "废除，废止",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 17,
+          "type": "en2cn",
+          "word": "abundant",
+          "meaning": "大量,丰盛的,充裕的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 18,
+          "type": "cn2en",
+          "word": "absurd",
+          "meaning": "荒谬的，怪诞不经的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 19,
+          "type": "cn2en",
+          "word": "account",
+          "meaning": "账目;描述",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "type": "cn2en",
+          "word": "ability",
+          "meaning": "能力；才能",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "ability",
+              "meaning": "能力；才能",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abnormal",
+              "meaning": "反常的，变态的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 1,
+          "type": "cn2en",
+          "word": "absent",
+          "meaning": "缺席，不在",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abandon",
+              "meaning": "抛弃，舍弃，放弃",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 2,
+          "type": "cn2en",
+          "word": "abortion",
+          "meaning": "人工流产，堕胎",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "accuracy",
+              "meaning": "准确，精确",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "academic",
+              "meaning": "学术的，教学的",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 3,
+          "type": "cn2en",
+          "word": "about",
+          "meaning": "大约；到处；四处",
+          "pos": "adv.",
+          "options": [
+            {
+              "word": "about",
+              "meaning": "大约；到处；四处",
+              "pos": "adv.",
+              "correct": true
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 4,
+          "type": "en2cn",
+          "word": "acquaintance",
+          "meaning": "熟人，（与某人）认识",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "absolute",
+              "meaning": "完全，全部，绝对的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "acquaintance",
+              "meaning": "熟人，（与某人）认识",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 5,
+          "type": "en2cn",
+          "word": "aboard",
+          "meaning": "上（船，飞机，火车，汽车等）",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "accumulate",
+              "meaning": "积累，积聚",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "accept",
+              "meaning": "接受",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 6,
+          "type": "en2cn",
+          "word": "abuse",
+          "meaning": "（酗酒）滥用,虐待,恶语",
+          "pos": "v.",
+          "options": [
+            {
+              "word": "abroad",
+              "meaning": "到（在）国外",
+              "pos": "adv.",
+              "correct": false
+            },
+            {
+              "word": "accountant",
+              "meaning": "会计，会计师",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": true
+            },
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 7,
+          "type": "cn2en",
+          "word": "achievement",
+          "meaning": "成就,成绩,功绩",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "acre",
+              "meaning": "英亩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "abuse",
+              "meaning": "（酗酒）滥用,虐待,恶语",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accuracy",
+              "meaning": "准确，精确",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 8,
+          "type": "cn2en",
+          "word": "academy",
+          "meaning": "专科学院,（美）私立学校",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "academy",
+              "meaning": "专科学院,（美）私立学校",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "absence",
+              "meaning": "不在，缺席",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 9,
+          "type": "en2cn",
+          "word": "accessible",
+          "meaning": "可到达的，可接受的，易相处的）",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "accelerate",
+              "meaning": "（使）加速，加快",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accessible",
+              "meaning": "可到达的，可接受的，易相处的）",
+              "pos": "adj.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 10,
+          "type": "en2cn",
+          "word": "absence",
+          "meaning": "不在，缺席",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "action",
+              "meaning": "行动",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "accent",
+              "meaning": "口音，音调",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absence",
+              "meaning": "不在，缺席",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "acquire",
+              "meaning": "获得，得到",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "id": 11,
+          "type": "cn2en",
+          "word": "act",
+          "meaning": "法令，条例",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "able",
+              "meaning": "能够；有能力的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        },
+        {
+          "id": 12,
+          "type": "en2cn",
+          "word": "active",
+          "meaning": "积极的，主动的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "acid",
+              "meaning": "酸的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "absent",
+              "meaning": "缺席，不在",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 13,
+          "type": "en2cn",
+          "word": "above",
+          "meaning": "在……上面",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "achieve",
+              "meaning": "达到，取得",
+              "pos": "vt.",
+              "correct": false
+            },
+            {
+              "word": "accommodation",
+              "meaning": "住宿，膳宿",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 14,
+          "type": "en2cn",
+          "word": "to",
+          "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+          "pos": "prep.",
+          "options": [
+            {
+              "word": "act",
+              "meaning": "法令，条例",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": true
+            },
+            {
+              "word": "above",
+              "meaning": "在……上面",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 15,
+          "type": "en2cn",
+          "word": "acquisition",
+          "meaning": "获得，得到",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "acquisition",
+              "meaning": "获得，得到",
+              "pos": "n.",
+              "correct": true
+            },
+            {
+              "word": "aboard",
+              "meaning": "上（船，飞机，火车，汽车等）",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "ache",
+              "meaning": "痛，疼痛",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 16,
+          "type": "en2cn",
+          "word": "access",
+          "meaning": "通道，途径，存取",
+          "pos": "",
+          "options": [
+            {
+              "word": "acre",
+              "meaning": "英亩",
+              "pos": "n.",
+              "correct": false
+            },
+            {
+              "word": "access",
+              "meaning": "通道，途径，存取",
+              "pos": "",
+              "correct": true
+            },
+            {
+              "word": "active",
+              "meaning": "积极的，主动的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "abolish",
+              "meaning": "废除，废止",
+              "pos": "v.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 17,
+          "type": "en2cn",
+          "word": "abundant",
+          "meaning": "大量,丰盛的,充裕的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "abundant",
+              "meaning": "大量,丰盛的,充裕的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "achievement",
+              "meaning": "成就,成绩,功绩",
+              "pos": "n.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "id": 18,
+          "type": "cn2en",
+          "word": "absurd",
+          "meaning": "荒谬的，怪诞不经的",
+          "pos": "adj.",
+          "options": [
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": true
+            },
+            {
+              "word": "to",
+              "meaning": "（动词不定式符号，无词义）；（表示接受动作的人或物）给；对，向，到；在…之前",
+              "pos": "prep.",
+              "correct": false
+            },
+            {
+              "word": "accomplish",
+              "meaning": "完成",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "across",
+              "meaning": "横过，穿过",
+              "pos": "prep.",
+              "correct": false
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "id": 19,
+          "type": "cn2en",
+          "word": "account",
+          "meaning": "账目;描述",
+          "pos": "n.",
+          "options": [
+            {
+              "word": "?",
+              "meaning": "",
+              "pos": "",
+              "correct": false
+            },
+            {
+              "word": "abortion",
+              "meaning": "人工流产，堕胎",
+              "pos": "v.",
+              "correct": false
+            },
+            {
+              "word": "absurd",
+              "meaning": "荒谬的，怪诞不经的",
+              "pos": "adj.",
+              "correct": false
+            },
+            {
+              "word": "account",
+              "meaning": "账目;描述",
+              "pos": "n.",
+              "correct": true
+            }
+          ],
+          "answerIndex": 3
+        }
+      ],
+      "alias": "00000084"
+    }
+  ]
+}
