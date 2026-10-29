@@ -2247,11 +2247,27 @@
     $("#btn-save-bank").addEventListener("click", () => {
       if (!pendingParsed) return;
       const name = $("#bank-name").value.trim() || pendingParsed.meta.source || "未命名词库";
-      Store.addBank(name, pendingParsed.items, pendingParsed.meta);
+      const bank = Store.addBank(name, pendingParsed.items, pendingParsed.meta);
       pendingParsed = null;
       $("#parse-preview").classList.add("hidden");
       $("#paste-area").value = "";
-      renderBankList(); renderClassSelects(); toast("词库已保存：" + name);
+      renderBankList(); renderClassSelects();
+
+      // 自动识别词库规模并生成对应试题，无需教师再手动组卷
+      let q = null;
+      try {
+        const n = bank.items.length;
+        const count = n >= 20 ? 20 : Math.max(4, n);   // 大词库抽 20 题，小词库全量
+        q = Store.addQuiz({
+          name: name + " 词汇测验", bankId: bank.id, classId: null,
+          count, minutes: count > 15 ? 15 : 10, instant: true
+        });
+      } catch (e) { /* 自动组卷失败不阻断保存 */ }
+      renderTeacher();
+      const sel = $("#q-bank");
+      if (sel) sel.value = bank.id;                     // 新建测验面板默认选中该词库
+      if (q) { showQuizShare(q); toast("词库已保存，已自动生成测验「" + q.name + "」（" + q.count + " 题 / " + q.minutes + " 分钟）"); }
+      else toast("词库已保存：" + name);
     });
 
     /* 新建测验 */
