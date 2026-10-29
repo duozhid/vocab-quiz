@@ -32,3 +32,30 @@ git push -u origin main
 - 短链：`https://<用户名>.github.io/vocab-quiz/?c=00000000`（二维码里就是这个）
 
 > GitHub Pages 不拦截微信 UA，微信内可直接打开答题。
+
+## 账号与密钥（运维备忘）
+
+- Supabase 项目：`https://vhobkjbiorgzewellbaf.supabase.co`
+- Storage 桶：`worksheets`（PDF）、`assets`（前端资源 + 发布批次 `data/vials.json`）
+- 批次密钥：固定 `0123456789abc`（13 位 [0-9a-f]）。**改密钥会让所有已发出的短链失效**，
+  `app.js` 里的 `PW_DEFAULT`、`runner.js` 里的默认值要同步改。
+
+## 一键发布（教师端）
+
+教师建好测验 → 弹窗点「发布上线」→ 前端把批次（含完整卷面）推到 `assets/data/vials.json`
+→ 后台 runner 取走、合并历史批次、重新打包、提交 `index.html` 到 GitHub Pages
+→ 前端每 5 秒轮询，页面自动出现二维码，全程无需人工。
+
+runner 部署：
+
+```bash
+GITHUB_TOKEN=<contents:write 的 PAT> POLL_SECONDS=60 node runner.js
+```
+
+要点：
+- 必须**合并**而不是覆盖线上批次，否则此前发布的卷全部失效（`runner.js` 用
+  `data/vials-full.json` 作为历史基线，前端也会先拉云端批次再合并，双保险）。
+- `pack-share.js` 不再把 `data/vials.json` 覆盖成摘要：完整卷面写 `data/vials-full.json`，
+  摘要写 `data/vials-toc.json`。之前用摘要覆盖导致"再打包就没题目了"。
+- runner 打包后会**等待线上密文真的变化**（最多 3 分钟）才回写发布状态，
+  避免前端看到旧页面而一直卡在等待态。
