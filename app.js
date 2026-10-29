@@ -728,6 +728,335 @@
     toast("Word 文件已下载，可用 Word / WPS 直接编辑或打印");
   }
 
+  /* =========================================================
+     PDF 生成（jsPDF + 内嵌中文子集）
+     目的：微信内置浏览器不能下载 blob: 链接、也不能打印，
+     但可以下载 http 直链的 .pdf —— 传上云存储后在微信里点开，
+     微信会自动弹出「文件已下载完成 / 打开文件 / 分享给好友」。
+     ========================================================= */
+  let pdfLibReady = false;
+
+  function loadScriptOnce(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = () => reject(new Error("脚本加载失败：" + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function ensurePdfLib() {
+    if (pdfLibReady && window.jspdf) return;
+    if (!window.jspdf) await loadScriptOnce("jspdf.min.js?v=gh18");
+    if (!window.PDF_FONT_B64) await loadScriptOnce("pdf-font.js?v=gh18");
+    pdfLibReady = true;
+  }
+
+  /* 把 base64 字体注册进 jsPDF（只做一次） */
+  function registerPdfFont(doc) {
+    if (doc.__zhFont) return doc.__zhFont;
+    doc.addFileToVFS("NotoSC.ttf", window.PDF_FONT_B64);
+    doc.addFont("NotoSC.ttf", "NotoSC", "normal");
+    doc.__zhFont = "NotoSC";
+    return "NotoSC";
+  }
+
+  /* 生成巩固练习 PDF，返回 Blob */
+  async function buildWorksheetPdf(includeKey) {
+    const words = state.worksheetWords || [];
+    if (!words.length) return null;
+    await ensurePdfLib();
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: "mm", format: "a4", compress: true });
+    const F = registerPdfFont(doc);
+
+    const PW = 210, PH = 297;
+    const ML = 16, MR = 16;
+    const WIDTH = PW - ML - MR;       // 178mm
+    // 用「宋体尺」把字宽量化：统一按 0.36×字号（偏保守）估算，避免长词溢出
+    let y = 20;
+
+    const setFont = (size, bold) => { doc.setFont(F, "normal"); doc.setFontSize(size); };
+    const text = (str, x, yy, opts) => doc.text(String(str), x, yy, opts || {});
+    /* 带字号绘制：wrap() 会改字号，绘制前必须重新指定，否则会串字号 */
+    const tt = (str, x, yy, size, opts) => {
+      doc.setFont(F, "normal");
+      doc.setFontSize(size);
+      doc.text(String(str), x, yy, opts || {});
+    };
+
+    /* 按宽度自动折行：中文逐字断、英文按空格断，宽度用 jsPDF 实测 */
+    const _wrapCache = new Map();
+    function wrap(str, maxW, size) {
+      const key = size + "|" + maxW + "|" + str;
+      doc.setFont(F, "normal");
+      doc.setFontSize(size);          // 命中缓存也必须先设字号，否则外部 getTextWidth 会用错字号
+      if (_wrapCache.has(key)) return _wrapCache.get(key);
+      const tw = (s) => doc.getTextWidth(s);
+      const out = [];
+      for (const para of String(str).split("\n")) {
+        let line = "";
+        const tokens = para.match(/[A-Za-z0-9'’\-\./]+\s*|\s+|[\s\S]/g) || [];
+        for (const tk of tokens) {
+          if (tw(line + tk) <= maxW) { line += tk; continue; }
+          if (line.trim()) { out.push(line.replace(/\s+$/, "")); line = ""; }
+          if (tw(tk) <= maxW) { line = tk.replace(/^\s+/, ""); continue; }
+          for (const ch of tk) {
+            if (tw(line + ch) > maxW && line) { out.push(line); line = ""; }
+            line += ch;
+          }
+        }
+        if (line.trim()) out.push(line.replace(/\s+$/, ""));
+      }
+      const res = out.length ? out : [""];
+      _wrapCache.set(key, res);
+      return res;
+    }
+
+    function ensure(h) {
+      if (y + h > PH - 18) {
+        doc.addPage();
+        y = 20;
+        drawHeaderRule();
+        doc.setTextColor(140, 148, 168);
+        tt("高中英语 3500 词 · 巩固练习（续）", PW / 2, 11, 7.5, { align: "center" });
+        doc.setTextColor(30, 36, 52);
+        y = 22;
+      }
+    }
+    function drawHeaderRule() {
+      doc.setDrawColor(200, 206, 220);
+      doc.setLineWidth(0.2);
+      doc.line(ML, 14, PW - MR, 14);
+    }
+
+    /* ---------- 页头 ---------- */
+    doc.setDrawColor(27, 32, 48);
+    doc.setLineWidth(0.6);
+    tt("高中英语 3500 词 · 个性化巩固练习", PW / 2, 22, 15, { align: "center" });
+    doc.setTextColor(110, 118, 138);
+    tt("依据本次测验结果自动生成 · 建议限时 25 分钟", PW / 2, 28.5, 8.5, { align: "center" });
+    doc.setTextColor(30, 36, 52);
+    y = 32;
+    doc.line(ML, y, PW - MR, y);
+    y += 7;
+
+    /* ---------- 信息栏 ---------- */
+    tt("姓名：____________", ML, y, 9);
+    tt("班级：____________", ML + 58, y, 9);
+    tt("日期：____________", ML + 116, y, 9);
+    y += 8;
+    doc.setDrawColor(223, 227, 236);
+    doc.setLineDashPattern([1.2, 1.2], 0);
+    doc.line(ML, y, PW - MR, y);
+    doc.setLineDashPattern([], 0);
+    y += 8;
+
+    /* ---------- 分区渲染 ---------- */
+    function partTitle(no, title, sub) {
+      ensure(16);
+      doc.setFillColor(51, 85, 209);
+      doc.rect(ML, y - 3.6, 1.6, 5, "F");
+      tt(`${no}　${title}`, ML + 4, y, 10.5);
+      y += 4.6;
+      if (sub) {
+        doc.setTextColor(110, 118, 138);
+        for (const L of wrap(sub, WIDTH - 4, 8)) { tt(L, ML + 4, y, 8); y += 3.8; }
+        doc.setTextColor(30, 36, 52);
+      }
+      y += 1.8;
+    }
+
+    function numbered(n, content, lines, extra) {
+      const bodyW = WIDTH - 12;
+      const rows = [];
+      for (const seg of content) {
+        const w = wrap(seg.t, bodyW, seg.size || 9);
+        rows.push({ lines: w, size: seg.size || 9, gap: seg.gap || 4.8 });
+      }
+      const LINE_GAP = 8.2;   // 每条答题横线的行高
+      const textH = rows.reduce((a, r) => a + r.lines.length * r.gap, 0);
+      const drawnLines = lines || 0;
+      const h = textH + (drawnLines ? drawnLines * LINE_GAP : 0) + 1.6;
+      ensure(h);
+      doc.setTextColor(150, 158, 176);
+      tt(String(n).padStart(2, "0"), ML + 1, y, 7.5);
+      doc.setTextColor(30, 36, 52);
+      let yy = y;
+      for (const r of rows) {
+        for (const L of r.lines) { tt(L, ML + 10, yy, r.size); yy += r.gap; }
+      }
+      // 答题横线：紧贴题干最后一行下方，均匀排布
+      if (drawnLines) {
+        const base = yy - rows[rows.length - 1].gap + 3.4;   // 最后一行基线往下 3.4mm
+        doc.setDrawColor(196, 203, 218);
+        doc.setLineWidth(0.15);
+        for (let i = 0; i < drawnLines; i++) {
+          doc.line(ML + 12, base + i * LINE_GAP, PW - MR, base + i * LINE_GAP);
+        }
+        yy = base + (drawnLines - 1) * LINE_GAP + 0.8;
+      }
+      y = yy + (extra != null ? extra : 2.4);
+    }
+
+    const A = shuffle(words);
+    const B = shuffle(words).slice(0, Math.min(6, words.length));
+    const C = shuffle(words).slice(0, Math.min(8, words.length));
+    const D = shuffle(words).slice(0, Math.min(4, words.length));
+    const bank = shuffle(words).slice(0, 6);
+
+    partTitle("Part I", `写出中文释义（每词 2 分，共 ${A.length} 题）`,
+      "要求写出该词在高中阶段的核心义项，可附词性。");
+    A.forEach((v, i) => numbered(i + 1, [{ t: `${v.w}${v.ph ? "  /" + v.ph + "/" : ""}`, size: 10 }], 1));
+
+    partTitle("Part II", `根据中文写出英文（每题 2 分，共 ${B.length} 题）`,
+      "注意拼写、双写辅音、不发音字母。");
+    B.forEach((v, i) => numbered(i + 1, [{ t: `${v.m}${v.p ? "（" + v.p + "）" : ""}`, size: 9.5 }], 1));
+
+    partTitle("Part III", `首字母提示拼写（每题 1 分，共 ${C.length} 题）`,
+      "根据词性与释义补全单词，字母数已给出。");
+    C.forEach((v, i) => {
+      const hint = v.w[0] + " " + "_ ".repeat(Math.max(0, v.w.length - 1)).trim();
+      numbered(i + 1, [{ t: `${v.m}${v.p ? "（" + v.p + "）" : ""}　提示：${hint}`, size: 9 }], 0, 3.6);
+    });
+
+    partTitle("Part IV", `词形转换（每题 2 分，共 ${D.length} 题）`,
+      "给出原词，写出要求的派生形式。");
+    D.forEach((v, i) => numbered(i + 1, [{ t: `${v.w}（${v.p} ${v.m}）　写出其形容词 / 名词形式：`, size: 9 }], 1));
+
+    partTitle("Part V", `词义匹配（每题 1 分，共 ${bank.length} 题）`,
+      "从下方词库选出与释义对应的单词，把字母写在横线上，每个词只用一次。");
+    ensure(20);
+    doc.setDrawColor(223, 227, 236);
+    doc.setLineWidth(0.2);
+    const bankH = Math.ceil(bank.length / 3) * 6.4 + 6;
+    doc.roundedRect(ML, y - 2, WIDTH, bankH, 1.5, 1.5, "S");
+    bank.forEach((v, i) => {
+      const col = i % 3, row = Math.floor(i / 3);
+      tt(`${String.fromCharCode(65 + i)}. ${v.w}`, ML + 5 + col * (WIDTH / 3), y + 4 + row * 6.4, 9);
+    });
+    y += bankH + 5;
+    bank.forEach((v, i) => numbered(i + 1, [{ t: v.m + (v.p ? `（${v.p}）` : ""), size: 9 }], 0, 3.6));
+
+    partTitle("Part VI", "造句应用（任选 4 题，每题 5 分）",
+      "各写一个不少于 8 词的完整句子，体现该词的常见搭配。");
+    shuffle(words).slice(0, 4).forEach((v, i) => numbered(i + 1, [{ t: v.w, size: 10 }], 2));
+
+    /* ---------- 答案页 ---------- */
+    if (includeKey) {
+      doc.addPage();
+      y = 22;
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(27, 32, 48);
+      setFont(11);
+      tt("参考答案（可撕下）", ML, y, 11);
+      y += 5;
+      doc.line(ML, y, PW - MR, y);
+      y += 7;
+
+      setFont(8.6);
+      const COLW = WIDTH / 2 - 3;
+      const ROWH = 4.2;
+      const PER_COL = Math.ceil(words.length / 2);   // 两栏均分，左栏排完自动接右栏
+      const colX = (c) => ML + c * (WIDTH / 2 + 3);
+      let colTop = y;
+      words.forEach((v, i) => {
+        const label = `${i + 1}. ${v.w}  ${v.p || ""} ${v.m || ""}`.replace(/\s+/g, " ").trim();
+        const segs = wrap(label, COLW, 8.6);
+        const col = Math.floor(i / PER_COL);
+        const row = i % PER_COL;
+        const yy = colTop + row * (ROWH + 0.4);
+        if (yy + segs.length * ROWH > PH - 16) {       // 极端长词兜底：换页
+          doc.addPage();
+          colTop = y = 20;
+          return;
+        }
+        segs.forEach((L, k) => tt(L, colX(col), yy + k * ROWH, 8.6));
+      });
+    }
+
+    /* ---------- 页脚页码 ---------- */
+    const total = doc.internal.getNumberOfPages();
+    for (let p = 1; p <= total; p++) {
+      doc.setPage(p);
+      doc.setTextColor(160, 168, 186);
+      tt(`第 ${p} 页 / 共 ${total} 页`, PW / 2, PH - 9, 7.5, { align: "center" });
+    }
+    doc.setPage(total);
+    doc.setTextColor(30, 36, 52);
+
+    return doc.output("blob");
+  }
+
+  /* 手机/微信端：生成 PDF → 传云 → 用直链触发微信原生下载弹窗 */
+  async function worksheetPdfViaCloud(includeKey) {
+    const blob = await buildWorksheetPdf(includeKey);
+    if (!blob) { toast("还没有可下载的习题"); return { ok: false }; }
+    const name = DL_FILE(currentResult()) + ".pdf";
+    const r = await window.Cloud.uploadFile(name, blob, "application/pdf");
+    if (!r.ok) return { ok: false, error: r.error, blob };
+    return { ok: true, url: r.dlUrl || r.url, name, blob };
+  }
+
+  /* =========================================================
+     离线兜底：云存储不可用时，把练习 HTML 用 html2canvas 渲染成
+     一张长图，在应用内全屏展示。微信里长按图片可「保存到相册」，
+     再发到「文件传输助手」——完全不依赖任何服务端。
+     ========================================================= */
+  function showHtmlImageViewer(html, title) {
+    const wrap = document.createElement("div");
+    wrap.className = "pdf-view";
+    wrap.innerHTML = `
+      <div class="pdf-view-bar">
+        <span>${esc(title || "巩固练习")}</span>
+        <button class="pv-close">关闭</button>
+      </div>
+      <div class="pdf-view-tip">长按下面的图片 → <b>保存图片</b>；也可直接截屏。</div>
+      <div class="pdf-view-body"><div class="pdf-view-loading">正在生成图片，请稍候…</div></div>`;
+    document.body.appendChild(wrap);
+    wrap.querySelector(".pv-close").onclick = () => wrap.remove();
+
+    const body = wrap.querySelector(".pdf-view-body");
+    return new Promise((resolve, reject) => {
+      // 用离屏 iframe 承载 A4 版式，尺寸固定为 794px（A4 @96dpi）
+      const ifr = document.createElement("iframe");
+      ifr.style.cssText = "position:fixed;left:-10000px;top:0;width:794px;height:1123px;border:0;";
+      document.body.appendChild(ifr);
+      const d = ifr.contentDocument || ifr.contentWindow.document;
+      d.open();
+      d.write(html);
+      d.close();
+
+      const render = async () => {
+        try {
+          if (!window.html2canvas) throw new Error("截图组件未加载");
+          const target = d.body;
+          const canvas = await window.html2canvas(target, {
+            backgroundColor: "#ffffff",
+            scale: Math.min(2, window.devicePixelRatio || 1.5),
+            useCORS: true,
+            logging: false,
+            windowWidth: 794,
+            width: 794,
+            height: target.scrollHeight
+          });
+          body.innerHTML = "";
+          body.appendChild(canvas);
+          resolve(canvas);
+        } catch (e) {
+          body.innerHTML = `<div class="pdf-view-loading">图片生成失败：${esc(e.message || e)}</div>`;
+          reject(e);
+        } finally {
+          ifr.remove();
+        }
+      };
+      if (d.readyState === "complete") setTimeout(render, 260);
+      else ifr.onload = () => setTimeout(render, 260);
+    });
+  }
+
   let lastResult = null;
   const currentResult = () => lastResult || {};
 
@@ -738,10 +1067,11 @@
       return;
     }
     const IN_WX = /MicroMessenger/i.test(navigator.userAgent);
+    const IN_MOBILE = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
     modal("下载巩固练习", `
       <div class="dl-sheet">
-        ${IN_WX ? `<div class="wx-tip">当前在微信内打开，系统限制「直接下载」和「打印」。
-          点下面 <b>「发到微信文件助手」</b> 生成链接，粘贴给文件传输助手即可保存、打印、转发。</div>` : ""}
+        ${IN_WX ? `<div class="wx-tip">微信里点 <b>「生成 PDF 并下载」</b>，会像接收文件一样弹出
+          <b>「文件已下载完成 · 打开文件 · 分享给朋友」</b>，可以直接存到手机、转发到群。</div>` : ""}
         <div class="dl-lead">只下载<b>习题本身</b>（题目 + 答题横线），不含得分、诊断、提升方案等评价内容。</div>
         <label class="dl-row">
           <input type="checkbox" id="dl-key" checked>
@@ -749,13 +1079,18 @@
         </label>
         <div class="dl-grid">
           <button class="dl-btn primary" id="dl-wx">
-            <span class="dl-t"><b>发到微信文件助手</b><i>生成链接 → 复制 → 粘贴给「文件传输助手」</i></span>
+            <span class="dl-t"><b>生成 PDF 并下载</b><i>${IN_MOBILE
+              ? "生成后弹微信文件下载框，可直接保存/转发"
+              : "生成 PDF 直链，浏览器直接下载"}</i></span>
           </button>
-          <button class="dl-btn" id="dl-pdf">
-            <span class="dl-t"><b>下载 PDF</b><i>排版固定，适合打印/发群（电脑端）</i></span>
+          <button class="dl-btn" id="dl-img">
+            <span class="dl-t"><b>保存为图片</b><i>不用联网，长按图片存相册后转发（最稳）</i></span>
           </button>
+          ${IN_MOBILE ? "" : `<button class="dl-btn" id="dl-pdf">
+            <span class="dl-t"><b>打印 / 另存为 PDF</b><i>走系统打印面板（电脑端）</i></span>
+          </button>`}
           <button class="dl-btn" id="dl-doc">
-            <span class="dl-t"><b>下载 Word</b><i>可编辑，改题目/加校名（电脑端）</i></span>
+            <span class="dl-t"><b>下载 Word</b><i>可编辑，改题目/加校名${IN_MOBILE ? "" : ""}</i></span>
           </button>
           <button class="dl-btn" id="dl-html">
             <span class="dl-t"><b>下载网页文件</b><i>单个 .html，手机可直接看</i></span>
@@ -763,54 +1098,116 @@
         </div>
         <div id="wx-result"></div>
         <div class="dl-foot">${IN_WX
-          ? "微信里：复制链接 → 聊天列表搜索「文件传输助手」→ 粘贴发送，手机和电脑微信都能打开。"
-          : "PDF 会打开系统打印窗口，在「目标打印机」里选 另存为 PDF 即可保存到本地。"}</div>
+          ? "下载完成后，微信里「我 → 收藏 / 文件」或聊天里的文件记录都能再次打开，也可以直接转发给班级群。"
+          : "点「生成 PDF 并下载」会直接开始下载 .pdf 文件。"}</div>
       </div>`, null, "关闭");
 
     const withKey = () => ($("#dl-key") ? $("#dl-key").checked : true);
 
-    /* 微信文件助手：上传到云存储 → 出链接 → 复制 */
+    /* 生成 PDF → 传云 → 拿到 http 直链，微信里点开会弹原生「文件已下载完成」 */
     $("#dl-wx").onclick = async () => {
       const box = $("#wx-result");
       const btn = $("#dl-wx");
       btn.disabled = true;
-      box.innerHTML = `<div class="wx-uploading">正在生成链接…</div>`;
-      const html = worksheetHtml(withKey());
-      if (!html) { btn.disabled = false; box.innerHTML = ""; return toast("还没有可下载的习题"); }
-      const r = await window.Cloud.uploadWorksheet(DL_FILE(currentResult()), html);
-      btn.disabled = false;
-      if (!r.ok) {
-        box.innerHTML = `<div class="wx-err">生成失败：${esc(r.error)}。可稍后重试，或用电脑浏览器下载。</div>`;
+      box.innerHTML = `<div class="wx-uploading">正在生成 PDF，请稍候…（首次约 3-6 秒）</div>`;
+      let r = null;
+      try {
+        r = await worksheetPdfViaCloud(withKey());
+      } catch (e) {
+        r = { ok: false, error: e && e.message ? e.message : "生成失败" };
+      }
+
+      if (r && r.ok) {
+        btn.disabled = false;
+        box.innerHTML = `
+          <div class="wx-ok">
+            <b>PDF 已生成</b>
+            <div class="wx-steps2">点下面按钮即可下载：微信会弹出「文件已下载完成 / 打开文件 / 分享给朋友」。</div>
+            <button class="btn btn-primary btn-sm" id="btn-dl-pdf-now">立即下载 PDF</button>
+            <button class="btn btn-soft btn-sm" id="btn-copy-pdf">复制下载链接</button>
+          </div>`;
+        const fire = () => {
+          // 微信内置浏览器对 http 直链的 .pdf 会走下载器，不跳外部浏览器
+          const a = document.createElement("a");
+          a.href = r.url;
+          a.target = "_blank";
+          a.rel = "noopener";
+          a.download = r.name || "worksheet.pdf";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        };
+        $("#btn-dl-pdf-now").onclick = fire;
+        $("#btn-copy-pdf").onclick = () => {
+          const done = () => toast("链接已复制，可在浏览器或微信里打开下载");
+          const fallback = () => {
+            const ta = document.createElement("textarea");
+            ta.value = r.url; ta.style.cssText = "position:fixed;opacity:0";
+            document.body.appendChild(ta); ta.select();
+            try { document.execCommand("copy"); done(); }
+            catch (e) { toast("复制失败，请长按下方链接手动复制"); }
+            ta.remove();
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(r.url).then(done).catch(fallback);
+          } else fallback();
+        };
+        // 微信里直接自动触发一次，省一步点击
+        setTimeout(fire, 120);
         return;
       }
-      box.innerHTML = `
-        <div class="wx-ok">
-          <b>链接已生成</b>
-          <div class="wx-link">${esc(r.url)}</div>
-          <button class="btn btn-primary btn-sm" id="btn-copy-wx">复制链接</button>
-          <ol class="wx-steps">
-            <li>点上方按钮复制链接</li>
-            <li>微信聊天列表顶部 <b>搜索「文件传输助手」</b>，打开对话</li>
-            <li>粘贴并发送 —— 手机、电脑微信都能打开，可打印、可转发、可另存</li>
-          </ol>
-        </div>`;
-      $("#btn-copy-wx").onclick = () => {
-        const done = () => toast("已复制，去微信粘贴给「文件传输助手」");
-        const fallback = () => {
-          const ta = document.createElement("textarea");
-          ta.value = r.url; ta.style.cssText = "position:fixed;opacity:0";
-          document.body.appendChild(ta); ta.select();
-          try { document.execCommand("copy"); done(); }
-          catch (e) { toast("复制失败，请长按链接手动复制"); }
-          ta.remove();
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(r.url).then(done).catch(fallback);
-        } else fallback();
-      };
+
+      /* 降级 1：云端传不上去（存储桶策略未开通/网络问题）→ 本地渲染成长图，长按保存 */
+      btn.disabled = false;
+      const htmlForImg = worksheetHtml(withKey());
+      if (htmlForImg) {
+        box.innerHTML = `<div class="wx-uploading">云端暂时不可用，正在本地生成图片版…</div>`;
+        try {
+          await showHtmlImageViewer(htmlForImg, DL_FILE(currentResult()));
+          box.innerHTML = `
+            <div class="wx-ok">
+              <b>已生成图片版（可保存到相册）</b>
+              <div class="wx-steps2">在打开的页面里 <b>长按图片 → 保存图片</b>，
+                再到微信「我 → 相册」发到「文件传输助手」或班级群即可。</div>
+              <button class="btn btn-soft btn-sm" id="btn-reopen-pdf">再打开一次</button>
+            </div>`;
+          $("#btn-reopen-pdf").onclick = () => showHtmlImageViewer(htmlForImg, DL_FILE(currentResult()));
+          return;
+        } catch (e) {
+          box.innerHTML = `<div class="wx-err">图片版生成失败：${esc(e.message || e)}。请用电脑浏览器下载 PDF。</div>`;
+          return;
+        }
+      }
+
+      /* 降级 2：连练习内容都没有 → 提示 */
+      box.innerHTML = `<div class="wx-err">生成失败：${esc((r && r.error) || "未知错误")}。请用电脑浏览器下载 PDF。</div>`;
     };
 
-    $("#dl-pdf").onclick = () => worksheetPdf(withKey());
+    const pdfBtn = $("#dl-pdf");
+    if (pdfBtn) pdfBtn.onclick = () => worksheetPdf(withKey());
+
+    $("#dl-img").onclick = async () => {
+      const box = $("#wx-result");
+      const b = $("#dl-img");
+      b.disabled = true;
+      box.innerHTML = `<div class="wx-uploading">正在生成图片，请稍候…</div>`;
+      try {
+        const html = worksheetHtml(withKey());
+        if (!html) { box.innerHTML = ""; return toast("还没有可下载的习题"); }
+        await showHtmlImageViewer(html, DL_FILE(currentResult()));
+        box.innerHTML = `
+          <div class="wx-ok">
+            <b>图片已生成</b>
+            <div class="wx-steps2">长按图片 → <b>保存图片</b>，再去相册发送到「文件传输助手」或班级群。</div>
+            <button class="btn btn-soft btn-sm" id="btn-reopen-img">再打开一次</button>
+          </div>`;
+        $("#btn-reopen-img").onclick = () => showHtmlImageViewer(html, DL_FILE(currentResult()));
+      } catch (e) {
+        box.innerHTML = `<div class="wx-err">生成失败：${esc(e.message || e)}</div>`;
+      } finally {
+        b.disabled = false;
+      }
+    };
     $("#dl-doc").onclick = () => worksheetWord(withKey());
     $("#dl-html").onclick = () => {
       const html = worksheetHtml(withKey());
