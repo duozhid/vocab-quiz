@@ -1,34 +1,41 @@
 {
-  "pw": "a2a99faeeaaf6",
-  "builtAt": 1792652313214,
+  "pw": "0123456789abc",
+  "builtAt": 1793261464886,
   "quizzes": [
     {
-      "id": "demo_xgffwx",
-      "code": "XGFFWX",
-      "name": "高一 Unit 1–2 词汇过关测",
+      "id": "q_69yvpsdaa",
+      "code": "7MDQW7",
+      "name": "测试",
       "alias": "00000000",
-      "bytes": 194
+      "bytes": 318
     },
     {
-      "id": "demo_rpmdkj",
-      "code": "RPMDKJ",
-      "name": "高二 高频动词专项",
+      "id": "q_ank7pkfqv",
+      "code": "DUU33J",
+      "name": "测试",
       "alias": "0000003J",
-      "bytes": 194
+      "bytes": 284
     },
     {
-      "id": "demo_yj64xf",
-      "code": "YJ64XF",
-      "name": "高三 一轮复习综合测",
+      "id": "q_ao5unz6my",
+      "code": "6DK9WM",
+      "name": "1",
       "alias": "00000050",
-      "bytes": 258
+      "bytes": 318
     },
     {
-      "id": "demo_v3y7nv",
-      "code": "V3Y7NV",
-      "name": "课堂 5 分钟小测",
+      "id": "q_96r6k8w37",
+      "code": "V3JA79",
+      "name": "测试",
       "alias": "0000006J",
-      "bytes": 130
+      "bytes": 318
+    },
+    {
+      "id": "q_9dpjjeqyo",
+      "code": "FXF6WV",
+      "name": "测试",
+      "alias": "00000084",
+      "bytes": 284
     }
   ]
 }
