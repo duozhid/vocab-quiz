@@ -134,12 +134,13 @@ window.Cloud = (() => {
   }
 
   /* 把巩固练习上传到云存储，返回公开链接（微信内转发/保存用）。
-     走公开密钥 + 存储桶 worksheets 的 anon INSERT 策略。 */
+     走公开密钥 + 存储桶 worksheets 的 anon INSERT 策略。
+     注意：Supabase Storage 的 key 只接受 ASCII 安全字符，文件名里的
+     中文会被去掉，只保留时间戳+随机段，避免 Invalid key。 */
   async function uploadWorksheet(fileName, html) {
     if (!enabled) return { ok: false, error: "云端未配置" };
-    // 路径只留安全字符，避免中文/特殊符号在不同端表现不一
-    const safe = String(fileName || "练习").replace(/[^\w\u4e00-\u9fa5.-]+/g, "_").slice(0, 40);
-    const path = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}-${safe}.html`;
+    const safe = String(fileName || "").replace(/[^a-zA-Z0-9_-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 30);
+    const path = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}${safe ? "-" + safe : ""}.html`;
     try {
       const res = await fetch(`${cfg.url}/storage/v1/object/worksheets/${path}`, {
         method: "POST",
