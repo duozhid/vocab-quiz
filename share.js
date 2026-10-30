@@ -2530,7 +2530,7 @@ window.ShareCodec = (() => {
        [3..7]  测验码（5 位/字符，30 位）
        题目区  每题 1 位题型 + 2 位正确位置 + 4×12 位词索引
        附注区  内置库覆盖不到的选项：数量 u16 + 每条 [len][词:释义:词性] */
-  const PER_Q_BITS = 1 + 2 + 4 * 12;
+  const PER_Q_BITS = 2 + 2 + 4 * 12;   // 题型 2 位（与 pack-share.js 对称）
   const CODE_ALPHA = "ACDEFGHJKLMNPQRTUVWXY34679";
 
   let builtinIndex = null;
@@ -2585,10 +2585,11 @@ window.ShareCodec = (() => {
     for (let k = 0; k < qCount; k++) {
       const base = k * PER_Q_BITS;
       const refs = [];
-      const isCn2en = readBits(base, 1) === 1;
+      const t = readBits(base, 2);
+      const isCn2en = t === 1 || t > 2;   // 3 视为旧数据的中译英
       const ai = readBits(base + 1, 2);
       for (let j = 0; j < 4; j++) refs.push(readBits(base + 3 + j * 12, 12));
-      raw.push({ isCn2en, ai, refs });
+      raw.push({ t, isCn2en, ai, refs });
     }
 
     p = qEnd;
@@ -2618,7 +2619,7 @@ window.ShareCodec = (() => {
       const c = opts[ai] || { word: "", meaning: "", pos: "" };
       return {
         id: k,
-        type: q.isCn2en ? "cn2en" : "en2cn",
+        type: q.t === 2 ? "usage" : q.isCn2en ? "cn2en" : "en2cn",
         word: c.word, meaning: c.meaning, pos: c.pos || "", phon: "",
         tier: "core",
         options: opts.map((r, i) => ({ word: r.word, meaning: r.meaning, correct: i === ai })),
