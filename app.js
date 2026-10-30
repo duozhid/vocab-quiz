@@ -1305,8 +1305,11 @@
     }
     const { stage, index } = staged;
     const total = stage.list.length;
-    const aliasCandidate = window.ShareCodec.hasVial() && index < window.ShareCodec.toc().count
-      ? window.ShareCodec.aliasAt(index) : "";
+    // 暗号按「合并进线上批次后的真实位置」计算：本地第 0 条在线上可能是第 6 条，
+    // 用本地索引算出的暗号会指向别的卷（这正是"线上密文与本卷不一致"的根源之一）。
+    let qrIndex = index;
+    const aliasCandidate = () => window.ShareCodec.hasVial() && qrIndex < window.ShareCodec.toc().count
+      ? window.ShareCodec.aliasAt(qrIndex) : "";
     const qrSize = 240;
 
     modal("测验已创建 · 学生扫码作答", `
@@ -1344,12 +1347,13 @@
       const slot = $("#qr-slot");
       if (!slot) { stopWatch(); return; }
       let ok = false, link = "", alias = "";
-      if (aliasCandidate) {
+      const cand = aliasCandidate();
+      if (cand) {
         try {
-          const decoded = await window.ShareCodec.decode(aliasCandidate);
+          const decoded = await window.ShareCodec.decode(cand);
           ok = decoded && String(decoded.code || "").toUpperCase() === String(q.code).toUpperCase()
             && (decoded.questions || []).length === q.count;
-          if (ok) { alias = aliasCandidate; link = window.ShareCodec.makeLink(alias); }
+          if (ok) { alias = cand; link = window.ShareCodec.makeLink(alias); }
         } catch (e) { ok = false; }
       }
       if (!slot.isConnected) return;   // 弹窗已被用户关闭
@@ -1458,6 +1462,8 @@
         return;
       }
       if (note) note.innerHTML = `已推送（含线上原有 <b>${merged.length - local.length > 0 ? merged.length - local.length : 0}</b> 份 + 本地 <b>${local.length}</b> 份），后台正在打包上线…`;
+      const bi = merged.findIndex(x => String(x.c || x.code || "") === String(q.code));
+      if (bi >= 0) qrIndex = bi;   // 用合并后的真实位置重算暗号
       watchPublish();
     };
 
