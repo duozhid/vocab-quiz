@@ -66,7 +66,7 @@ window.Store = (() => {
       bankId: bankId || null, bankName: bank ? bank.name : "",
       classId,
       count: n, minutes: minutes || 15, instant: instant !== false,
-      types: types || ["en2cn", "cn2en"],
+      types: types || ["en2cn", "cn2en", "usage"],
       createdAt: Date.now(), open: true
     };
     db.quizzes.push(q); save(); return q;
