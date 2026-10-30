@@ -17,14 +17,15 @@
   };
   const TYPES = {
     en2cn: { name: "英译中", desc: "看英文选中文释义" },
-    cn2en: { name: "中译英", desc: "看中文选对应英文单词" }
+    cn2en: { name: "中译英", desc: "看中文选对应英文单词" },
+    usage: { name: "英语知识运用", desc: "根据释义选出拼写正确的单词" }
   };
 
   const state = {
     vocab: [],
     mode: "mixed",        // core / mid / high / mixed
     count: 20,
-    types: ["en2cn", "cn2en"],
+    types: ["en2cn", "cn2en", "usage"],
     instant: true,
     timed: true,
     deadlineTimer: null,
@@ -75,7 +76,27 @@
   }
 
   /* ---------- 组卷 ---------- */
+  /* 生成 3 个"像样但错误"的拼写变体，用于英语知识运用题。
+     变换策略：去/加双写字母、交换中部相邻字母、易混元音组合、词尾 e。
+     生成的变体必须不在真实词库中，避免"误打误撞选了正确答案"。 */
+  function misspellings(w, vocabSet) {
+    const out = [];
+    const add = v => { if (v && v !== w && /^[a-z\-]{2,}$/.test(v) && !out.includes(v) && !vocabSet.has(v)) out.push(v); };
+    add(w.replace(/([a-z])\1/, "$1"));                                   // success → sucess
+    add(w.length > 3 ? w.slice(0, -1) : w + w.slice(-1));                // 去尾字母 / 双写尾字母
+    const mid = Math.max(1, Math.floor(w.length / 2));                   // 交换中部相邻字母
+    if (w.length > 3) add(w.slice(0, mid) + w[mid + 1] + w[mid] + w.slice(mid + 2));
+    add(w.replace(/ie/, "ei").replace(/ea/, "ee").replace(/ou/, "oa"));  // 易混元音
+    add(w.length > 3 && w.endsWith("e") ? w.slice(0, -1) : w + "e");     // 词尾 e 增删
+    if (w.length > 4) add(w.slice(0, -2) + w.slice(-1) + w.slice(-2, -1)); // 交换末两字母
+    // 兜底：仍有缺就补"双写首音节"之类简单变体
+    let guard = 0;
+    while (out.length < 3 && guard++ < 8) add(w + "s".repeat(guard % 2) + (guard > 4 ? "e" : ""));
+    return out.slice(0, 3);
+  }
+
   function buildQuestions() {
+    const vocabSet = new Set(state.vocab.map(v => String(v.w).toLowerCase()));
     let pool = state.vocab.filter(v => v.m && v.m.length > 1 && /^[a-z\-]+$/.test(v.w));
     if (state.mode !== "mixed") {
       pool = state.vocab.filter(v => v.tier === state.mode && v.m);
@@ -89,6 +110,19 @@
 
     return chosen.map((v, i) => {
       const type = state.types[rnd(state.types.length)];
+
+      // 英语知识运用：给释义，从形近拼写变体里选正确单词
+      if (type === "usage") {
+        const vars = misspellings(v.w, vocabSet);
+        const options = shuffle([v, ...vars.map(w => ({ w, m: "", p: v.p }))])
+          .map(x => ({ word: x.w, meaning: x.m, pos: x.p, correct: x.w === v.w }));
+        return {
+          id: i, type, word: v.w, meaning: v.m, pos: v.p, phon: v.ph,
+          tier: v.tier || tierOf(state.vocab.indexOf(v), state.vocab.length),
+          options, answerIndex: options.findIndex(o => o.correct)
+        };
+      }
+
       const samePos = (byPos[v.p] || state.vocab).filter(x => x.w !== v.w);
       let distractors = [];
 
@@ -187,11 +221,12 @@
         : `<span class="spk" data-say="${esc(q.word)}" title="朗读">🔊 朗读</span>`;
       $("#q-instr").textContent = "选出该单词最恰当的中文释义";
     } else {
+      // cn2en 与 usage：题干给中文释义（+词性），选项给英文单词
       $("#q-stem").innerHTML = `<span class="stem-cn">${esc(q.meaning)}</span>`;
       $("#q-phon").innerHTML = q.pos
         ? `<span class="pos-hint">词性：${esc(q.pos)}</span>`
         : "";
-      $("#q-instr").textContent = "选出与中文释义对应的英文单词";
+      $("#q-instr").textContent = q.type === "usage" ? "英语知识运用：选出拼写正确的单词" : "选出与中文释义对应的英文单词";
     }
 
     // 选项一律只显示「作答侧」的文本，绝不附带答案侧信息
@@ -231,6 +266,10 @@
         // 作答侧是中文：指出你选的那条释义其实属于哪个词
         fb.innerHTML = `<span class="ic">✕</span><span>正确答案是「<b>${esc(right.meaning)}</b>」。<br>
           你选的「${esc(pick.meaning)}」是 <b>${esc(pick.word)}</b> 的意思。</span>`;
+      } else if (q.type === "usage") {
+        // 拼写题：强调正确写法与易错点
+        fb.innerHTML = `<span class="ic">✕</span><span>正确拼写是 <b>${esc(right.word)}</b>（${esc(q.pos)} ${esc(q.meaning)}）。<br>
+          你选的 <b>${esc(pick.word)}</b> 拼写有误 —— 这类形近词建议抄写 3 遍加深印象。</span>`;
       } else {
         fb.innerHTML = `<span class="ic">✕</span><span>正确答案是 <b>${esc(right.word)}</b>（${esc(right.pos)} ${esc(right.meaning)}）。<br>
           你选的 <b>${esc(pick.word)}</b> 释义为：${esc(pick.meaning)}。</span>`;
@@ -326,7 +365,7 @@
         <p class="rp-sum">本次共 ${r.total} 题，答对 <b>${r.correct}</b> 题，答错 <b>${r.total - r.correct}</b> 题。${g.desc}。
         ${weakTier ? `四项能力中最薄弱的是「${TIERS[weakTier[0]].name}」（正确率 ${weakTier[1]}%），
         表现最稳的是「${TIERS[strongTier[0]].name}」（${strongTier[1]}%）。` : ""}
-        ${weakType && weakType[1] < 80 ? `题型上，<b>${TYPES[weakType[0]].name}</b>正确率仅 ${weakType[1]}%，说明「${weakType[0] === "cn2en" ? "会认不会写、拼写提取慢" : "词义辨识不牢、看到英文想不起中文"}」是当前主要瓶颈。` : ""}</p>
+        ${weakType && weakType[1] < 80 ? `题型上，<b>${TYPES[weakType[0]].name}</b>正确率仅 ${weakType[1]}%，说明「${weakType[0] === "cn2en" ? "会认不会写、拼写提取慢" : weakType[0] === "usage" ? "拼写运用不牢、形近词易混" : "词义辨识不牢、看到英文想不起中文"}」是当前主要瓶颈。` : ""}</p>
         <div class="rp-quick">
           <div><span>${r.avgMs}s</span><small>平均每题耗时</small></div>
           <div><span>${r.guessed}</span><small>瞬时作答（疑猜）</small></div>
@@ -576,7 +615,7 @@
       : builtinVocab.map((v, i) => ({ ...v, tier: tierOf(i, builtinVocab.length) }));
     state.mode = "mixed";
     state.count = Math.min(q.count, state.vocab.length);
-    state.types = q.types && q.types.length ? q.types : ["en2cn", "cn2en"];
+    state.types = q.types && q.types.length ? q.types : ["en2cn", "cn2en", "usage"];
     state.instant = q.instant !== false;
     state.questions = buildQuestions();
 
@@ -1939,7 +1978,7 @@
       code: pendingShare.code, name: pendingShare.name,
       minutes: pendingShare.minutes, instant: pendingShare.instant,
       count: pendingShare.questions.length,
-      types: ["en2cn", "cn2en"], bankName: pendingShare.bankName,
+      types: ["en2cn", "cn2en", "usage"], bankName: pendingShare.bankName,
       studentName: name
     };
     selfMode = false;
@@ -1960,7 +1999,7 @@
   }
 
   function startSelfTest() {
-    currentQuiz = { id: null, name: "内置词库自主检测", minutes: 15, instant: true, count: 20, types: ["en2cn", "cn2en"], studentName: $("#name-input").value.trim() || "匿名学生" };
+    currentQuiz = { id: null, name: "内置词库自主检测", minutes: 15, instant: true, count: 20, types: ["en2cn", "cn2en", "usage"], studentName: $("#name-input").value.trim() || "匿名学生" };
     selfMode = true;
     state.vocab = builtinVocab.map((v, i) => ({ ...v, tier: tierOf(i, builtinVocab.length) }));
     beginQuiz();
