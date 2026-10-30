@@ -2421,6 +2421,18 @@ window.ShareCodec = (() => {
 
   /* ---------------- 密钥瓶 ---------------- */
   let vialCache = null;
+  /* 热更新：runner 刚发布的新批次不会自动进入已打开的页面，
+     教师端发布轮询会拉最新 index.html 并注入这里，避免"必须刷新才能出二维码"。 */
+  function loadVial(b64) {
+    try {
+      const bin = atob(String(b64 || "").trim());
+      const arr = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      vialCache = arr;
+      keyCache = null;
+      return true;
+    } catch { return false; }
+  }
   function getVial() {
     if (vialCache !== null) return vialCache;
     if (!FIXED_B64) return (vialCache = null);
@@ -2779,7 +2791,7 @@ window.ShareCodec = (() => {
   }
 
   return {
-    decode, makeLink, readFromUrl, hasVial, toc, aliasAt,
+    decode, makeLink, readFromUrl, hasVial, toc, aliasAt, loadVial,
     qrSvg: (text, px) => QR.svg(text, px),
     qrCanvas: (text, px) => QR.toCanvas(text, px)
   };
