@@ -70,7 +70,7 @@ function build() {
     if (w && !indexOf.has(w)) indexOf.set(w, rankOf.get(orig));
   });
 
-  const PER_Q_BITS = 1 + 2 + 4 * 12;
+  const PER_Q_BITS = 2 + 2 + 4 * 12;   // 题型 2 位：0 英译中 / 1 中译英 / 2 英语知识运用
   const CODE_ALPHA = "ACDEFGHJKLMNPQRTUVWXY34679";
 
   // 6 字符 × 5 位 = 30 位，第一个字符占最高位；整体右对齐成 32 位再切 4 字节。
@@ -105,7 +105,7 @@ function build() {
 
     qs.forEach(q => {
       const ai = Math.max(0, q.options.findIndex(o => o.correct)) & 3;
-      push(q.type === "cn2en" ? 1 : 0, 1);
+      push(q.type === "usage" ? 2 : q.type === "cn2en" ? 1 : 0, 2);
       push(ai, 2);
       q.options.forEach(o => {
         const key = String(o.word).toLowerCase();
