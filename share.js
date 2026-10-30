@@ -2696,8 +2696,10 @@ window.ShareCodec = (() => {
      线上：https://<域名>/s/XXXXXXXX  （27 字符）
      本地双击打开（file:）：退回 #p= 形式 */
   function makeLink(alias) {
+    // GitHub Pages 项目站部署在 /vocab-quiz/ 子路径下，且没有 /s/ 路由（会 404），
+    // 统一用「当前页面路径 + #p=暗号」的形式：任何静态托管都能直接打开。
     if (location.protocol === "file:") return `${location.pathname}#p=${alias}`;
-    return `${location.origin}/s/${alias}`;
+    return `${location.origin}${location.pathname}#p=${alias}`;
   }
 
   /* 瓶内第 idx 份试卷的暗号（与打包脚本算法一致） */
