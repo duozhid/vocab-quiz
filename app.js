@@ -1397,6 +1397,17 @@
       verifyAndRenderQr();
       watcher = setInterval(async () => {
         if (!$("#qr-slot")) { stopWatch(); return; }
+        // 热更新密钥瓶：runner 刚上线时本页还是旧密文，不刷新就会一直"查不到这份卷"
+        try {
+          const res = await fetch(location.pathname + "?vialwatch=" + Date.now(), { cache: "no-store" });
+          if (res.ok) {
+            const m = (await res.text()).match(/id="vial-data">([^<]*)<\/script>/);
+            if (m && m[1] !== window.__vialSeen && window.ShareCodec.loadVial) {
+              window.__vialSeen = m[1];
+              window.ShareCodec.loadVial(m[1]);
+            }
+          }
+        } catch { /* 网络抖动忽略，下一轮再试 */ }
         await verifyAndRenderQr();
       }, 5000);
     };
