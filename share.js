@@ -2599,8 +2599,8 @@ window.ShareCodec = (() => {
       const refs = [];
       const t = readBits(base, 2);
       const isCn2en = t === 1 || t > 2;   // 3 视为旧数据的中译英
-      const ai = readBits(base + 1, 2);
-      for (let j = 0; j < 4; j++) refs.push(readBits(base + 3 + j * 12, 12));
+      const ai = readBits(base + 2, 2);   // 打包端：type(2位)+ai(2位)，ai 从第 2 位开始
+      for (let j = 0; j < 4; j++) refs.push(readBits(base + 4 + j * 12, 12));
       raw.push({ t, isCn2en, ai, refs });
     }
 
