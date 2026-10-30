@@ -484,7 +484,11 @@ window.DocxParser = (() => {
       const one = parseLine(line);
       if (one) out.push(one);
     });
-    return out;
+    // 与 parseFile 一致：合并同词多行并展平成 {w, p, m, ph}，
+    // 否则词条缺 m/p 字段，组卷时释义全空（此前粘贴路径踩过这个坑）。
+    const merged = mergeRecords(out);
+    merged.sort((a, b) => a.w.localeCompare(b.w));
+    return toItems(merged);
   }
 
   /* =========================================================
