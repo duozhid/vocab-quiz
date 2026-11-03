@@ -109,3 +109,17 @@ GITHUB_TOKEN=<contents:write 的 PAT> POLL_SECONDS=60 node runner.js
 当前沙箱里的 `node runner.js --once` 只在沙箱存活期间有效。沙箱休眠后，
 「点发布 → 二维码自动出现」会退化为「导出备份 → 手动上传」。
 长期使用请按上表切到 GitHub Actions。
+
+## 发布不再依赖 runner（浏览器端打包）
+
+GitHub 网页打不开、或没有常开机器时，原来的「runner 定时打包」就用不了。
+现在把打包搬到浏览器里（`ShareCodec.packVial`，与解码严格对称）：
+
+老师点「发布上线」→ 浏览器本地用 WebCrypto 打包并加密 → 通过 GitHub Contents API
+直接提交 index.html → Pages 自动重建。全程不经过任何服务器。
+
+- 令牌只存老师本机 localStorage，不上传
+- 没配令牌时会退化为「下载打好补丁的 index.html」，手动替换也能上线
+- 提交后本地立刻按新密文渲染二维码，不必等 Pages 缓存刷新（约 1 分钟）
+
+验证：10 份卷往返打包→解码，题面/选项/正确答案完全一致。
