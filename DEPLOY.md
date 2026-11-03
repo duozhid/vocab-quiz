@@ -77,3 +77,35 @@ GITHUB_TOKEN=<contents:write 的 PAT> POLL_SECONDS=60 node runner.js
 ## 联调试卷 ACDE34
 
 线上保留一份 8 题的小卷（英译中 3 / 中译英 3 / 英语知识运用 2），用于验证三种题型全链路。源码见 `tools-build-batch.js`，需要时 `node tools-build-batch.js && node pack-share.js` 重新生成。
+
+## 公网访问（现状）
+
+站点已是公网可访问：**https://duozhid.github.io/vocab-quiz/**
+- 仓库 `duozhid/vocab-quiz` 为 public，GitHub Pages 已开启，任何人（含微信内）可直接打开
+- 无服务器成本，静态托管；数据在 Supabase（免费额度）
+
+## 发布流水线的三种运行方式
+
+老师点「发布上线」后，需要有个「搬运工」把批次重打包并提交到 Pages。按可靠性排序：
+
+| 方式 | 是否需要常开电脑 | 说明 |
+|---|---|---|
+| **GitHub Actions**（推荐） | 不需要 | `runner.js --once` 每 5 分钟跑一轮；文件见 `.github/workflows/publish.yml` |
+| 自己的服务器 / 云函数 | 需要（或定时触发） | `node runner.js` 常驻，或 cron 调 `--once` |
+| 本机手动 | 不需要 | 老师点「导出备份」后手动上传 index.html |
+
+### 启用 GitHub Actions 的两个前置步骤
+
+1. **首次必须用网页端创建 workflow 文件**：GitHub 禁止用 PAT 通过 API 创建 `.github/workflows/*`（会返回 403）。
+   把本地 `.github/workflows/publish.yml` 的内容复制到仓库网页 → Add file → Create new file → 路径填
+   `.github/workflows/publish.yml` → 粘贴 → Commit。
+2. 仓库 Settings → Secrets and variables → Actions → Variables 添加 `SUPABASE_URL` 和 `SUPABASE_ANON_KEY`
+   （不配也能从 index.html 的 cloud-config 自动读取，但显式配置更清晰）。
+
+启用后可在 Actions 页面点「Run workflow」手动触发一次，验证是否正常打包上线。
+
+## 沙箱 runner 的局限
+
+当前沙箱里的 `node runner.js --once` 只在沙箱存活期间有效。沙箱休眠后，
+「点发布 → 二维码自动出现」会退化为「导出备份 → 手动上传」。
+长期使用请按上表切到 GitHub Actions。
