@@ -2767,6 +2767,115 @@ window.ShareCodec = (() => {
     return { build, svg, toCanvas };
   })();
 
+  /* ---------------- 浏览器端打包（与 unpackBin 严格对称） ----------------
+     为什么要把打包放进浏览器：原来由服务器上的 runner 定时打包并提交到 GitHub，
+     一旦 runner 不在（没有常开机器、或访问不了 github.com），老师点「发布上线」
+     后二维码就永远出不来。挪到浏览器后，老师点一次按钮即可产出新密文，
+     再把密文写回线上 index.html（GitHub API 或直接下载替换）。 */
+  function packCodeBits(codeStr) {
+    const s = String(codeStr || "").toUpperCase().slice(0, 6);
+    let val = 0;
+    for (let i = 0; i < 6; i++) {
+      const v = i < s.length ? Math.max(0, CODE_ALPHA.indexOf(s[i])) : 0;
+      val = val * 32 + v;
+    }
+    return { bytes: [(val >>> 24) & 0xff, (val >>> 16) & 0xff, (val >>> 8) & 0xff, val & 0xff], len: s.length };
+  }
+
+  function encodeQuizBytes(quiz) {
+    const qs = quiz.q || quiz.questions || [];
+    const code = String(quiz.code || quiz.c || "").toUpperCase();
+    const flags = (quiz.instant === false || quiz.i === 0 ? 0 : 1) | (code ? 2 : 0);
+    const out = [0x40 | flags];
+    out.push(Math.max(1, Math.min(255, quiz.minutes || quiz.m || 15)));
+    out.push(Math.min(255, qs.length));
+    if (code) { const pc = packCodeBits(code); out.push(...pc.bytes, pc.len); }
+
+    const idx = getBuiltinIndex();
+    const extras = [];
+    const bits = [];
+    const push = (v, n) => { for (let i = n - 1; i >= 0; i--) bits.push((v >> i) & 1); };
+
+    qs.forEach(q => {
+      const opts = q.options || [];
+      const ai = Math.max(0, opts.findIndex(o => o.correct)) & 3;
+      push(q.type === "usage" ? 2 : q.type === "cn2en" ? 1 : 0, 2);
+      push(ai, 2);
+      opts.forEach(o => {
+        const key = String(o.word || "").toLowerCase();
+        if (idx.has(key) && idx.get(key) <= 0xffe) {
+          push(idx.get(key), 12);
+        } else {
+          // 与解码端一致：附注按 0xfff 出现顺序逐条消费，不能去重
+          extras.push("W:" + (o.word || "") + ":" + (o.meaning || "") + ":" + (o.pos || q.pos || ""));
+          push(0xfff, 12);
+        }
+      });
+      for (let k = opts.length; k < 4; k++) push(0xfef, 12);
+    });
+
+    for (let i = 0; i < bits.length; i += 8) {
+      let b = 0;
+      for (let j = 0; j < 8; j++) b = (b << 1) | (bits[i + j] || 0);
+      out.push(b);
+    }
+    const cnt = new Uint8Array(2);
+    cnt[0] = extras.length & 0xff; cnt[1] = (extras.length >> 8) & 0xff;
+    const ext = [];
+    extras.forEach(s => {
+      const b = new TextEncoder().encode(s);
+      ext.push(b.length, ...b);
+    });
+    return new Uint8Array([...out, ...cnt, ...ext]);
+  }
+
+  /* 把整批试卷打包成密钥瓶 Base64。pw 必须 13 位十六进制。 */
+  async function packVial(quizzes, pw) {
+    const subtle = crypto && crypto.subtle;
+    if (!subtle) throw new Error("当前浏览器内核过旧，无法在本机打包");
+    let pwHex = String(pw || "").replace(/[^0-9a-f]/gi, "").toLowerCase();
+    while (pwHex.length < 13) pwHex += "0123456789abcdef"[pwHex.length % 16];
+    pwHex = pwHex.slice(0, 13);
+
+    const km = await subtle.importKey("raw", new TextEncoder().encode("gk3500-vial|" + pwHex), "PBKDF2", false, ["deriveBits"]);
+    const bits = await subtle.deriveBits(
+      { name: "PBKDF2", salt: new TextEncoder().encode("gk3500-v1"), iterations: 10000, hash: "SHA-256" },
+      km, 256
+    );
+    const key = await subtle.importKey("raw", bits, "AES-GCM", false, ["encrypt"]);
+    const aad = new TextEncoder().encode("gkv1");
+
+    const sealed = [];
+    for (const q of quizzes) {
+      const plain = encodeQuizBytes(q);
+      const nonce = crypto.getRandomValues(new Uint8Array(12));
+      const ct = await subtle.encrypt({ name: "AES-GCM", iv: nonce, additionalData: aad }, key, plain);
+      const body = new Uint8Array(ct);          // 密文 + 16 字节 tag
+      const rec = new Uint8Array(12 + body.length);
+      rec.set(nonce, 0); rec.set(body, 12);
+      sealed.push(rec);
+    }
+
+    const recLen = sealed.reduce((m, b) => Math.max(m, b.length), 0);
+    const total = 16 + (recLen + 2) * sealed.length;
+    const vial = new Uint8Array(total);
+    vial[0] = 2;
+    for (let i = 0; i < 13; i++) vial[1 + i] = pwHex.charCodeAt(i);
+    vial[14] = sealed.length & 0xff;
+    vial[15] = (sealed.length >> 8) & 0xff;
+    let p = 16;
+    sealed.forEach(b => {
+      vial[p] = (b.length >> 8) & 0xff;         // u16 BE 记录长度
+      vial[p + 1] = b.length & 0xff;
+      vial.set(b, p + 2);
+      p += recLen + 2;
+    });
+
+    let bin = "";
+    for (let i = 0; i < vial.length; i++) bin += String.fromCharCode(vial[i]);
+    return btoa(bin);
+  }
+
   /* ---------------- 从 URL 读取 ----------------
      支持 /s/XXXXXXXX、?c=XXXXXXXX、#p=XXXXXXXX、旧 #q=长串 */
   function readFromUrl() {
@@ -2793,7 +2902,7 @@ window.ShareCodec = (() => {
   }
 
   return {
-    decode, makeLink, readFromUrl, hasVial, toc, aliasAt, loadVial,
+    decode, makeLink, readFromUrl, hasVial, toc, aliasAt, loadVial, packVial,
     qrSvg: (text, px) => QR.svg(text, px),
     qrCanvas: (text, px) => QR.toCanvas(text, px)
   };
