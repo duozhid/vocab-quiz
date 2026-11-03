@@ -1402,17 +1402,20 @@
       verifyAndRenderQr();
       watcher = setInterval(async () => {
         if (!$("#qr-slot")) { stopWatch(); return; }
-        // 热更新密钥瓶：runner 刚上线时本页还是旧密文，不刷新就会一直"查不到这份卷"
-        try {
-          const res = await fetch(location.pathname + "?vialwatch=" + Date.now(), { cache: "no-store" });
-          if (res.ok) {
-            const m = (await res.text()).match(/id="vial-data">([^<]*)<\/script>/);
-            if (m && m[1] !== window.__vialSeen && window.ShareCodec.loadVial) {
-              window.__vialSeen = m[1];
-              window.ShareCodec.loadVial(m[1]);
+        // 热更新密钥瓶：只有在本机没有「刚发布但还没生效」的密文时才去读线上。
+        // 否则会把本地刚打包的新卷覆盖回旧的线上版本，二维码永远出不来。
+        if (!window.__vialPending) {
+          try {
+            const res = await fetch(location.pathname + "?vialwatch=" + Date.now(), { cache: "no-store" });
+            if (res.ok) {
+              const m = (await res.text()).match(/id="vial-data">([^<]*)<\/script>/);
+              if (m && m[1] !== window.__vialSeen && window.ShareCodec.loadVial) {
+                window.__vialSeen = m[1];
+                window.ShareCodec.loadVial(m[1]);
+              }
             }
-          }
-        } catch { /* 网络抖动忽略，下一轮再试 */ }
+          } catch { /* 网络抖动忽略，下一轮再试 */ }
+        }
         await verifyAndRenderQr();
       }, 5000);
     };
@@ -1491,20 +1494,23 @@
         // 本地页面先换成新密文，二维码立即可算
         window.ShareCodec.loadVial(b64);
         window.__vialSeen = b64;
+        window.__vialPending = true;      // 阻止轮询用旧线上文件覆盖它
 
         const gh = await pushVialToGithub(b64, note);
         const bi = merged.findIndex(x => String(x.c || x.code || "") === String(q.code));
         if (bi >= 0) qrIndex = bi;
+        // 本地密文已经是对的，先按它渲染二维码（不必等 Pages 重新构建）
+        await verifyAndRenderQr();
         if (gh.ok) {
-          if (note) note.innerHTML = `✅ 已上线 <b>${merged.length}</b> 份试卷，二维码已生成。<br><span style="color:var(--ink-3)">线上页面约 1 分钟后完全生效（GitHub Pages 缓存）</span>`;
-          watchPublish();
+          if (note) note.innerHTML = `✅ 已上线 <b>${merged.length}</b> 份试卷，二维码已生成。<br><span style="color:var(--ink-3)">线上页面约 1 分钟后完全生效；其他设备此时打开可能还是旧版，稍等即可</span>`;
         } else {
-          if (note) note.innerHTML = `密文已打好，但自动提交失败：${esc(gh.error)}<br>
+          if (note) note.innerHTML = `密文已在本机打好，二维码可立即使用；但自动提交失败：${esc(gh.error)}<br>
             <button class="btn btn-ghost btn-sm" id="btn-dl-html" style="margin-top:8px">下载新 index.html 手动替换</button>`;
           const dl = $("#btn-dl-html");
           if (dl) dl.onclick = () => downloadPatchedHtml(b64);
-          verifyAndRenderQr();
         }
+        // 60 秒后线上应该已生效，放开轮询
+        setTimeout(() => { window.__vialPending = false; }, 60000);
       } catch (e) {
         if (note) note.innerHTML = `本机打包失败：${esc(e.message || e)}。可点「导出备份」改用其他方式发布。`;
         btnPub.disabled = false;
