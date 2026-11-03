@@ -111,6 +111,7 @@ async function uploadStatus(doc) {
       method: "POST",
       headers: {
         Authorization: `Bearer ${CFG.supabaseKey}`,
+        apikey: CFG.supabaseKey,
         "Content-Type": "application/json",
         "x-upsert": "true",
         "cache-control": "no-store"
@@ -138,11 +139,32 @@ async function tick() {
     prev = Array.isArray(back.quizzes) ? back.quizzes : [];
   } catch { /* 首次运行没有历史 */ }
   if (prev.length) {
+    // 垃圾题计分：题干/选项出现 ?、undefined、空词即算坏题。
+    // 同码冲突时保留坏题更少的版本 —— 修过的干净数据不会被云端旧脏数据反向覆盖。
+    const junkScore = qs => qs.reduce((n, x) => {
+      const opts = x.options || [];
+      const stemBad = !String(x.word || "").trim() || x.word === "?" || x.word === "undefined";
+      const optBad = opts.some(o => !String(o.word || "").trim() || o.word === "?" || o.word === "undefined");
+      const real = opts.find(o => o.correct);
+      const meanBad = (x.type === "en2cn") && real && !String(real.meaning || "").trim();
+      return n + ((stemBad || optBad || meanBad) ? 1 : 0);
+    }, 0);
     const merged = prev.map(q => ({ ...q }));
     list.forEach(q => {
       const code = String(q.c || q.code || "");
+      const qs = q.q || q.questions || [];
       const i = merged.findIndex(x => String(x.c || x.code || "") === code);
-      if (i >= 0) merged[i] = q; else merged.push(q);
+      if (i < 0) merged.push(q);
+      else {
+        const cur = merged[i];
+        const curQs = cur.q || cur.questions || [];
+        if (junkScore(qs) < junkScore(curQs)) {
+          log(`同码冲突 ${code}：云端版本坏题更少，采用云端（${junkScore(qs)} vs ${junkScore(curQs)}）`);
+          merged[i] = q;
+        } else if (junkScore(qs) > junkScore(curQs)) {
+          log(`同码冲突 ${code}：保留已发布版本（云端坏题 ${junkScore(qs)} > 本地 ${junkScore(curQs)}）`);
+        } else merged[i] = q;
+      }
     });
     if (merged.length !== list.length) log(`合并历史批次：已发布 ${prev.length} + 本次 ${list.length} → ${merged.length}`);
     list.length = 0; list.push(...merged);
@@ -198,6 +220,15 @@ async function tick() {
   fillFromHtml();
   if (!CFG.token) { console.error("缺少 GITHUB_TOKEN"); process.exit(2); }
   if (!CFG.supabaseUrl) { console.error("缺少 SUPABASE_URL"); process.exit(2); }
+
+  /* --once：跑一轮就退出。GitHub Actions 定时任务用这个模式，
+     不需要任何常开机器；本机部署仍可用默认常驻模式。 */
+  if (process.argv.includes("--once")) {
+    log(`runner 单轮模式：repo=${CFG.repo}`);
+    try { await tick(); } catch (e) { log("异常:", e.message); process.exit(1); }
+    return;
+  }
+
   log(`runner 启动：repo=${CFG.repo} 轮询=${CFG.poll}s`);
   while (true) {
     try { await tick(); } catch (e) { log("本轮异常:", e.message); }
