@@ -1911,6 +1911,20 @@
     const name = $("#name-input").value.trim();
     const tip = $("#entry-tip");
 
+    // 词库还没加载完（弱网常见）：自动等它，最多 15 秒，不弹错误
+    if (!vocabReady) {
+      tip.className = "entry-tip";
+      tip.textContent = "题库正在加载，请稍候…";
+      const t0 = Date.now();
+      const wait = () => {
+        if (vocabReady) { tip.textContent = ""; enterByCode(); return; }
+        if (Date.now() - t0 > 15000) { tip.className = "entry-tip err"; tip.textContent = "题库加载超时，请检查网络后刷新重试"; return; }
+        setTimeout(wait, 500);
+      };
+      setTimeout(wait, 500);
+      return;
+    }
+
     // 分享链接模式：卷面已在手，不需要查本机数据
     if (pendingShare) {
       if (code && pendingShare.code && code !== pendingShare.code.toUpperCase()) {
@@ -2016,6 +2030,7 @@
   }
 
   function startSelfTest() {
+    if (!vocabReady) { toast("题库正在加载，请稍候 1–2 秒再点"); return; }
     currentQuiz = { id: null, name: "内置词库自主检测", minutes: 15, instant: true, count: 20, types: ["en2cn", "cn2en", "usage"], studentName: $("#name-input").value.trim() || "匿名学生" };
     selfMode = true;
     state.vocab = builtinVocab.map((v, i) => ({ ...v, tier: tierOf(i, builtinVocab.length) }));
@@ -2023,6 +2038,13 @@
   }
 
   function beginQuiz() {
+    // 词库未就绪（弱网）：等一下再组卷，避免组出 0 题
+    if (!vocabReady) {
+      toast("题库正在加载，请稍候…");
+      const wait = () => { if (vocabReady) beginQuiz(); else setTimeout(wait, 500); };
+      setTimeout(wait, 500);
+      return;
+    }
     const n = Math.min(currentQuiz.count, state.vocab.length);
     // 组卷参数
     state.mode = "mixed";
@@ -2565,7 +2587,13 @@
 
   /* ---------- 启动 ---------- */
   let builtinVocab = [];
+  let vocabReady = false;   // 词库加载完成标记：角色按钮不再等词库，但作答开始前要等它
   async function boot() {
+    // 关键修复：事件绑定必须先于词库加载。以前 bind() 排在 await fetch("vocab.json")
+    // 之后，弱网/微信下词库要几秒才下完，期间「我是教师/我是学生」点了毫无反应，
+    // 用户以为登录不上。现在角色卡片立即可点，词库并行加载、作答前再等它就绪。
+    bind();
+
     // 页脚/品牌副标题/隐私说明随云端是否启用切换，避免未配置时误导
     const cloudOn = !!(window.Cloud && window.Cloud.enabled);
     const foot = $("#cloud-foot");
@@ -2588,7 +2616,8 @@
     // 微信内置浏览器已可完整作答（GitHub Pages 不拦微信 UA），不再提示跳转浏览器
     try {
       // 用相对路径：GitHub Pages 部署在 /vocab-quiz/ 子目录，绝对路径 /vocab.json 会 404
-      const res = await fetch("vocab.json", { cache: "no-cache" });
+      // 并行加载：不阻塞事件绑定，作答开始前用 vocabReady 等待
+      const res = await fetch("vocab.json", { cache: "force-cache" });
       if (!res.ok) throw new Error("HTTP " + res.status);
       builtinVocab = await res.json();
     } catch (err) {
@@ -2602,7 +2631,7 @@
     // 供分享链接编码使用：干扰项释义若能在内置库查到，就不必塞进链接
     window.__BUILTIN_VOCAB__ = builtinVocab;
     $("#vocab-total").textContent = builtinVocab.length.toLocaleString();
-    bind();
+    vocabReady = true;
     renderTeacher();
 
     // 从分享链接进入：优先还原卷面，不等用户点身份卡片
