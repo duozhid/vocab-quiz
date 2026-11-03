@@ -1336,6 +1336,11 @@
         </div>
         <button class="btn btn-primary btn-sm" id="btn-publish-batch">发布上线（${total} 份）</button>
         <button class="btn btn-ghost btn-sm" id="btn-export-vials">导出备份</button>
+        <div style="margin-top:10px;font-size:12px;color:var(--ink-3)">
+          ${localStorage.getItem(GH_KEY)
+            ? `已绑定 GitHub 发布通道 <a href="javascript:void 0" id="btn-gh-token" style="color:var(--brand)">更换令牌</a>`
+            : `首次发布需绑定 GitHub 令牌：<a href="javascript:void 0" id="btn-gh-token" style="color:var(--brand)">现在设置</a>（只需一次）`}
+        </div>
       </div>`, null, "知道了");
 
     /* 异步校验：密钥瓶 alias 解出的卷面必须与本卷完全一致（测验码 + 题数），
@@ -1472,13 +1477,79 @@
         if (note) note.innerHTML = `发布失败：${esc(r.error)}。也可以点「导出备份」交给管理员。`;
         return;
       }
-      if (note) note.innerHTML = `已推送（含线上原有 <b>${merged.length - local.length > 0 ? merged.length - local.length : 0}</b> 份 + 本地 <b>${local.length}</b> 份），后台正在打包上线…`;
-      const bi = merged.findIndex(x => String(x.c || x.code || "") === String(q.code));
-      if (bi >= 0) qrIndex = bi;   // 用合并后的真实位置重算暗号
-      watchPublish();
+      if (note) note.innerHTML = `已推送 <b>${merged.length}</b> 份到线上批次，正在本机打包密文…`;
+
+      /* 浏览器端直接打包 + 提交，不再依赖任何后台 runner。
+         打包算法与解码严格对称（ShareCodec.packVial），已在 10 份卷上验证往返一致。 */
+      try {
+        const b64 = await window.ShareCodec.packVial(merged.map(x => ({
+          code: x.c || x.code, name: x.name, minutes: x.minutes || x.m,
+          instant: x.instant !== false && x.i !== 0,
+          q: x.q || x.questions || []
+        })), stage.pw);
+
+        // 本地页面先换成新密文，二维码立即可算
+        window.ShareCodec.loadVial(b64);
+        window.__vialSeen = b64;
+
+        const gh = await pushVialToGithub(b64, note);
+        const bi = merged.findIndex(x => String(x.c || x.code || "") === String(q.code));
+        if (bi >= 0) qrIndex = bi;
+        if (gh.ok) {
+          if (note) note.innerHTML = `✅ 已上线 <b>${merged.length}</b> 份试卷，二维码已生成。<br><span style="color:var(--ink-3)">线上页面约 1 分钟后完全生效（GitHub Pages 缓存）</span>`;
+          watchPublish();
+        } else {
+          if (note) note.innerHTML = `密文已打好，但自动提交失败：${esc(gh.error)}<br>
+            <button class="btn btn-ghost btn-sm" id="btn-dl-html" style="margin-top:8px">下载新 index.html 手动替换</button>`;
+          const dl = $("#btn-dl-html");
+          if (dl) dl.onclick = () => downloadPatchedHtml(b64);
+          verifyAndRenderQr();
+        }
+      } catch (e) {
+        if (note) note.innerHTML = `本机打包失败：${esc(e.message || e)}。可点「导出备份」改用其他方式发布。`;
+        btnPub.disabled = false;
+        btnPub.textContent = "重试发布";
+      }
     };
 
     watchPublish();
+
+    /* 绑定 GitHub 发布令牌（只存本机，用于把新密文写进线上 index.html） */
+    const btnGh = $("#btn-gh-token");
+    if (btnGh) btnGh.onclick = () => {
+      const cur = localStorage.getItem(GH_KEY) || "";
+      modal("绑定 GitHub 发布令牌", `
+        <p style="font-size:13px;line-height:1.7;color:var(--ink-2)">
+          用于把新打包的密文直接提交到仓库，让二维码立即可用。<br>
+          · 令牌只保存在<b>这台电脑的浏览器</b>里，不会上传任何服务器<br>
+          · 需要该仓库的 <code>Contents: Read and write</code> 权限<br>
+          · 在 GitHub 生成：Settings → Developer settings → Personal access tokens
+        </p>
+        <input id="gh-token-input" placeholder="ghp_… 或 github_pat_…" value="${esc(cur)}"
+          style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-family:var(--mono);font-size:12px">
+        <div id="gh-token-msg" style="margin-top:8px;font-size:12px"></div>`,
+        async () => {
+          const v = ($("#gh-token-input") || {}).value || "";
+          const t = v.trim();
+          if (!t) { localStorage.removeItem(GH_KEY); toast("已清除令牌"); return; }
+          const msg = $("#gh-token-msg");
+          if (msg) { msg.textContent = "正在验证…"; msg.style.color = "var(--ink-3)"; }
+          try {
+            const r = await fetch(`https://api.github.com/repos/${GH_REPO}`, { headers: { Authorization: `Bearer ${t}` } });
+            if (r.status === 401) { if (msg) { msg.textContent = "令牌无效"; msg.style.color = "var(--red)"; } return; }
+            if (!r.ok) { if (msg) { msg.textContent = "验证失败：HTTP " + r.status; msg.style.color = "var(--red)"; } return; }
+            const d = await r.json();
+            if (!d.permissions || !d.permissions.push) {
+              if (msg) { msg.textContent = "这个令牌没有写权限，请勾选 Contents: Read and write"; msg.style.color = "var(--red)"; }
+              return;
+            }
+            localStorage.setItem(GH_KEY, t);
+            toast("已绑定，下次点「发布上线」就会自动提交");
+          } catch (e) {
+            if (msg) { msg.textContent = "连不上 GitHub：" + (e.message || e); msg.style.color = "var(--red)"; }
+          }
+        }, "保存");
+    };
 
     const btnExport = $("#btn-export-vials");
     if (btnExport) btnExport.onclick = () => {
@@ -1493,6 +1564,62 @@
   }
 
   /* 把二维码导出成高清 PNG（1024px，含白边，适合打印/投屏/发群） */
+  /* ---------- 把新密文写进线上 index.html ----------
+     两条路：
+       1) 配置了 GitHub 令牌 → 走 Contents API 直接提交，Pages 自动 rebuild（推荐）
+       2) 没配 → 下载打好补丁的 index.html，由管理员拖进仓库
+     令牌只存在老师本机 localStorage，不上传任何服务器。 */
+  const GH_KEY = "gk3500_gh_token";
+  const GH_REPO = "duozhid/vocab-quiz";
+
+  function patchedHtml(b64) {
+    return fetch(location.pathname + "?fresh=" + Date.now(), { cache: "no-store" })
+      .then(r => r.text())
+      .then(html => html.replace(/<script type="application\/json" id="vial-data">[\s\S]*?<\/script>/,
+        `<script type="application/json" id="vial-data">${b64}</script>`));
+  }
+
+  async function pushVialToGithub(b64, note) {
+    const tok = localStorage.getItem(GH_KEY);
+    if (!tok) return { ok: false, error: "未配置 GitHub 令牌" };
+    const html = await patchedHtml(b64);
+    const api = `https://api.github.com/repos/${GH_REPO}/contents/index.html`;
+    const h = { Authorization: `Bearer ${tok}`, Accept: "application/vnd.github+json" };
+    try {
+      const head = await fetch(api + "?ref=main", { headers: h });
+      if (head.status === 401) return { ok: false, error: "令牌无效或已过期" };
+      const sha = head.ok ? (await head.json()).sha : "";
+      const body = {
+        message: `auto: publish vial batch ${new Date().toISOString()}`,
+        // 中文字节必须按 UTF-8 编 Base64
+        content: btoa(unescape(encodeURIComponent(html))),
+        branch: "main"
+      };
+      if (sha) body.sha = sha;
+      const put = await fetch(api, { method: "PUT", headers: { ...h, "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      if (!put.ok) {
+        const t = await put.text();
+        return { ok: false, error: put.status === 403 ? "令牌没有该仓库的写权限" : `GitHub ${put.status} ${t.slice(0, 100)}` };
+      }
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: e.message || "网络不通" };
+    }
+  }
+
+  async function downloadPatchedHtml(b64) {
+    try {
+      const html = await patchedHtml(b64);
+      const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "index.html";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      toast("已下载，替换仓库里的 index.html 即可上线");
+    } catch (e) { toast("下载失败：" + (e.message || e)); }
+  }
+
   function downloadQr(link, title, code) {
     let cv;
     try {
